@@ -1,0 +1,25 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - node
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+    - mysql -uroot < tests/travis.sql
+
+script:
+  - yarn lint:fix
+  - yarn lint
+  - yarn tests
+  - yarn test:coverage
+
+notifications:
+  email: false
