@@ -24,6 +24,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
 
+require("./routes/apiRoutes")(app);
+
 /**
  * app (next js ) will prepare our server with express, and then,
  * wrap express application inside next
