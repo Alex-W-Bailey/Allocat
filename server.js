@@ -1,54 +1,42 @@
-const path = require('path');
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
-const session = require('express-session');
+const express = require( 'express' );
+const next = require( 'next' );
 
-const db = require('./models');
-const routes = require('./routes');
-const passport = require('./config/passport');
-const corsOptions = require('./config/cors.js');
+const port = 3000;
+const dev = process.env.NODE_ENV !== 'production';
+const app = next( { dev } );
+const handle = app.getRequestHandler();
 
-const PORT = process.env.PORT || 3001;
-const app = express();
+/**
+ * app (next js ) will prepare our server with express, and then,
+ * wrap express application inside next
+ *
+ */
+app.prepare()
+	.then( () => {
+		const server = express();
 
-// Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(helmet());
-app.use(session({ secret: 'TBD', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(cors(corsOptions));
+		/**
+		 * This will override the default '/about' next js route and when user goes to '/about'
+		 * it will serve index.js because route '/' which we are rendering in app.render() belongs to index.js
+		 */
+		server.get( '/about', ( req, res ) => {
+			return app.render( req, res, '/' );
+		} );
 
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
+		/**
+		 * Wrapping express app inside next will allow us to create routes by using
+		 * express js function inside of the next js build
+		 *
+		 * '*' means all routes which are not explicit , use this route for them.
+		 */
+		server.get( '*', ( req, res ) => {
+			return handle( req, res );
+		} );
 
-// Add routes, both API and view
-app.use(routes);
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, '/client/build/index.html'));
-  });
-}
-
-// Dynamically force schema refresh only for 'test'
-const FORCE_SCHEMA = process.env.NODE_ENV === 'test';
-
-db.sequelize
-  .authenticate()
-  .then(() => {
-    db.sequelize.sync({ force: FORCE_SCHEMA }).then(() => {
-      console.log(`🌎 ==> API server now on port ${PORT}!`); // eslint-disable-line no-console
-      app.emit('appStarted');
-    });
-  })
-  .catch(console.error); // eslint-disable-line no-console
-
-module.exports = app;
+		server.listen( port, ( err ) => {
+			if ( err ) {
+				throw err;
+			}
+			console.warn( `Ready on http://localhost:${port}` );
+		} );
+	} );
