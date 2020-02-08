@@ -37,10 +37,6 @@ nextApp.prepare()
 		 * This will override the default '/about' next js route and when user goes to '/about'
 		 * it will serve index.js because route '/' which we are rendering in app.render() belongs to index.js
 		 */
-		// app.get( '*', ( req, res ) => {
-		// 	console.log("THIS ROUTE WAS HIT");
-		// 	return app.render( req, res);
-		// } );
 
 		/**
 		 * Wrapping express app inside next will allow us to create routes by using
@@ -49,7 +45,7 @@ nextApp.prepare()
 		 * '*' means all routes which are not explicit , use this route for them.
 		 */
 		app.get( '*', ( req, res ) => {
-			return handle( req, res );
+			return handle( req, res, "/login");
 		} );
 
 		const FORCE_SCHEMA = process.env.NODE_ENV === 'test';
