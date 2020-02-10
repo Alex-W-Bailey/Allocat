@@ -26,26 +26,10 @@ app.use(cors(corsOptions));
 
 require("./routes/apiRoutes")(app);
 
-/**
- * app (next js ) will prepare our server with express, and then,
- * wrap express application inside next
- *
- */
 nextApp.prepare()
 	.then( () => {
-		/**
-		 * This will override the default '/about' next js route and when user goes to '/about'
-		 * it will serve index.js because route '/' which we are rendering in app.render() belongs to index.js
-		 */
-
-		/**
-		 * Wrapping express app inside next will allow us to create routes by using
-		 * express js function inside of the next js build
-		 *
-		 * '*' means all routes which are not explicit , use this route for them.
-		 */
 		app.get( '*', ( req, res ) => {
-			return handle( req, res, "/login");
+			return handle( req, res);
 		} );
 
 		const FORCE_SCHEMA = process.env.NODE_ENV === 'test';
@@ -62,6 +46,6 @@ nextApp.prepare()
 			} );
 		  });
 		})
-		.catch(console.error); // eslint-disable-line no-console
+		.catch(console.error);
 
 	} );
