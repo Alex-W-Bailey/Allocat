@@ -42,6 +42,7 @@
     "passport-local": "^1.0.0",
     "passport-session": "^1.0.2",
     "sequelize": "^4.44.3",
-    "isomorphic-unfetch": "^3.0.0"
+    "isomorphic-unfetch": "^3.0.0",
+    "bcrypt": "^3.0.8"
   }
 }
