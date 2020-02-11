@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
+import NPCard from "../components/NPCard";
 
 export default class Projects extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class Projects extends Component {
                   each one. Click the card and it takes you to the dashboard for
                   that Project
                 </h5>
+                <NPCard />
               </div>
             </div>
           </div>
