@@ -9,8 +9,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Email: "",
-      Password: "",
+      email: "",
+      password: "",
       pageTitle: "Login",
       menuItem: ["something", "something2", "something3"]
     };
@@ -38,7 +38,7 @@ export default class Login extends Component {
         axios.post("/api/login", user)
             .then(function(response){
                if(response.status === 200) {
-                   window.location.replace("/blah");
+                   window.location.replace("/projects");
                }
             })
     }

@@ -29,6 +29,10 @@ require("./routes/apiRoutes")(app);
 
 nextApp.prepare()
 	.then( () => {
+		app.get( '/', ( req, res ) => {
+			return handle( req, res);
+		});
+
 		app.get( '/login', ( req, res ) => {
 			return handle( req, res);
 		});
@@ -37,11 +41,7 @@ nextApp.prepare()
 			return handle( req, res);
 		});
 
-		app.get( '/blah', ( req, res ) => {
-			return handle( req, res);
-		});
-
-		app.get( '/', ( req, res ) => {
+		app.get( '/projects', ( req, res ) => {
 			return handle( req, res);
 		});
 
@@ -53,7 +53,7 @@ nextApp.prepare()
 		db.sequelize
 		.authenticate()
 		.then(() => {
-		  db.sequelize.sync({ force: true }).then(() => {			
+		  db.sequelize.sync({ force: false }).then(() => {			
 			app.listen( PORT, ( err ) => {
 				if ( err ) {
 					throw err;

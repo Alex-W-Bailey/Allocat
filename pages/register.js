@@ -11,9 +11,9 @@ export default class Register extends Component {
     this.state = {
       pageTitle: "Register",
       menuItem: ["something", "something2", "something3"],
-      Email: "",
-      FullName: "",
-      Password: ""
+      email: "",
+      fullName: "",
+      password: ""
     };
   }
 
@@ -50,7 +50,7 @@ export default class Register extends Component {
           <label htmlFor='FullName'>Full Name:</label>
           <input
             type='text'
-            name='FullName'
+            name='fullName'
             className='form-control'
             id='FullName'
             placeholder='Full Name'
@@ -60,7 +60,7 @@ export default class Register extends Component {
           <label htmlFor='Email'>Email:</label>
           <input
             type='text'
-            name='Email'
+            name='email'
             className='form-control'
             id='Email'
             placeholder='Email'
@@ -70,7 +70,7 @@ export default class Register extends Component {
           <label htmlFor='Password'>Password:</label>
           <input
             type='text'
-            name='Password'
+            name='password'
             className='form-control'
             id='Password'
             placeholder='Password'
