@@ -1,31 +1,19 @@
 // This will be the dropdown for the Nav Bar. Evenually it will change depending on where in the website the user is.
 // Currently its not functioning becuase I think we do not have bootstrap Jquery/Javascript properly linked.
+import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
-    <div className='dropdown'>
-      <button
-        className='btn btn-secondary dropdown-toggle'
-        type='button'
-        id='dropdownMenuButton'
-        data-toggle='dropdown'
-        aria-haspopup='true'
-        aria-expanded='false'
-      >
-        Dropdown button
-      </button>
-      <div className='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-        <a className='dropdown-item' href='#'>
-          Something 1
-        </a>
-        <a className='dropdown-item' href='#'>
-          Something 2
-        </a>
+    <Dropdown>
+      <Dropdown.Toggle variant='success' id='dropdown-basic'>
+        Dropdown Button
+      </Dropdown.Toggle>
 
-        <a className='dropdown-item' href='#'>
-          "Something 3"
-        </a>
-      </div>
-    </div>
+      <Dropdown.Menu>
+        <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+        <Dropdown.Item href='#/action-2'>Another action</Dropdown.Item>
+        <Dropdown.Item href='#/action-3'>Something else</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 export default NavDropdown;

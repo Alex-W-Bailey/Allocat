@@ -10,7 +10,10 @@ export default class NewProject extends Component {
     this.state = {
       pageTitle: "Create A New Project",
       numOfTeams: 1,
-      teams: [],
+      teams: [
+        { Frontend: ["Danielle", "Monica"] },
+        { Backend: ["Rico", "Alex"] }
+      ],
       collaborators: [],
       tasks: []
     };
