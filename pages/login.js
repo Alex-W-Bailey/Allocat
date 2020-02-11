@@ -6,8 +6,8 @@ export default class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Email: "",
-            Password: ""
+            email: "",
+            password: ""
         };
     }
 
@@ -23,6 +23,18 @@ export default class Login extends Component {
     handleRegisterClick = () => {
         console.log("clicked!");
         console.log(this.state);
+
+        let user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        axios.post("/api/login", user)
+            .then(function(response){
+               if(response.status === 200) {
+                   window.location.replace("/blah");
+               }
+            })
     }
 
     render() {
@@ -32,7 +44,7 @@ export default class Login extends Component {
                 <label htmlFor="Email">Email:</label>
                 <input
                     type="text"
-                    name="Email"
+                    name="email"
                     className="form-control"
                     id="Email"
                     placeholder="Email"
@@ -42,7 +54,7 @@ export default class Login extends Component {
                 <label htmlFor="Password">Password:</label>
                 <input
                     type="text"
-                    name="Password"
+                    name="password"
                     className="form-control"
                     id="Password"
                     placeholder="Password"

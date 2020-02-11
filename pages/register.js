@@ -6,9 +6,9 @@ export default class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Email: "",
-            FullName: "",
-            Password: ""
+            email: "",
+            fullName: "",
+            password: ""
         };
     }
 
@@ -26,9 +26,9 @@ export default class Register extends Component {
         console.log(this.state);
 
         let newUser = {
-            Email: this.state.Email,
-            FullName: this.state.FullName,
-            Password: this.state.Password
+            email: this.state.email,
+            fullName: this.state.fullName,
+            password: this.state.password
         }
 
         axios.post("/api/newUser", newUser)
@@ -44,7 +44,7 @@ export default class Register extends Component {
                 <label htmlFor="FullName">Full Name:</label>
                 <input
                     type="text"
-                    name="FullName"
+                    name="fullName"
                     className="form-control"
                     id="FullName"
                     placeholder="Full Name"
@@ -54,7 +54,7 @@ export default class Register extends Component {
                 <label htmlFor="Email">Email:</label>
                 <input
                     type="text"
-                    name="Email"
+                    name="email"
                     className="form-control"
                     id="Email"
                     placeholder="Email"
@@ -64,7 +64,7 @@ export default class Register extends Component {
                 <label htmlFor="Password">Password:</label>
                 <input
                     type="text"
-                    name="Password"
+                    name="password"
                     className="form-control"
                     id="Password"
                     placeholder="Password"
