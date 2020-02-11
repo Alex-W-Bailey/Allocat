@@ -1,40 +1,35 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require("passport-local").Strategy;
 
-// Telling passport we want to use a Local Strategy.
-// In other words, we want login with a username/email and password
+var db = require("../models");
+
 passport.use(new LocalStrategy(
-  // Our user will sign in using an email, rather than a 'username'
-  {
-    usernameField: 'email',
-  },
-  async (email, password, done) => {
-    // When a user tries to sign in this code runs
-
-    const isloginSuccessful = false;
-
-    if (!isloginSuccessful) {
-      // Login failed
-      return done(null, false, {
-        message: 'Invalid user details',
-      });
-    }
-
-    // Login success
-    return done(null, user);
-  },
+  { usernameField: "email" }, function (email, password, done) {
+    db.User.findOne({
+      where: {
+        email: email
+      }
+    }).then(function (dbUser) {
+      if (!dbUser) {
+        return done(null, false, {
+          message: "YOU DONE GOOFED!"
+        });
+      } else if (!dbUser.validPassword(password)) {
+        return done(null, false, {
+          message: "YOU DONE GOOFED! EVEN MORE(INCORRECT PASSWORD)"
+        });
+      }
+      return done(null, dbUser);
+    });
+  }
 ));
 
-// In order to help keep authentication state across HTTP requests,
-// Sequelize needs to serialize and deserialize the user
-// Just consider this part boilerplate needed to make it all work
-passport.serializeUser((user, cb) => {
-  cb(null, user);
+passport.serializeUser(function(user, callback) {
+  callback(null, user);
 });
 
-passport.deserializeUser((obj, cb) => {
-  cb(null, obj);
+passport.deserializeUser(function(user, callback) {
+  callback(null, user);
 });
 
-// Exporting our configured passport
 module.exports = passport;

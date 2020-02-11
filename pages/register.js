@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import RLLayout from "../components/RLLayout";
 
 export default class Register extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,11 +30,12 @@ export default class Register extends Component {
     console.log("clicked!");
     console.log(this.state);
 
-    let newUser = {
-      Email: this.state.Email,
-      FullName: this.state.FullName,
-      Password: this.state.Password
-    };
+        let newUser = {
+            email: this.state.email,
+            fullName: this.state.fullName,
+            password: this.state.password
+        }
+
 
     axios.post("/api/newUser", newUser).then(function(response) {
       console.log("user added!");
@@ -75,6 +77,7 @@ export default class Register extends Component {
             onChange={this.handleChange.bind(this)}
           />
           <br />
+
 
           <button onClick={() => this.handleRegisterClick()}>Register</button>
         </RLLayout>

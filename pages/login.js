@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import RLLayout from "../components/RLLayout";
 
 export default class Login extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +16,7 @@ export default class Login extends Component {
     };
   }
 
+
   handleChange = e => {
     let objName = e.target.name;
     let objValue = e.target.value;
@@ -24,36 +26,48 @@ export default class Login extends Component {
     });
   };
 
-  handleRegisterClick = () => {
-    console.log("clicked!");
-    console.log(this.state);
-  };
+    handleRegisterClick = () => {
+        console.log("clicked!");
+        console.log(this.state);
 
-  render() {
-    return (
-      <div>
+        let user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        axios.post("/api/login", user)
+            .then(function(response){
+               if(response.status === 200) {
+                   window.location.replace("/blah");
+               }
+            })
+    }
+
+    render() {
+        return (
+            <div>
         <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
         <RLLayout>
-          <label htmlFor='Email'>Email:</label>
-          <input
-            type='text'
-            name='Email'
-            className='form-control'
-            id='Email'
-            placeholder='Email'
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
-          <label htmlFor='Password'>Password:</label>
-          <input
-            type='text'
-            name='Password'
-            className='form-control'
-            id='Password'
-            placeholder='Password'
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
+          <label htmlFor="Email">Email:</label>
+                <input
+                    type="text"
+                    name="email"
+                    className="form-control"
+                    id="Email"
+                    placeholder="Email"
+                    onChange={this.handleChange.bind(this)}
+                />
+                <br />
+                <label htmlFor="Password">Password:</label>
+                <input
+                    type="text"
+                    name="password"
+                    className="form-control"
+                    id="Password"
+                    placeholder="Password"
+                    onChange={this.handleChange.bind(this)}
+                />
+                <br />
 
           <button onClick={() => this.handleRegisterClick()}>Login</button>
         </RLLayout>

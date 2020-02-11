@@ -1,5 +1,5 @@
-# ignore client folder
-/client
-/tests
-/migrations
-/seeders
+# # ignore client folder
+# /client
+# /tests
+# /migrations
+# /seeders
