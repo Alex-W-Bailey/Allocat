@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
+import Nav from "../components/Nav";
+import RLLayout from "../components/RLLayout";
 
 export default class Login extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            email: "",
-            password: ""
-        };
-    }
 
-    handleChange = (e) => {
-        let objName = e.target.name;
-        let objValue = e.target.value;
+  constructor(props) {
+    super(props);
+    this.state = {
+      Email: "",
+      Password: "",
+      pageTitle: "Login",
+      menuItem: ["something", "something2", "something3"]
+    };
+  }
 
-        this.setState({
-            [objName]: objValue
-        })
-    }
+
+  handleChange = e => {
+    let objName = e.target.name;
+    let objValue = e.target.value;
+
+    this.setState({
+      [objName]: objValue
+    });
+  };
 
     handleRegisterClick = () => {
         console.log("clicked!");
@@ -40,8 +46,9 @@ export default class Login extends Component {
     render() {
         return (
             <div>
-                <p>Login Form</p>
-                <label htmlFor="Email">Email:</label>
+        <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
+        <RLLayout>
+          <label htmlFor="Email">Email:</label>
                 <input
                     type="text"
                     name="email"
@@ -62,8 +69,9 @@ export default class Login extends Component {
                 />
                 <br />
 
-                <button onClick={() => this.handleRegisterClick()} >Login</button>
-            </div>
-        )
-    }
-};
+          <button onClick={() => this.handleRegisterClick()}>Login</button>
+        </RLLayout>
+      </div>
+    );
+  }
+}

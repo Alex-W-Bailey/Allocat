@@ -5,13 +5,14 @@ const helmet = require('helmet');
 const cors = require('cors');
 const session = require('express-session');
 const next = require( 'next' );
+
 const db = require("./models");
 const passport = require("passport");
 const corsOptions = require("./config/cors");
 
 const PORT = process.env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next( { dev } );
+const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const app = express();
 
@@ -19,7 +20,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(session({ secret: 'TBD', resave: true, saveUninitialized: true }));
+app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
@@ -64,3 +65,4 @@ nextApp.prepare()
 		.catch(console.error);
 
 	} );
+

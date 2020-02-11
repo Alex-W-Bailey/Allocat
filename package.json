@@ -34,6 +34,7 @@
     "axios": "^0.19.2",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
@@ -44,6 +45,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-session": "^1.0.2",
+    "react-bootstrap": "^1.0.0-beta.16",
     "sequelize": "^4.44.3"
   }
 }
