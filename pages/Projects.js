@@ -9,9 +9,24 @@ export default class Projects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageTitle: "Projects"
+      pageTitle: "Projects",
+      projects: []
     };
   }
+
+  componentDidMount(){
+    axios.get("/api/allProjects")
+      .then((projectsFound) => {
+        if(projectsFound.data.length > 0){
+          this.setState({ projects: projectsFound});
+          console.log(this.state);
+        }
+        else {
+          console.log("No projects found...");
+        }
+      });
+  }
+
   render() {
     return (
       <div>
