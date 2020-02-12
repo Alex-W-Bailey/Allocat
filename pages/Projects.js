@@ -9,9 +9,22 @@ export default class Projects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageTitle: "Projects"
+      pageTitle: "Projects",
+      existingProjects: [
+        {
+          id: 12321,
+          projectName: "Project 3",
+          description: "Blahhhhhhhh",
+          dueDate: "Feb 29"
+        }
+      ]
     };
   }
+
+  // On page load, API Call to database to get a list of the projects.
+  // setState() to include object of all all the existing projects
+  // ID,
+
   render() {
     return (
       <div>
@@ -25,6 +38,7 @@ export default class Projects extends Component {
                   each one. Click the card and it takes you to the dashboard for
                   that Project
                 </h5>
+
                 <NPCard />
               </div>
             </div>
