@@ -1,5 +1,7 @@
 import NPLayout from "../components/NPLayout";
 
+// pass through a function that is triggered by click event. Function updates State with Project Title and Teams
+
 const FormNewProject = () => {
   return (
     <NPLayout>

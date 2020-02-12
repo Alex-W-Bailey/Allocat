@@ -12,19 +12,18 @@ export default class NewProject extends Component {
     this.state = {
       pageTitle: "Create A New Project",
       projectTitle: "BootCamp Project",
-      teams: ["Frontend", "Backend"]
-      //   teams: [
-      //     {
-      //       name: "Frontend",
-      //       collaborators: ["Danielle", "Monica"],
-      //       tasks: ["Create React Components", "Add bootstrap", "Learn SASS"]
-      //     },
-      //     {
-      //       name: "Backend",
-      //       collaborators: ["Rico", "Alex"],
-      //       tasks: ["Implement Next.js", "Add Authentication", "Create Schema"]
-      //     }
-      //   ]
+      teams: [
+        {
+          name: "Frontend",
+          collaborators: ["Danielle", "Monica"],
+          tasks: ["Create React Components", "Add bootstrap", "Learn SASS"]
+        },
+        {
+          name: "Backend",
+          collaborators: ["Rico", "Alex"],
+          tasks: ["Implement Next.js", "Add Authentication", "Create Schema"]
+        }
+      ]
     };
   }
 
@@ -43,6 +42,9 @@ export default class NewProject extends Component {
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <FormNewProject />
+          {/* {this.state.teams.map((team, i) => {
+            return <FormTeam key={i} teamName={team.name} />;
+          })} */}
           <FormTeam
             teams={this.state.teams}
             project={this.state.projectTitle}

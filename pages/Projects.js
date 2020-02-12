@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
 import NPCard from "../components/NPCard";
+import PCard from "../components/PCard";
 
 export default class Projects extends Component {
   constructor(props) {
@@ -12,18 +13,14 @@ export default class Projects extends Component {
       pageTitle: "Projects",
       existingProjects: [
         {
-          id: 12321,
-          projectName: "Project 3",
-          description: "Blahhhhhhhh",
+          id: "1234",
+          projectName: "Success!!!!",
+          description: "Blahhh",
           dueDate: "Feb 29"
         }
       ]
     };
   }
-
-  // On page load, API Call to database to get a list of the projects.
-  // setState() to include object of all all the existing projects
-  // ID,
 
   render() {
     return (
@@ -40,6 +37,17 @@ export default class Projects extends Component {
                 </h5>
 
                 <NPCard />
+                {this.state.existingProjects.map((project, i) => {
+                  return (
+                    <PCard
+                      key={i}
+                      id={project.id}
+                      projectName={project.projectName}
+                      description={project.description}
+                      dueDate={project.description}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
