@@ -12,20 +12,16 @@ export default class NewProject extends Component {
     this.state = {
       pageTitle: "Create A New Project",
       projectTitle: "BootCamp Project",
-      // teams: ["Frontend", "Backend"],
-      // collaborators0:["Danielle", "Monica"],
-      // collaborators1:["Alex", "Rico"],
-      // tasks0:["Create React Components", "Add bootstrap", "Learn SASS"],
-      // tasks1:["Implement Next.js", "Add Authentication", "Create Schema"]
-      //
       teams: [
         {
           name: "Frontend",
+          id: 1,
           collaborators: ["Danielle", "Monica"],
           tasks: ["Create React Components", "Add bootstrap", "Learn SASS"]
         },
         {
           name: "Backend",
+          id: 2,
           collaborators: ["Rico", "Alex"],
           tasks: ["Implement Next.js", "Add Authentication", "Create Schema"]
         }
@@ -53,7 +49,6 @@ export default class NewProject extends Component {
   //   });
   // };
   render() {
-    console.log(this.state.teams[0]);
     return (
       <div>
         <Layout>

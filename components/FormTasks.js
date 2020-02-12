@@ -2,10 +2,9 @@ import NPLayout from "./NPLayout";
 
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
 
-const FormTasks = teams => {
-  console.log("Form tasks: TEAMS: " + teams[0]);
-  return teams && teams.length ? (
-    teams.map(team, i => {
+const FormTasks = props => {
+  return props.teams && props.teams.length ? (
+    props.teams.map(team => {
       <NPLayout>
         <div className='container'>
           <div className='row mt-5'>
