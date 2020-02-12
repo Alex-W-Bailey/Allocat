@@ -1,6 +1,12 @@
-import { Card } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Modal, Button } from "react-bootstrap";
 
 const DashboardTasks = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div className='mt-5'>
       <h5>This is a div that will render all of the tasks as cards</h5>
@@ -11,10 +17,33 @@ const DashboardTasks = () => {
             Level of Priority
           </Card.Subtitle>
           <Card.Text>Due Date</Card.Text>
-          <Card.Link href='#'>Claim Task</Card.Link>
-          <Card.Link href='#'>Details</Card.Link>
+          <Button variant='danger'>Claim Task</Button>
+          <Button variant='primary' onClick={handleShow}>
+            View Details
+          </Button>
         </Card.Body>
       </Card>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Project Title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='container'>
+            <div className='row'>Project Description will go here</div>
+            <div className='row'>Level of Priority</div>
+            <div className='row'>Due Date</div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant='danger' onClick={handleClose}>
+            Claim Task
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

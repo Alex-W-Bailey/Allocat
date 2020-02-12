@@ -32,7 +32,7 @@ export default class Dashboard extends Component {
           <Nav pageTitle={this.state.pageTitle} />
           <div className=' mt-5'>
             <div className='row'>
-              <div className='col-md-3 dashboard-menu verticle-align mt-5'>
+              <div className='col-md-2 dashboard-menu verticle-align mt-5'>
                 <ListGroup variant='flush' className='verticle-align'>
                   <ListGroup.Item>
                     <Button>Teams</Button>
@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
                   </ListGroup.Item>
                 </ListGroup>
               </div>
-              <div className='col-md-9 mt-5'>
+              <div className='col-md-10 mt-5'>
                 <DBLayout>
                   <DashboardTeams teams={this.state.teams} />
                   <DashboardTasks tasks={this.state.tasks} />
