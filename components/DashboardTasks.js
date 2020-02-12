@@ -16,7 +16,7 @@ const DashboardTasks = () => {
           <Card.Subtitle className='mb-2 text-muted'>
             Level of Priority
           </Card.Subtitle>
-          <Card.Text>Due Date</Card.Text>
+          <Card.Text>Assigned or Unassigned</Card.Text>
           <Button variant='danger'>Claim Task</Button>
           <Button variant='primary' onClick={handleShow}>
             View Details
