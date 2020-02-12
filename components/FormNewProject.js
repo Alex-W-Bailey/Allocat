@@ -2,7 +2,7 @@ import NPLayout from "../components/NPLayout";
 
 // pass through a function that is triggered by click event. Function updates State with Project Title and Teams
 
-const FormNewProject = () => {
+const FormNewProject = props => {
   return (
     <NPLayout>
       <div className='container'>
@@ -40,7 +40,10 @@ const FormNewProject = () => {
                 // onChange={this.handleChange.bind(this)}
               />
               <br />
-              <button>Continue on To Adding collaborators</button>
+              {/* This  button will have a click even that adds the above information to the state, which should trigger the next form to appear */}
+              <button onClick={newProject => props.createProject}>
+                Continue on To Adding collaborators
+              </button>
             </form>
           </div>
         </div>

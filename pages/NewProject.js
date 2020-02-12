@@ -28,36 +28,35 @@ export default class NewProject extends Component {
       ]
     };
   }
-  createProject(newProjectTitle, newTeams) {
+  createProject = (newProjectTitle, newTeams) => {
+    console.log("create project triggered");
+
     // This will be triggered by a click event in the FormTeam Component
     //
     this.setState({ projectTitle: newProjectTitle, teams: newTeams });
-  }
+  };
 
-  // createTasks(newTasks) {
-  //   //
-  //   this.setState({tasks: newTasks})
+  createTeams = newTeams => {
+    console.log("create project triggered" + newTeams);
+  };
+  createTasks = newTasks => {
+    console.log("create Tasks triggered");
+    // this.setState({ tasks: newTasks });
+  };
 
-  // }
-
-  // handleChange = e => {
-  //   let objName = e.target.name;
-  //   let objValue = e.target.value;
-
-  //   this.setState({
-  //     [objName]: objValue
-  //   });
-  // };
   render() {
     return (
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
-          <FormNewProject />
+          <FormNewProject
+            teams={this.state.teams}
+            createProject={this.createProject}
+          />
           <FormTeam
             teams={this.state.teams}
             project={this.state.projectTitle}
-            createProject={this.createProject}
+            createTeams={this.createTeams}
           />
           <FormTasks teams={this.state.teams} createTasks={this.createTasks} />
         </Layout>

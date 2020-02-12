@@ -9,7 +9,7 @@ const FormTasks = props => {
         <div className='container'>
           <div className='row mt-5'>
             <div className='col-md-12 mx-auto'>
-              <h2>Add Tasks for{team.name} to Complete</h2>
+              <h2>Add Tasks for {team.name} to Complete</h2>
 
               <div className='row'>
                 <div className='col-md-8'>
