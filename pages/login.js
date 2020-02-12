@@ -12,8 +12,8 @@ export default class Login extends Component {
       password: "",
       pageTitle: "Login",
       menuItems: [
-        { name: "Logout", link: "/", id: 1 },
-        { name: "Projects", link: "/Projects", id: 2 }
+        { name: "Logout", href: "/", id: 1 },
+        { name: "Projects", href: "/Projects", id: 2 }
       ]
     };
   }
