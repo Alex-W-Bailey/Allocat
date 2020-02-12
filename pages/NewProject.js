@@ -12,6 +12,12 @@ export default class NewProject extends Component {
     this.state = {
       pageTitle: "Create A New Project",
       projectTitle: "BootCamp Project",
+      // teams: ["Frontend", "Backend"],
+      // collaborators0:["Danielle", "Monica"],
+      // collaborators1:["Alex", "Rico"],
+      // tasks0:["Create React Components", "Add bootstrap", "Learn SASS"],
+      // tasks1:["Implement Next.js", "Add Authentication", "Create Schema"]
+      //
       teams: [
         {
           name: "Frontend",
@@ -26,32 +32,59 @@ export default class NewProject extends Component {
       ]
     };
   }
+  createProject(newProjectTitle, newTeams) {
+    // This will be triggered by a click event in the FormTeam Component
+    //
+    this.setState({ projectTitle: newProjectTitle, teams: newTeams });
+  }
 
-  handleChange = e => {
-    let objName = e.target.name;
-    let objValue = e.target.value;
+  // createTasks(newTasks) {
+  //   //
+  //   this.setState({tasks: newTasks})
 
-    this.setState({
-      [objName]: objValue
-    });
-  };
+  // }
 
+  // handleChange = e => {
+  //   let objName = e.target.name;
+  //   let objValue = e.target.value;
+
+  //   this.setState({
+  //     [objName]: objValue
+  //   });
+  // };
   render() {
+    console.log(this.state.teams[0]);
     return (
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <FormNewProject />
-          {/* {this.state.teams.map((team, i) => {
-            return <FormTeam key={i} teamName={team.name} />;
-          })} */}
           <FormTeam
             teams={this.state.teams}
             project={this.state.projectTitle}
+            createProject={this.createProject}
           />
-          <FormTasks teams={this.state.teams} />
+          <FormTasks teams={this.state.teams} createTasks={this.createTasks} />
         </Layout>
       </div>
     );
   }
 }
+
+// console.log(this.state.teams[0]);
+// if( this.state.teams && this.state.teams.length ){
+//   return (
+//       <Layout>
+//         <Nav pageTitle={this.state.pageTitle} />
+//         <FormNewProject />
+//         <FormTeam
+//           teams={this.state.teams}
+//           project={this.state.projectTitle}
+//         />
+//       </Layout>
+//   );
+
+// }
+// else if (this.state.teams.collaborators && this.state.teams.collaborators.length){
+//   <FormTasks teams={this.state.teams} />
+// }
