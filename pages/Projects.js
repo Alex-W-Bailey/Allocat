@@ -11,23 +11,7 @@ export default class Projects extends Component {
     super(props);
     this.state = {
       pageTitle: "Projects",
-      projects: []
-    };
-  }
-
-  componentDidMount(){
-    axios.get("/api/allProjects")
-      .then((projectsFound) => {
-        if(projectsFound.data.length > 0){
-          this.setState({ projects: projectsFound});
-          console.log(this.state);
-        }
-        else {
-          console.log("No projects found...");
-        }
-      });
-  }
-
+      projects: [],
       existingProjects: [
         {
           id: "1234",
@@ -37,6 +21,17 @@ export default class Projects extends Component {
         }
       ]
     };
+  }
+
+  componentDidMount() {
+    axios.get("/api/allProjects").then(projectsFound => {
+      if (projectsFound.data.length > 0) {
+        this.setState({ projects: projectsFound });
+        console.log(this.state);
+      } else {
+        console.log("No projects found...");
+      }
+    });
   }
 
   render() {
@@ -52,20 +47,19 @@ export default class Projects extends Component {
                   each one. Click the card and it takes you to the dashboard for
                   that Project
                 </h5>
+
                 <NPCard />
-                {
-                  this.state.existingProjects.map((project, i) => {
-                    return (
-                      <PCard
-                        key={i}
-                        id={project.id}
-                        projectName={project.projectName}
-                        description={project.description}
-                        dueDate={project.description}
-                      />
-                    );
-                  })
-                }
+                {this.state.existingProjects.map((project, i) => {
+                  return (
+                    <PCard
+                      key={i}
+                      id={project.id}
+                      projectName={project.projectName}
+                      description={project.description}
+                      dueDate={project.description}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
