@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
 import NPCard from "../components/NPCard";
+import PCard from "../components/PCard";
 
 export default class Projects extends Component {
   constructor(props) {
@@ -27,6 +28,17 @@ export default class Projects extends Component {
       });
   }
 
+      existingProjects: [
+        {
+          id: "1234",
+          projectName: "Success!!!!",
+          description: "Blahhh",
+          dueDate: "Feb 29"
+        }
+      ]
+    };
+  }
+
   render() {
     return (
       <div>
@@ -41,6 +53,19 @@ export default class Projects extends Component {
                   that Project
                 </h5>
                 <NPCard />
+                {
+                  this.state.existingProjects.map((project, i) => {
+                    return (
+                      <PCard
+                        key={i}
+                        id={project.id}
+                        projectName={project.projectName}
+                        description={project.description}
+                        dueDate={project.description}
+                      />
+                    );
+                  })
+                }
               </div>
             </div>
           </div>
