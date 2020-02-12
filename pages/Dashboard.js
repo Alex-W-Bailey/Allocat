@@ -7,6 +7,7 @@ import DBLayout from "../components//DBLayout";
 import axios from "axios";
 import DashboardTasks from "../components/DashboardTasks";
 import DashboardTeams from "../components/DashboardTeams";
+import DashboardTimeline from "../components/DashboardTimeline";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -29,29 +30,30 @@ export default class Dashboard extends Component {
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
-          <DBLayout>
-            <div className='container mt-5'>
-              <div className='row'>
-                <div className='col-md-3 dashboard-menu verticle-align mt-5'>
-                  <ListGroup variant='flush' className='verticle-align'>
-                    <ListGroup.Item>
-                      <Button>Teams</Button>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <Button>Tasks</Button>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <Button>Timeline</Button>
-                    </ListGroup.Item>
-                  </ListGroup>
-                </div>
-                <div className='col-md-9 mt-5'>
-                  <DashboardTasks />
-                  <DashboardTeams />
-                </div>
+          <div className=' mt-5'>
+            <div className='row'>
+              <div className='col-md-3 dashboard-menu verticle-align mt-5'>
+                <ListGroup variant='flush' className='verticle-align'>
+                  <ListGroup.Item>
+                    <Button>Teams</Button>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Button>Tasks</Button>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Button>Timeline</Button>
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+              <div className='col-md-9 mt-5'>
+                <DBLayout>
+                  <DashboardTeams teams={this.state.teams} />
+                  <DashboardTasks tasks={this.state.tasks} />
+                  <DashboardTimeline timeline={this.state.timeline} />
+                </DBLayout>
               </div>
             </div>
-          </DBLayout>
+          </div>
         </Layout>
       </div>
     );
