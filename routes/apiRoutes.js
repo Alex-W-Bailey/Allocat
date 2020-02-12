@@ -43,13 +43,25 @@ module.exports = function(app) {
     });
 
     app.post("/api/newProject", (req, res) => {
-        db.Project.create({
-            projectName: req.body.projectName,
-            description: req.body.description,
-            dueDate: req.body.dueDate
-        }).then(() => {
-            res.status(200).end();
-        });
+        db.Project.findOne({
+            where: {
+                projectName: req.body.projectName
+            }
+        }).then((projectsFound) => {
+            if(projectsFound){
+                console.log("Project name already in use");
+                res.send("err");
+            }
+            else {
+                db.Project.create({
+                    projectName: req.body.projectName,
+                    projectDescription: req.body.projectDescription,
+                    dueDate: req.body.dueDate
+                }).then(() => {
+                    res.status(200).end();
+                });
+            }
+        })
     });
 }
 

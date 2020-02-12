@@ -8,7 +8,7 @@ const NPCard = props => {
                     <h5 className="card-title">Add New Project</h5>
                     <p className="card-text">Ready to get started on a new project? Add a new project to your projects list.</p>
                     <Link>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                        <a href="/newProject" className="btn btn-primary">Go somewhere</a>
                     </Link>
                 </div>
             </div>
