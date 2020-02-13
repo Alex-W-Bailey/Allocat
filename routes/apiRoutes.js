@@ -10,10 +10,20 @@ module.exports = function(app) {
             where: {
                 userId: userId
             }
-        }).then((dbUsers) => {
-            res.json(dbUsers);
+        }).then((dbProjectCollab) => {
+            res.json(dbProjectCollab);
         })
     }); 
+
+    app.get("/api/project/:projectId", (req, res) => {
+        db.Project.findOne({
+            where: {
+                id: req.params.projectId
+            }
+        }).then((dbProjectInfo) => {
+            res.json(dbProjectInfo);
+        });
+    })
 
     //POST
     app.post("/api/login", passport.authenticate("local"), (req, res) => {
