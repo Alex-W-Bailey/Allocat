@@ -1,4 +1,5 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
+import "../styles.scss";
 import Nav from "../components/Nav";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
@@ -17,6 +18,18 @@ export default class Projects extends Component {
           projectName: "Success!!!!",
           description: "Blahhh",
           dueDate: "Feb 29"
+        },
+        {
+          id: "1234",
+          projectName: "Success!!!!",
+          description: "Blahhh",
+          dueDate: "Feb 29"
+        },
+        {
+          id: "1234",
+          projectName: "Success!!!!",
+          description: "Blahhh",
+          dueDate: "Feb 29"
         }
       ]
     };
@@ -28,28 +41,21 @@ export default class Projects extends Component {
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <div className='container'>
-            <div className='row'>
-              <div className='col-md-12 mt-5'>
-                <h5>
-                  This is where the projects will go. There will be a card for
-                  each one. Click the card and it takes you to the dashboard for
-                  that Project
-                </h5>
-                <NPCard />
-                {
-                  this.state.existingProjects.map((project, i) => {
-                    return (
-                      <PCard
-                        key={i}
-                        id={project.id}
-                        projectName={project.projectName}
-                        description={project.description}
-                        dueDate={project.description}
-                      />
-                    );
-                  })
-                }
-              </div>
+            <div className='row mt-5'>
+              <NPCard />
+              {
+                this.state.existingProjects.map((project, i) => {
+                  return (
+                    <PCard
+                      key={i}
+                      id={project.id}
+                      projectName={project.projectName}
+                      description={project.description}
+                      dueDate={project.description}
+                    />
+                  );
+                })
+              }
             </div>
           </div>
         </Layout>

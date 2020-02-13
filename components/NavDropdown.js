@@ -3,7 +3,7 @@
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
-    <Dropdown>
+    <Dropdown className='dropdown'>
       <Dropdown.Toggle variant='success' id='dropdown-basic'>
         Dropdown Button
       </Dropdown.Toggle>
