@@ -17,20 +17,66 @@ export default class NewProject extends Component {
       projectTitle: "BootCamp Project",
       teams: [
         {
-          name: "Frontend",
+          teamName: "Frontend",
           id: 1,
-          collaborators: ["Danielle", "Monica"],
-          tasks: ["Create React Components", "Add bootstrap", "Learn SASS"]
+          collaborators: [
+            { colabName: "Danielle", email: "danielle@danielle.com" },
+            { colabName: "Monica", email: "monica@monica.com" }
+          ],
+          tasks: [
+            {
+              taskName: "Implement Bootstrap and Sass",
+              description: "figure out how to work with Next.js and Bootstrap",
+              priorityLevel: 1,
+              dueDate: "02/29/20"
+            },
+            {
+              taskName: "Another Task",
+              description: "Something Else",
+              priorityLevel: 2,
+              dueDate: "02/20/20"
+            },
+            {
+              taskName: "Implement Bootstrap and Sass",
+              description: "figure out how to work with Next.js and Bootstrap",
+              priorityLevel: 2,
+              dueDate: "02/22/20"
+            }
+          ]
         },
         {
-          name: "Backend",
-          id: 2,
-          collaborators: ["Rico", "Alex"],
-          tasks: ["Implement Next.js", "Add Authentication", "Create Schema"]
+          teamName: "Backend",
+          id: 1,
+          collaborators: [
+            { colabName: "Alex", email: "alex@alex.com" },
+            { colabName: "rico", email: "rico@rico.com" }
+          ],
+          tasks: [
+            {
+              taskname: "Next.js Bootstrap and Sass",
+              description: "figure out how to work with Next.js and Bootstrap",
+              priorityLevel: 1,
+              dueDate: "02/29/20"
+            },
+            {
+              taskname: "Another Task",
+              description: "Something Else",
+              priorityLevel: 2,
+              dueDate: "02/20/20"
+            },
+            {
+              taskName: "MySql",
+              description: "figure out how to work with Next.js and Bootstrap",
+              priorityLevel: 2,
+              dueDate: "02/22/20"
+            }
+          ]
         }
       ]
     };
   }
+
+  //Priority level 1: High, 2: Medium, 3: Low
 
   createProject = (newProjectTitle, newTeams) => {
     console.log("create project triggered");
@@ -45,7 +91,13 @@ export default class NewProject extends Component {
   };
   createTasks = newTasks => {
     console.log("create Tasks triggered");
+    //
+
     // this.setState({ tasks: newTasks });
+  };
+
+  finalizeProjectDetails = () => {
+    console.log("finalize project details");
   };
 
   render() {
@@ -53,10 +105,7 @@ export default class NewProject extends Component {
       <Layout>
         <Nav pageTitle={this.state.pageTitle} />
         <NPLayout>
-          <FormNewProject
-          // teams={this.state.teamName}
-          // createProject={this.createProject}
-          />
+          <FormNewProject />
           <FormTeam
             teamObj={this.state.teams}
             project={this.state.projectTitle}
@@ -78,21 +127,3 @@ export default class NewProject extends Component {
     );
   }
 }
-
-// console.log(this.state.teams[0]);
-// if( this.state.teams && this.state.teams.length ){
-//   return (
-//       <Layout>
-//         <Nav pageTitle={this.state.pageTitle} />
-//         <FormNewProject />
-//         <FormTeam
-//           teams={this.state.teams}
-//           project={this.state.projectTitle}
-//         />
-//       </Layout>
-//   );
-
-// }
-// else if (this.state.teams.collaborators && this.state.teams.collaborators.length){
-//   <FormTasks teams={this.state.teams} />
-// }

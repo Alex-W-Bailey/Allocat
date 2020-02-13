@@ -4,7 +4,13 @@ import { Form } from "react-bootstrap";
 import { useState } from "react";
 
 const FormIndividualTeam = props => {
-  const [collaborators, setCollaborators] = useState();
+  const [collaborators, setCollaborators] = useState([]);
+
+  const handleCollaborator = () => {
+    console.log("handle collaborator");
+    //This will take in the value from the collaborator form
+  };
+
   return (
     <NPLayout>
       <div className='row mt-5'>
@@ -20,10 +26,18 @@ const FormIndividualTeam = props => {
                   className='form-control'
                   placeholder='Collaborator'
                 />
+                <label htmlFor='Col-email'>Email:</label>
+                <input
+                  type='email'
+                  name='Col-email'
+                  className='form-control'
+                  placeholder='joe@schmoe.com'
+                />
                 <br />
                 <button>Add Collaborator to {props.name}</button>
+
                 <br />
-                <button>Finalize Tasks Added</button>
+                <button>Finalize {props.name} Collaborators</button>
               </Form>
             </div>
             <div className='col-md-4'>
