@@ -1,9 +1,19 @@
 import NPLayout from "./NPLayout";
 import { Form } from "react-bootstrap";
+import { useState } from "react";
 
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
 
 const FormIndividualTasks = props => {
+  const [tasks, setTasks] = useState({});
+
+  const handleTask = () => {
+    console.log("handle task");
+    //This will take in the value from the task input
+    //as well as the priority level, due date, and description
+    // it needs to be passed to state.
+  };
+
   return (
     <NPLayout>
       <div className='row mt-5'>
@@ -13,7 +23,9 @@ const FormIndividualTasks = props => {
           <div className='row'>
             <div className='col-md-8'>
               <Form>
-                <label htmlFor='TaskName'>Name of Tasks for: </label>
+                <label htmlFor='TaskName'>
+                  Name of Tasks for {props.name}:
+                </label>
                 <input
                   type='text'
                   name='TaskName'
