@@ -1,48 +1,18 @@
 import NPLayout from "./NPLayout";
+import FormIndividualTeam from "../components/FormIndividualTeam";
 
-//This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
+//This function detects whether teams exist yet, and creates a form to add collaborators to each team
 
 const FormTeam = props => {
   console.log("teams: " + props.teams);
   return props.teams && props.teams.length ? (
     props.teams.map(team => {
-      <NPLayout key={team.id}>
-        <div className='container'>
-          <div className='row mt-5'>
-            <div className='col-md-12 mx-auto'>
-              <h2>{team.name} Collaborators</h2>
-              <div className='row'>
-                <div className='col-md-8'>
-                  <form>
-                    <label htmlFor='Collaborator'>Name of Collaborator:</label>
-                    <input
-                      type='text'
-                      name='Collaborator'
-                      className='form-control'
-                      id='Collaborator'
-                      placeholder='Collaborator'
-                    />
-                    <br />
-                    <button>Add Collaborator to Team 1</button>
-                    <br />
-                    <button>Continue on To Team 2</button>
-                  </form>
-                </div>
-                <div className='col-md-4'>
-                  <p>
-                    This is where Team Member names will show up as you type
-                    them in.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <NPLayout>
+        <FormIndividualTeam key={team.id} name={team.name} />
       </NPLayout>;
     })
   ) : (
     <p className='text-center'>Create project teams to add Collaborators</p>
   );
 };
-
 export default FormTeam;

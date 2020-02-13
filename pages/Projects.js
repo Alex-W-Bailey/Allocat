@@ -49,14 +49,14 @@ export default class Projects extends Component {
                 </h5>
 
                 <NPCard />
-                {this.state.existingProjects.map((project, i) => {
+                {this.state.existingProjects.map(project => {
                   return (
                     <PCard
-                      key={i}
+                      key={project.id}
                       id={project.id}
                       projectName={project.projectName}
                       description={project.description}
-                      dueDate={project.description}
+                      dueDate={project.dueDate}
                     />
                   );
                 })}

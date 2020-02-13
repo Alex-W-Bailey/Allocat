@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import NPLayout from "../components/NPLayout";
 import axios from "axios";
 
-// pass through a function that is triggered by click event. Function updates State with Project Title and Teams
-
 export default class FormNewProject extends Component {
   constructor(props) {
     super(props);
@@ -137,7 +135,9 @@ export default class FormNewProject extends Component {
                   onChange={this.handleChange.bind(this)}
                 />
                 <br />
-                <button>Continue on To Adding collaborators</button>
+              <button onClick={newProject => props.createProject}>
+                Continue on To Adding collaborators
+              </button>
                 <br />
                 <button type="button" onClick={() => this.handleNewProject()}>Create Project</button>
               </form>
