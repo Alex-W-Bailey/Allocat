@@ -1,4 +1,5 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
+import "../styles.scss";
 import Nav from "../components/Nav";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
