@@ -1,4 +1,5 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
+import "../styles.scss";
 import Nav from "../components/Nav";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
@@ -12,26 +13,40 @@ export default class Projects extends Component {
     this.state = {
       pageTitle: "Projects",
       projects: [],
-      existingProjects: [
-        {
-          id: "1234",
-          projectName: "Success!!!!",
-          description: "Blahhh",
-          dueDate: "Feb 29"
-        }
-      ]
+      projectInfo: [],
     };
   }
 
   componentDidMount() {
+    var newArr = this.state.projects;
+
     axios.get("/api/allProjects").then(projectsFound => {
       if (projectsFound.data.length > 0) {
-        this.setState({ projects: projectsFound });
-        console.log(this.state);
+        for (var i = 0; i < projectsFound.data.length; i++) {
+          newArr.push(projectsFound.data[i].id);
+          this.setState({
+            projects: newArr
+          });
+
+           this.getProjectInfo(i);
+        }
       } else {
         console.log("No projects found...");
       }
     });
+  }
+
+  async getProjectInfo(i) {
+    var newArr = this.state.projectInfo;
+
+    await axios.get(`/api/project/${this.state.projects[i]}`).then((project) => {
+      newArr.push(project.data);
+      this.setState({
+        projectInfo: newArr
+      });
+    });
+
+    console.log(this.state);
   }
 
   render() {
@@ -49,17 +64,19 @@ export default class Projects extends Component {
                 </h5>
 
                 <NPCard />
-                {this.state.existingProjects.map(project => {
-                  return (
-                    <PCard
+                {
+                  this.state.projectInfo.map(project => {
+                    return (
+                      <PCard
                       key={project.id}
                       id={project.id}
                       projectName={project.projectName}
-                      description={project.description}
+                      description={project.projectDescription}
                       dueDate={project.dueDate}
                     />
-                  );
-                })}
+                    )
+                  })
+                }
               </div>
             </div>
           </div>
