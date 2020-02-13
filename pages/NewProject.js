@@ -61,7 +61,11 @@ export default class NewProject extends Component {
             createTeams={this.createTeams}
           />
           ;
-          {/* <FormTasks teams={this.state.teams} createTasks={this.createTasks} /> */}
+          <FormTasks
+            teamObj={this.state.teams}
+            project={this.state.projectTitle}
+            createTasks={this.createTasks}
+          />
         </Layout>
       </div>
     );
