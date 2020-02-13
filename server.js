@@ -9,6 +9,7 @@ const next = require( 'next' );
 const db = require("./models");
 const passport = require("passport");
 const corsOptions = require("./config/cors");
+const isAuthenticated = require("./config/middleware/isAuthenticated");
 
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -20,7 +21,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(session({ secret: "TBD", resave: true, saveUninitialized: true }));
+app.use(session({ secret: "TBD", resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
@@ -41,8 +42,8 @@ nextApp.prepare()
 			return handle( req, res);
 		});
 
-		app.get( '/projects', ( req, res ) => {
-			return handle( req, res);
+		app.get( '/projects', isAuthenticated, ( req, res ) => {
+			return handle(req, res);
 		});
 
 		app.get( '*', ( req, res ) => {

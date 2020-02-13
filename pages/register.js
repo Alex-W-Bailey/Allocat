@@ -37,8 +37,15 @@ export default class Register extends Component {
         }
 
 
-    axios.post("/api/newUser", newUser).then(function(response) {
-      console.log("user added!");
+    axios.post("/api/newUser", newUser).then((response) => {
+        if(response.data !== "email is already taken"){
+            if(response.status === 200) {
+                window.location.replace("/");
+            }
+        }
+        else{
+            console.log(response.data);
+        }
     });
   };
 

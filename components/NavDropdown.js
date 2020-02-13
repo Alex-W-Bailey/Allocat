@@ -2,16 +2,29 @@
 // Currently its not functioning becuase I think we do not have bootstrap Jquery/Javascript properly linked.
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
+  console.log(props + " NavDropdown Props");
   return (
-    <Dropdown className='dropdown'>
-      <Dropdown.Toggle variant='success' id='dropdown-basic'>
-        Dropdown Button
+    <Dropdown className='mr-3' alignRight>
+      <Dropdown.Toggle variant='success' drop='left' id='dropdown-basic'>
+        Options
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-        <Dropdown.Item href='#/action-2'>Another action</Dropdown.Item>
-        <Dropdown.Item href='#/action-3'>Something else</Dropdown.Item>
+        {/* Switch statement for the first item of the dropdown. If user is logged in, first item will be logout. --- Set this to default
+           If pageTitle= "Login",  option will be "Register New Account". if pagetitle="Register"  option will be Login to existing account*/}
+        <Dropdown.Item href='/'>Logout</Dropdown.Item>
+
+        {/* Takes in state of parent page - for teach menuItem, it takes in the name, and the link it wants to go to. Figure out how to */}
+        {/* 
+        {props.menuItems.map(item => (
+          <Dropdown.Item key={item.id} href={item.href}>
+            {item.name}
+          </Dropdown.Item>
+        ))} */}
+        <Dropdown.Item href='/register'>Register</Dropdown.Item>
+        <Dropdown.Item href='/Projects'>Projects</Dropdown.Item>
+        <Dropdown.Item href='/NewProject'>New Project</Dropdown.Item>
+        <Dropdown.Item href='/Dashboard'>Dashboard</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

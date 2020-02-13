@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const NPCard = props => {
     return (
@@ -13,7 +13,9 @@ const NPCard = props => {
                 </div>
             </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default NPCard;
