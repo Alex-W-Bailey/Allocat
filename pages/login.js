@@ -14,7 +14,9 @@ export default class Login extends Component {
       menuItems: [
         { name: "Logout", href: "/", id: 1 },
         { name: "Projects", href: "/Projects", id: 2 }
-      ]
+      ],
+      isError: false,
+      errorMsg: "Email or Password incorrect"
     };
   }
 
@@ -36,14 +38,23 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    axios.post("/api/login", user).then(function(response) {
+    axios.post("/api/login", user).then(function (response) {
       if (response.status === 200) {
         window.location.replace("/projects");
+      }
+    }).catch((err) => {
+      if (err.response) {
+        console.log('err');
+        this.setState({
+          isError: true
+        });
       }
     });
   };
 
   render() {
+    const isError = this.state.isError;
+
     return (
       <div>
         <Nav
@@ -73,6 +84,12 @@ export default class Login extends Component {
           <br />
 
           <button onClick={() => this.handleRegisterClick()}>Login</button>
+          <br />
+          {isError ? (
+            <h1>{this.state.errorMsg}</h1>
+          ) : (
+            <h1></h1>
+          )}
         </RLLayout>
       </div>
     );
