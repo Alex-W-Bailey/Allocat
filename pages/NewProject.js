@@ -9,6 +9,7 @@ import FormTasks from "../components/FormTasks";
 export default class NewProject extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       pageTitle: "Create A New Project",
       projectTitle: "BootCamp Project",
@@ -28,6 +29,7 @@ export default class NewProject extends Component {
       ]
     };
   }
+
   createProject = (newProjectTitle, newTeams) => {
     console.log("create project triggered");
 
@@ -50,15 +52,16 @@ export default class NewProject extends Component {
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <FormNewProject
-            teams={this.state.teams}
-            createProject={this.createProject}
+          // teams={this.state.teamName}
+          // createProject={this.createProject}
           />
           <FormTeam
-            teams={this.state.teams}
+            teamObj={this.state.teams}
             project={this.state.projectTitle}
             createTeams={this.createTeams}
           />
-          <FormTasks teams={this.state.teams} createTasks={this.createTasks} />
+          ;
+          {/* <FormTasks teams={this.state.teams} createTasks={this.createTasks} /> */}
         </Layout>
       </div>
     );
