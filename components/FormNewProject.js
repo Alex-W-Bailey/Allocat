@@ -11,19 +11,40 @@ export default class FormNewProject extends Component {
       projectName: "",
       projectDescription: "",
       dueDate: "",
+      allTeams: []
     }
   }
 
   handleChange = (e) => {
     let objName = e.target.name;
-    let objValue = e.target.value;  
-  
-    this.setState({
-      [objName]: objValue
-    });
+    let objValue = e.target.value;
+
+    if (objName.includes("TeamName")) {
+      let getTeamNum = objName.slice(-1);
+      let teamNum = parseInt(getTeamNum);
+
+      //if there are any teams in the allTeams arr...
+      if (this.state.allTeams.length >= teamNum) {
+        //removes all characters in the objName so we get the team num
+        let teamNum = parseInt(getTeamNum);
+        console.log("replace teamNum Val");
+        this.state.allTeams[teamNum - 1] = objValue;
+      }
+      //since there are no teams, just push to create one
+      else {
+        console.log("insert into the arr...");
+        this.state.allTeams.push(objValue);
+      }
+    }
+    //this is not a teamName object
+    else {
+      this.setState({
+        [objName]: objValue
+      });
+    }
   }
 
-  handleNewProject = () =>{
+  handleNewProject = () => {
     console.log("clicked!");
     console.log(this.state);
 
@@ -34,13 +55,38 @@ export default class FormNewProject extends Component {
     }
 
     axios.post("/api/newProject", newProject).then((response) => {
-      if(response.data === "err"){
+      if (response.data === "err") {
         console.log("project name already taken");
       }
       else {
         console.log("project created...");
+
+        var newCreator = {
+          projectName: this.state.projectName
+        }
+
+        axios.post("/api/projectCreator", newCreator).then((response) => {
+          for (var i = 0; i < this.state.allTeams.length; i++) {
+            console.log("creating team...");
+  
+            var teamName = this.state.allTeams[i];
+  
+            let newTeam = {
+              projectName: this.state.projectName,
+              projectId: 0,
+              teamName: teamName,
+              teamPosition: i
+            }
+  
+            axios.post("/api/newTeam", newTeam).then((response) => {
+              if (response) {
+                console.log("New Team created!");
+              }
+            })
+          }
+        })
       }
-    })
+    });
   }
 
   render() {
