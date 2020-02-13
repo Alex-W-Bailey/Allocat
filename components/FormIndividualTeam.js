@@ -1,7 +1,10 @@
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
 import NPLayout from "../components/NPLayout";
+import { Form } from "react-bootstrap";
+import { useState } from "react";
 
 const FormIndividualTeam = props => {
+  const [collaborators, setCollaborators] = useState();
   return (
     <NPLayout>
       <div className='row mt-5'>
@@ -9,7 +12,7 @@ const FormIndividualTeam = props => {
           <h2>{props.name} Collaborators</h2>
           <div className='row'>
             <div className='col-md-8'>
-              <form>
+              <Form>
                 <label htmlFor='Collaborator'>Name of Collaborator:</label>
                 <input
                   type='text'
@@ -21,7 +24,7 @@ const FormIndividualTeam = props => {
                 <button>Add Collaborator to {props.name}</button>
                 <br />
                 <button>Finalize Tasks Added</button>
-              </form>
+              </Form>
             </div>
             <div className='col-md-4'>
               <p>

@@ -1,6 +1,7 @@
 import Nav from "../components/Nav";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
+import NPLayout from "../components/NPLayout";
 import axios from "axios";
 import FormNewProject from "../components/FormNewProject";
 import FormTeam from "../components/FormTeam";
@@ -49,9 +50,9 @@ export default class NewProject extends Component {
 
   render() {
     return (
-      <div>
-        <Layout>
-          <Nav pageTitle={this.state.pageTitle} />
+      <Layout>
+        <Nav pageTitle={this.state.pageTitle} />
+        <NPLayout>
           <FormNewProject
           // teams={this.state.teamName}
           // createProject={this.createProject}
@@ -61,19 +62,19 @@ export default class NewProject extends Component {
             project={this.state.projectTitle}
             createTeams={this.createTeams}
           />
-          ;
+
           <FormTasks
             teamObj={this.state.teams}
             project={this.state.projectTitle}
             createTasks={this.createTasks}
           />
           <div className='row mx-auto'>
-            <div className='col-1'>
-              <Button className='mx-auto'>Finished</Button>
+            <div className='col-md-1 mx-auto'>
+              <Button className='mt-5 mb-5'>Finished</Button>
             </div>
           </div>
-        </Layout>
-      </div>
+        </NPLayout>
+      </Layout>
     );
   }
 }

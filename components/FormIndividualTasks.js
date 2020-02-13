@@ -1,4 +1,5 @@
 import NPLayout from "./NPLayout";
+import { Form } from "react-bootstrap";
 
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
 
@@ -11,7 +12,7 @@ const FormIndividualTasks = props => {
 
           <div className='row'>
             <div className='col-md-8'>
-              <form>
+              <Form>
                 <label htmlFor='TaskName'>Name of Tasks for: </label>
                 <input
                   type='text'
@@ -28,28 +29,27 @@ const FormIndividualTasks = props => {
                   placeholder='Task Description'
                 />
                 <br />
-                <label htmlFor='Collaborator'>Due Date: </label>
+                <label htmlFor='Collaborator'>Due Date (MM/DD/YY): </label>
                 <input
                   type='text'
-                  name='Collaborator'
+                  name='Due Date'
                   className='form-control'
-                  placeholder='Collaborator'
+                  placeholder='02/29/20'
                 />
                 <br />
-                <label htmlFor='Priority'>
-                  Priority Level: (eventually a dropdown){" "}
-                </label>
-                <input
-                  type='text'
-                  name='Priority'
-                  className='form-control'
-                  placeholder='Priority'
-                />
+                <Form.Group>
+                  <Form.Label>Priority Level</Form.Label>
+                  <Form.Control as='select'>
+                    <option>High Priority</option>
+                    <option>Medium Priority</option>
+                    <option>Low Priority</option>
+                  </Form.Control>
+                </Form.Group>
                 <br />
                 <button>Add Task</button>
                 <br />
                 <button>Continue on To Team 2 Tasks</button>
-              </form>
+              </Form>
             </div>
             <div className='col-md-4'>
               <p>This is where Tasks will show up</p>
