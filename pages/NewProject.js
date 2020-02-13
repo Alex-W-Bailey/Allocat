@@ -5,6 +5,7 @@ import axios from "axios";
 import FormNewProject from "../components/FormNewProject";
 import FormTeam from "../components/FormTeam";
 import FormTasks from "../components/FormTasks";
+import { Button } from "react-bootstrap";
 
 export default class NewProject extends Component {
   constructor(props) {
@@ -66,6 +67,11 @@ export default class NewProject extends Component {
             project={this.state.projectTitle}
             createTasks={this.createTasks}
           />
+          <div className='row mx-auto'>
+            <div className='col-1'>
+              <Button className='mx-auto'>Finished</Button>
+            </div>
+          </div>
         </Layout>
       </div>
     );

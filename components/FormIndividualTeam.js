@@ -20,7 +20,7 @@ const FormIndividualTeam = props => {
                 <br />
                 <button>Add Collaborator to {props.name}</button>
                 <br />
-                <button>Continue on To Next Team</button>
+                <button>Finalize Tasks Added</button>
               </form>
             </div>
             <div className='col-md-4'>
