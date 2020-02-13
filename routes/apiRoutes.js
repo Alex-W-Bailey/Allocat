@@ -43,13 +43,66 @@ module.exports = function(app) {
     });
 
     app.post("/api/newProject", (req, res) => {
-        db.Project.create({
-            projectName: req.body.projectName,
-            description: req.body.description,
-            dueDate: req.body.dueDate
-        }).then(() => {
-            res.status(200).end();
-        });
+        db.Project.findOne({
+            where: {
+                projectName: req.body.projectName
+            }
+        }).then((projectsFound) => {
+            if(projectsFound){
+                console.log("Project name already in use");
+                res.send("err");
+            }
+            else {
+                db.Project.create({
+                    projectName: req.body.projectName,
+                    projectDescription: req.body.projectDescription,
+                    dueDate: req.body.dueDate
+                }).then(() => {
+                    res.status(200).end();
+                });
+            }
+        })
     });
+
+    app.post("/api/newTeam", (req, res) => {
+        db.Project.findOne({
+            where: {
+                projectName: req.body.projectName
+            }
+        }).then((project) => {
+            var newTeam = {
+                projectId: project.id,
+                teamName: req.body.teamName,
+                teamPosition: req.body.teamPosition
+            }
+
+            db.Team.create(newTeam).then(() => {
+                res.status(200).end();
+            })
+
+        })
+    })
+
+    app.post("/api/projectCreator", (req, res) => {
+        var userId = req.user.id;
+        console.log("userId: " + req.user);
+
+        db.Project.findOne({
+            where: {
+                projectName: req.body.projectName
+            }
+        }).then((project) => {
+            db.Collaborator.create({
+                userId: userId,
+                projectId: project.id,
+            }).then(() => {
+                res.status(200).end();
+            })
+        })
+    })
+
+    // app.post("/api/newCollaborator", (req, res) => {
+    //     db.Collaborator
+    // })
 }
 

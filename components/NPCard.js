@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const NPCard = props => {
+
   return (
     <div>
       <div className='col-sm-4'>
@@ -11,7 +12,7 @@ const NPCard = props => {
             projects list.
           </p>
           <Link>
-            <a href='/NewProject' className='btn btn-primary'>
+            <a href='/newProject' className='btn btn-primary'>
               Create New Project
             </a>
           </Link>
