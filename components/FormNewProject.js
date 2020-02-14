@@ -10,10 +10,10 @@ export default class FormNewProject extends Component {
       projectDescription: "",
       dueDate: "",
       allTeams: []
-    };
+    }
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     let objName = e.target.name;
     let objValue = e.target.value;
 
@@ -40,7 +40,7 @@ export default class FormNewProject extends Component {
         [objName]: objValue
       });
     }
-  };
+  }
 
   handleNewProject = () => {
     console.log("clicked!");
@@ -50,41 +50,42 @@ export default class FormNewProject extends Component {
       projectName: this.state.projectName,
       projectDescription: this.state.projectDescription,
       dueDate: this.state.dueDate
-    };
+    }
 
-    axios.post("/api/newProject", newProject).then(response => {
+    axios.post("/api/newProject", newProject).then((response) => {
       if (response.data === "err") {
         console.log("project name already taken");
-      } else {
+      }
+      else {
         console.log("project created...");
 
         var newCreator = {
           projectName: this.state.projectName
-        };
+        }
 
-        axios.post("/api/projectCreator", newCreator).then(response => {
+        axios.post("/api/projectCreator", newCreator).then((response) => {
           for (var i = 0; i < this.state.allTeams.length; i++) {
             console.log("creating team...");
-
+  
             var teamName = this.state.allTeams[i];
-
+  
             let newTeam = {
               projectName: this.state.projectName,
               projectId: 0,
               teamName: teamName,
               teamPosition: i
-            };
-
-            axios.post("/api/newTeam", newTeam).then(response => {
+            }
+  
+            axios.post("/api/newTeam", newTeam).then((response) => {
               if (response) {
                 console.log("New Team created!");
               }
-            });
+            })
           }
-        });
+        })
       }
     });
-  };
+  }
 
   render() {
     return (
@@ -108,19 +109,9 @@ export default class FormNewProject extends Component {
                   type='text'
                   name='projectDescription'
                   className='form-control'
-                  rows='5'
+                  rows="5"
                   id='projectDescription'
                   placeholder='Project Description'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <label htmlFor='ProjectDescription'>Project Due Date:</label>
-                <input
-                  type='text'
-                  name='projectDueDate'
-                  className='form-control'
-                  rows='5'
-                  id='projectDueDate'
-                  placeholder='02/29/20'
                   onChange={this.handleChange.bind(this)}
                 />
                 <br />
@@ -144,13 +135,11 @@ export default class FormNewProject extends Component {
                   onChange={this.handleChange.bind(this)}
                 />
                 <br />
-                <button onClick={newProject => props.createProject}>
-                  Continue on To Adding collaborators
-                </button>
+              <button onClick={newProject => props.createProject}>
+                Continue on To Adding collaborators
+              </button>
                 <br />
-                <button type='button' onClick={() => this.handleNewProject()}>
-                  Create Project
-                </button>
+                <button type="button" onClick={() => this.handleNewProject()}>Create Project</button>
               </form>
             </div>
           </div>
@@ -158,4 +147,4 @@ export default class FormNewProject extends Component {
       </NPLayout>
     );
   }
-}
+};

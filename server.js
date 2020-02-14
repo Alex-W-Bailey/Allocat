@@ -46,6 +46,10 @@ nextApp.prepare()
 			return handle(req, res);
 		});
 
+		app.get( '/newProject', (req, res) => {
+			return handle(req, res);
+		})
+
 		app.get( '*', ( req, res ) => {
 			return handle( req, res);
 		});
