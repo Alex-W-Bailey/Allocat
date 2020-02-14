@@ -3,7 +3,6 @@ import { Card, Modal, Button } from "react-bootstrap";
 
 const DashboardTasks = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

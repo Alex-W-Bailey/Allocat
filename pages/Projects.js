@@ -28,7 +28,7 @@ export default class Projects extends Component {
             projects: newArr
           });
 
-           this.getProjectInfo(i);
+          this.getProjectInfo(i);
         }
       } else {
         console.log("No projects found...");
@@ -55,33 +55,29 @@ export default class Projects extends Component {
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <div className='container'>
-            <div className='row'>
-              <div className='col-md-12 mt-5'>
-                <h5>
-                  This is where the projects will go. There will be a card for
-                  each one. Click the card and it takes you to the dashboard for
-                  that Project
-                </h5>
-
-                <NPCard />
-                {
-                  this.state.projectInfo.map(project => {
-                    return (
-                      <PCard
+            <div className="row mt-5">
+              <h5>Your Projects</h5>
+              <hr />
+            </div>
+            <div className='row m-3'>
+              <NPCard />
+              {
+                this.state.projectInfo.map(project => {
+                  return (
+                    <PCard
                       key={project.id}
                       id={project.id}
                       projectName={project.projectName}
                       description={project.projectDescription}
                       dueDate={project.dueDate}
                     />
-                    )
-                  })
-                }
-              </div>
+                  )
+                })
+              }
             </div>
           </div>
         </Layout>
-      </div>
+      </div >
     );
   }
 }
