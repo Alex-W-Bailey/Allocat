@@ -2,7 +2,6 @@
 // Currently its not functioning becuase I think we do not have bootstrap Jquery/Javascript properly linked.
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
-  console.log(props + " NavDropdown Props");
   return (
     <Dropdown className='mr-3' alignRight>
       <Dropdown.Toggle variant='success' drop='left' id='dropdown-basic'>
