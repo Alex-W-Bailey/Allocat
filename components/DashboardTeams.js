@@ -3,13 +3,11 @@ import { Accordion, Card, Button } from "react-bootstrap";
 const DashboardTeams = props => {
   return (
     <div className='mt-5'>
-      This is a div that will render a list of all of the teams, and within the
-      teams, A list of the collaborators, and the tasks they have chosen.
       <Accordion>
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant='link' eventKey='0'>
-              Backend
+              Backend (Team 1)
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey='0'>

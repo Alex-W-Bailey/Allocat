@@ -25,7 +25,6 @@ export default class Dashboard extends Component {
 
   updateCategory = categoryName => {
     this.setState({ categorySelected: categoryName });
-    console.log(this.state.categorySelected);
   };
 
   render() {
