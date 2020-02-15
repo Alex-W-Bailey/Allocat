@@ -1,7 +1,7 @@
-import DBLayout from "../components/DBLayout";
-import DashboardTeams from "../components/DashboardTeams";
-import DashboardTimeline from "../components/DashboardTimeline";
-import DashboardTasks from "../components/DashboardTasks";
+import DBLayout from "../DashboardLayout";
+import DashboardTeams from "../DashboardTeams";
+import DashboardTimeline from "../DashboardTimeline";
+import DashboardTasks from "../DashboardTasks";
 
 const DashboardWindow = props => {
   if (props.categorySelescted === "teams") {
