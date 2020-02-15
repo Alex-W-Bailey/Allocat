@@ -1,8 +1,8 @@
-// @mixin card-border {
-//     border: 1px solid grey;
-//     border-radius: 12px;
-// }
+@mixin card-border {
+  border: 1px solid grey;
+  border-radius: 12px;
+}
 
-// .eProject-card {
-//     @include card-border;
-// }
+.eProject-card {
+  @include card-border;
+}
