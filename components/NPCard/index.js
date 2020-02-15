@@ -3,7 +3,7 @@ import Link from "next/link";
 const NPCard = props => {
   return (
     <div className='col-lg-4'>
-      <div className='eProject-card card' style={{ height: "15rem" }}>
+      <div className='eProject-card card'>
         <div className='card-body'>
           <h5 className='card-title'>Add New Project</h5>
           <p className='card-text'>

@@ -1,0 +1,8 @@
+@mixin projectBorder {
+    border-radius: 12px;
+    height: 15rem;
+}
+
+.eProject-card {
+    @include projectBorder
+}

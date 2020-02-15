@@ -1,6 +1,6 @@
 import TeamCard from "../components/TeamCard";
 import Layout from "../components/Layout";
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/index";
 
 import React, { Component } from "react";
 
