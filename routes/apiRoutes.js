@@ -12,7 +12,7 @@ module.exports = function(app) {
             }
         }).then((dbProjectCollab) => {
             res.json(dbProjectCollab);
-        })
+        });
     }); 
 
     app.get("/api/project/:projectId", (req, res) => {
@@ -23,7 +23,17 @@ module.exports = function(app) {
         }).then((dbProjectInfo) => {
             res.json(dbProjectInfo);
         });
-    })
+    });
+
+    app.get("/api/user/:userEmail", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((dbUser) => {
+            res.json(dbUser);
+        });
+    });
 
     //POST
     app.post("/api/login", passport.authenticate("local"), (req, res) => {
@@ -49,7 +59,7 @@ module.exports = function(app) {
                     res.status(200).end();
                 });
             }
-        })
+        });
     });
 
     app.post("/api/newProject", (req, res) => {
@@ -71,7 +81,7 @@ module.exports = function(app) {
                     res.status(200).end();
                 });
             }
-        })
+        });
     });
 
     app.post("/api/newTeam", (req, res) => {
@@ -88,10 +98,10 @@ module.exports = function(app) {
 
             db.Team.create(newTeam).then(() => {
                 res.status(200).end();
-            })
+            });
 
-        })
-    })
+        });
+    });
 
     app.post("/api/projectCreator", (req, res) => {
         var userId = req.user.id;
@@ -107,12 +117,29 @@ module.exports = function(app) {
                 projectId: project.id,
             }).then(() => {
                 res.status(200).end();
+            });
+        });
+    });
+
+    app.post("/api/newCollaborator/:userEmail/:projectName", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((userFound) => {
+            db.Project.findOne({
+                where: {
+                    projectName: req.params.projectName
+                }
+            }).then((projectFound) => {
+                db.Collaborator.create({
+                  userId: userFound.id,
+                  projectId: projectFound.id  
+                }).then(() => {
+                    res.status(200).end();
+                })
             })
         })
     })
-
-    // app.post("/api/newCollaborator", (req, res) => {
-    //     db.Collaborator
-    // })
 }
 
