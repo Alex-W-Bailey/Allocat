@@ -68,7 +68,6 @@ const DashboardTasks = () => {
                   <br />
                   <button>Add Task</button>
                   <br />
-                  <button>Continue on To Team 2 Tasks</button>
                 </Form>
               </div>
               <div className='col-md-4'>
