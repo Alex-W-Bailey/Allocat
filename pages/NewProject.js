@@ -7,6 +7,7 @@ import FormNewProject from "../components/FormNewProject";
 import FormTeam from "../components/FormTeam";
 import FormTasks from "../components/FormTasks";
 import NewTeam from "../components/NewTeam";
+import NewCollaborator from "../components/NewCollaborator";
 import { Button } from "react-bootstrap";
 
 export default class NewProject extends Component {
@@ -19,69 +20,25 @@ export default class NewProject extends Component {
       projectDescription: "",
       dueDate: "",
       numberOfTeams: [<NewTeam />],
-      allTeams: []
-      // teams: [
-      //   {
-      //     teamName: "Frontend",
-      //     id: 1,
-      //     collaborators: [
-      //       { collabName: "Danielle", email: "danielle@danielle.com" },
-      //       { collabName: "Monica", email: "monica@monica.com" }
-      //     ],
-      //     tasks: [
-      //       {
-      //         taskName: "Implement Bootstrap and Sass",
-      //         description: "figure out how to work with Next.js and Bootstrap",
-      //         priorityLevel: 1,
-      //         dueDate: "02/29/20"
-      //       },
-      //       {
-      //         taskName: "Another Task",
-      //         description: "Something Else",
-      //         priorityLevel: 2,
-      //         dueDate: "02/20/20"
-      //       },
-      //       {
-      //         taskName: "Implement Bootstrap and Sass",
-      //         description: "figure out how to work with Next.js and Bootstrap",
-      //         priorityLevel: 2,
-      //         dueDate: "02/22/20"
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     teamName: "Backend",
-      //     id: 1,
-      //     collaborators: [
-      //       { collabName: "Alex", email: "alex@alex.com" },
-      //       { collabName: "rico", email: "rico@rico.com" }
-      //     ],
-      //     tasks: [
-      //       {
-      //         taskName: "Next.js Bootstrap and Sass",
-      //         description: "figure out how to work with Next.js and Bootstrap",
-      //         priorityLevel: 1,
-      //         dueDate: "02/29/20"
-      //       },
-      //       {
-      //         taskName: "Another Task",
-      //         description: "Something Else",
-      //         priorityLevel: 2,
-      //         dueDate: "02/20/20"
-      //       },
-      //       {
-      //         taskName: "MySql",
-      //         description: "figure out how to work with Next.js and Bootstrap",
-      //         priorityLevel: 2,
-      //         dueDate: "02/22/20"
-      //       }
-      //     ]
-      //   }
-      // ]
+      allTeams: [],
+      searchedForCollaborator: false,
+      collaboratorEmail: "",
+      collaboratorFound: false,
+      collaboratorName: "",
+      allCollaborators: []
     };
   }
 
   handleChange = e => {
+    let objName = e.target.name;
+    let objValue = e.target.value;
+
+    this.setState({
+      [objName]: objValue
+    });
+  }
+
+  handleTeamNameChange = e => {
     let objName = e.target.name;
     let objValue = e.target.value;
 
@@ -114,44 +71,7 @@ export default class NewProject extends Component {
     console.log("clicked!");
     console.log(this.state);
 
-    let newProject = {
-      projectName: this.state.projectName,
-      projectDescription: this.state.projectDescription,
-      dueDate: this.state.dueDate
-    };
-
-    axios.post("/api/newProject", newProject).then(response => {
-      if (response.data === "err") {
-        console.log("project name already taken");
-      } else {
-        console.log("project created...");
-
-        var newCreator = {
-          projectName: this.state.projectName
-        };
-
-        axios.post("/api/projectCreator", newCreator).then(response => {
-          for (var i = 0; i < this.state.allTeams.length; i++) {
-            console.log("creating team...");
-
-            var teamName = this.state.allTeams[i];
-
-            let newTeam = {
-              projectName: this.state.projectName,
-              projectId: 0,
-              teamName: teamName,
-              teamPosition: i
-            };
-
-            axios.post("/api/newTeam", newTeam).then(response => {
-              if (response) {
-                console.log("New Team created!");
-              }
-            });
-          }
-        });
-      }
-    });
+    this.createProject();
   };
 
   handleNewTeam = () => {
@@ -163,18 +83,112 @@ export default class NewProject extends Component {
     });
   }
 
+  handleCollabSearch = () => {
+    console.log("searching..." + this.state.collaboratorEmail);
+
+    axios.get(`/api/user/${this.state.collaboratorEmail}`).then(usersFound => {
+      if (usersFound.data != null) {
+        this.setState({
+          searchedForCollaborator: true,
+          collaboratorFound: true,
+          collaboratorName: usersFound.data.fullName
+        });
+      }
+      else {
+        console.log("none");
+        this.setState({
+          searchedForCollaborator: true,
+          collaboratorFound: false
+        });
+      }
+
+      console.log(this.state)
+    });
+  }
+
+  handleAddNewCollaborator = () => {
+    console.log("Add new collaborator");
+    let collaboratorEmail = this.state.collaboratorEmail;
+
+    var newArr = this.state.allCollaborators;
+    newArr.push(collaboratorEmail);
+
+    this.setState({
+      allCollaborators: newArr,
+      collaboratorEmail: ""
+    });
+
+    console.log(this.state);
+  }
+
   //Priority level 1: High, 2: Medium, 3: Low
 
-  createProject = (newProjectTitle, newTeams) => {
-    console.log("create project triggered");
+  async createProject() {
+    let newProject = {
+      projectName: this.state.projectName,
+      projectDescription: this.state.projectDescription,
+      dueDate: this.state.dueDate
+    };
 
-    // This will be triggered by a click event in the FormTeam Component
-    this.setState({ projectTitle: newProjectTitle, teams: newTeams });
+    await axios.post("/api/newProject", newProject).then(response => {
+      if (response.data === "err") {
+        console.log("project name already taken");
+      } else {
+        console.log("project created...");
+      }
+    });
+
+    var newCreator = {
+      projectName: this.state.projectName
+    };
+
+    await axios.post("/api/projectCreator", newCreator).then(response => {
+      for (var i = 0; i < this.state.allTeams.length; i++) {
+        console.log("creating team...");
+
+        this.createTeams(i);
+      }
+    });
+
+    await this.createCollaborators();
+
+    console.log("project creation process completed...");
+  }
+
+  async createTeams(i) {
+    var teamName = this.state.allTeams[i];
+
+    let newTeam = {
+      projectName: this.state.projectName,
+      projectId: 0,
+      teamName: teamName,
+      teamPosition: i
+    };
+
+    console.log(newTeam);
+
+    axios.post("/api/newTeam", newTeam).then(response => {
+      if (response) {
+        console.log("New Team created!");
+      }
+    });
   };
 
-  createTeams = newTeams => {
-    console.log("create project triggered" + newTeams);
-  };
+  async createCollaborators() {
+    console.log("create collaborators")
+
+    for(var i = 0; i < this.state.allCollaborators.length; i++){
+      var collaborator = this.state.allCollaborators[i];
+      console.log("collab: " + collaborator);
+
+      axios.post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`).then((response) => {
+        if (response.status === 200) {
+          console.log("added collaborators");
+        }
+      })
+    }
+  }
+
   createTasks = newTasks => {
     console.log("create Tasks triggered");
     //
@@ -187,6 +201,9 @@ export default class NewProject extends Component {
   };
 
   render() {
+    const searchedForCollaborator = this.state.searchedForCollaborator;
+    const foundCollaborator = this.state.collaboratorFound;
+
     return (
       <Layout>
         <Nav pageTitle={this.state.pageTitle} />
@@ -202,7 +219,7 @@ export default class NewProject extends Component {
                   className='form-control'
                   id='projectName'
                   placeholder='Project Title'
-                  onChange={this.handleChange.bind(this)}
+                  onChange={this.handleTeamNameChange.bind(this)}
                 />
                 <label htmlFor='ProjectDescription'>Project Description:</label>
                 <input
@@ -222,18 +239,18 @@ export default class NewProject extends Component {
                   rows='5'
                   id='projectDueDate'
                   placeholder='02/29/20'
-                  onChange={this.handleChange.bind(this)}
+                  onChange={this.handleTeamNameChange.bind(this)}
                 />
                 <br />
                 {
                   this.state.numberOfTeams.map((team, index) => {
                     var i = parseInt(index);
                     var elementNum = i + 1;
-                    
+
                     return (
-                      <NewTeam 
+                      <NewTeam
                         elementNum={elementNum}
-                        handleChange={this.handleChange.bind(this)}
+                        handleChange={this.handleTeamNameChange.bind(this)}
                       />
                     )
                   })
@@ -242,33 +259,34 @@ export default class NewProject extends Component {
                   Add Another Team
                 </button>
                 <br />
-                <button onClick={newProject => props.createProject}>
-                  Continue on To Adding collaborators
+                <NewCollaborator
+                  value={this.state.collaboratorEmail}
+                  handleChange={this.handleChange.bind(this)}
+                />
+                {
+                  foundCollaborator ? (
+                    <p>{this.state.collaboratorName}</p>
+                  ) : searchedForCollaborator ? (
+                    <p>No user found...</p>
+                  ) : (
+                        <p></p>
+                      )
+                }
+                <button type="button" onClick={() => this.handleCollabSearch()}>
+                  Search
+                </button>
+                <button type="button" onClick={() => this.handleAddNewCollaborator()}>
+                  Add
                 </button>
                 <br />
+                <br />
+
                 <button type='button' onClick={() => this.handleNewProject()}>
                   Create Project
                 </button>
               </form>
             </div>
           </div>
-
-          {/* <FormTeam
-            teamObj={this.state.teams}
-            project={this.state.'projectTitle'}
-            createTeams={this.createTeams}
-          />
-
-          <FormTasks
-            teamObj={this.state.teams}
-            project={this.state.projectTitle}
-            createTasks={this.createTasks}
-          />
-          <div className='row mx-auto'>
-            <div className='col-md-1 mx-auto'>
-              <Button className='mt-5 mb-5' onClick={() => this.createProject()}>Finished</Button>
-            </div>
-          </div> */}
         </NPLayout>
       </Layout>
     );
