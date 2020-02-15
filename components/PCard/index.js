@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Link from "next/link";
 
 const PCard = props => {
@@ -7,7 +8,11 @@ const PCard = props => {
                 <div className="card-body">
                     <h5 className="card-title">{props.projectName}</h5>
                     <p className="card-text">{props.description}</p>
-                    <button className="btn btn-primary">View Project</button>
+                    <Link href="/project/[id]" as={`/project/${props.id}`}>
+                        <button className="btn btn-primary">
+                            View Project
+                        </button> 
+                    </Link>   
                 </div>
             </div>
         </div >

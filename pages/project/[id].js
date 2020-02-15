@@ -1,11 +1,11 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
-import Nav from "../components/Nav";
+import Nav from "../../components/Nav/index";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
-import Layout from "../components/Layout";
-import DBLayout from "../components/DashboardLayout";
+import Layout from "../../components/Layout";
+import DBLayout from "../../components/DBLayout";
 import axios from "axios";
-import DashboardWindow from "../components/DashboardWindow";
+import DashboardWindow from "../../components/DashboardWindow";
 
 export default class Dashboard extends Component {
   // constructor(props) {
