@@ -5,6 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         taskDescription: DataTypes.STRING,
         taskDueDate: DataTypes.STRING,
         taskPriority: DataTypes.STRING,
+        taskTeam: DataTypes.STRING,
         taskStatus: DataTypes.STRING
     });
 
