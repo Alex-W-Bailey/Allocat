@@ -1,13 +1,13 @@
 import Nav from "../components/Nav/index";
 import React, { Component } from "react";
-import Layout from "../components/Layout";
-import NPLayout from "../components/NPLayout";
+import Layout from "../components/Layout/index";
+import NPLayout from "../components/NPLayout/index";
 import axios from "axios";
-import FormNewProject from "../components/FormNewProject";
-import FormTeam from "../components/FormTeam";
-import FormTasks from "../components/FormTasks";
-import NewTeam from "../components/NewTeam";
-import NewCollaborator from "../components/NewCollaborator";
+import FormNewProject from "../components/FormNewProject/index";
+import FormTeam from "../components/FormTeam/index";
+import FormTasks from "../components/FormTasks/index";
+import NewTeam from "../components/NewTeam/index";
+import NewCollaborator from "../components/NewCollaborator/index";
 import { Button } from "react-bootstrap";
 
 export default class NewProject extends Component {

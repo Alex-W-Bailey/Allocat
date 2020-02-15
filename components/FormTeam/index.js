@@ -1,4 +1,4 @@
-import FormIndividualTeam from "../components/FormIndividualTeam";
+import FormIndividualTeam from "../FormIndividualTeam";
 
 //This function detects whether teams exist yet, and creates a form to add collaborators to each team
 const FormTeam = props => {
@@ -8,7 +8,7 @@ const FormTeam = props => {
       return <FormIndividualTeam key={team.id} name={team.teamName} />;
     })
   ) : (
-    <p className='text-center'>Create project teams to add Collaborators</p>
-  );
+      <p className='text-center'>Create project teams to add Collaborators</p>
+    );
 };
 export default FormTeam;

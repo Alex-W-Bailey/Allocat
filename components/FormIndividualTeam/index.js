@@ -1,5 +1,5 @@
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
-import NPLayout from "../components/NPLayout";
+import NPLayout from "../NPLayout";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 

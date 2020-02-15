@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import Nav from "../components/Nav/index";
+import Nav from "../components/Nav";
 import RLLayout from "../components/RLLayout";
 
 export default class Login extends Component {

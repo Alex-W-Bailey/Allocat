@@ -1,4 +1,4 @@
-import NPLayout from "./NPLayout";
+import NPLayout from "../NPLayout";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 

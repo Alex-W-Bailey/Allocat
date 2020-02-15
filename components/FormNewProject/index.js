@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NPLayout from "../components/NPLayout";
+import NPLayout from "../NPLayout";
 import axios from "axios";
 
 export default class FormNewProject extends Component {
@@ -66,16 +66,16 @@ export default class FormNewProject extends Component {
         axios.post("/api/projectCreator", newCreator).then((response) => {
           for (var i = 0; i < this.state.allTeams.length; i++) {
             console.log("creating team...");
-  
+
             var teamName = this.state.allTeams[i];
-  
+
             let newTeam = {
               projectName: this.state.projectName,
               projectId: 0,
               teamName: teamName,
               teamPosition: i
             }
-  
+
             axios.post("/api/newTeam", newTeam).then((response) => {
               if (response) {
                 console.log("New Team created!");
@@ -135,8 +135,8 @@ export default class FormNewProject extends Component {
                   onChange={this.handleChange.bind(this)}
                 />
                 <br />
-              <button onClick={newProject => props.createProject}>
-                Continue on To Adding collaborators
+                <button onClick={newProject => props.createProject}>
+                  Continue on To Adding collaborators
               </button>
                 <br />
                 <button type="button" onClick={() => this.handleNewProject()}>Create Project</button>
