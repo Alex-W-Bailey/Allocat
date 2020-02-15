@@ -3,27 +3,30 @@ import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import Layout from "../components/Layout";
-import DBLayout from "../components//DBLayout";
+import DBLayout from "../components/DBLayout";
 import axios from "axios";
-import DashboardTasks from "../components/DashboardTasks";
-import DashboardTeams from "../components/DashboardTeams";
-import DashboardTimeline from "../components/DashboardTimeline";
+import DashboardWindow from "../components/DashboardWindow";
 
 export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageTitle: "BootCamp Project 3 (Project Title)",
-      categorySelected: 1,
-      teams: [],
-      tasks: [],
-      timeline: []
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  state = {
+    pageTitle: "BootCamp Project 3 (Project Title)",
+    categorySelected: "",
+    teams: [],
+    tasks: [],
+    timeline: []
+  };
+  // }
 
   componentDidMount() {
-    console.log("Will retrieve project info from database and update state.");
+    // console.log("Will retrieve project info from database and update state.");
   }
+
+  updateCategory = categoryName => {
+    this.setState({ categorySelected: categoryName });
+    console.log(this.state.categorySelected);
+  };
 
   render() {
     return (
@@ -35,23 +38,28 @@ export default class Dashboard extends Component {
               <div className='col-md-2 dashboard-menu verticle-align mt-5'>
                 <ListGroup variant='flush' className='verticle-align'>
                   <ListGroup.Item>
-                    <Button>Teams</Button>
+                    <Button onClick={() => this.updateCategory("teams")}>
+                      Teams
+                    </Button>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <Button>Tasks</Button>
+                    <Button onClick={() => this.updateCategory("tasks")}>
+                      Tasks
+                    </Button>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <Button>Timeline</Button>
+                    <Button onClick={() => this.updateCategory("timeline")}>
+                      Timeline
+                    </Button>
                   </ListGroup.Item>
                 </ListGroup>
               </div>
-              <div className='col-md-10 mt-5'>
-                <DBLayout>
-                  <DashboardTeams teams={this.state.teams} />
-                  <DashboardTasks tasks={this.state.tasks} />
-                  <DashboardTimeline timeline={this.state.timeline} />
-                </DBLayout>
-              </div>
+              <DashboardWindow
+                categorySelected={this.state.categorySelected}
+                tasks={this.state.tasks}
+                teams={this.state.teams}
+                timeline={this.state.timeline}
+              />
             </div>
           </div>
         </Layout>
