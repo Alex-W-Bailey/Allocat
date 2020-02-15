@@ -48,7 +48,11 @@ nextApp.prepare()
 
 		app.get( '/newProject', (req, res) => {
 			return handle(req, res);
-		})
+		});
+
+		app.get( '/project/[id]', (req, res) => {
+			return handle(req, res);
+		});
 
 		app.get( '*', ( req, res ) => {
 			return handle( req, res);

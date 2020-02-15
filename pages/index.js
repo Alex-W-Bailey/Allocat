@@ -1,6 +1,7 @@
 import '../styles.scss';
 import Layout from "../components/Layout.js";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import fetch from "isomorphic-unfetch";
 import Login from "../pages/login";
 

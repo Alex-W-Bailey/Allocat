@@ -7,7 +7,13 @@ const PCard = props => {
                 <div className="card-body">
                     <h5 className="card-title">{props.projectName}</h5>
                     <p className="card-text">{props.description}</p>
-                    <button className="btn btn-primary">View Project</button>
+                    <button>
+                        <Link 
+                        href="/project/[id]" 
+                        as={`/projects/${props.id}`}>
+                            View Project
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div >

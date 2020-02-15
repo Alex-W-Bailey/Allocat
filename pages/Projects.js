@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import axios from "axios";
 import NPCard from "../components/NPCard";
 import PCard from "../components/PCard";
+import Link from 'next/link';
 
 export default class Projects extends Component {
   constructor(props) {
