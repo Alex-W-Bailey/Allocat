@@ -21,9 +21,9 @@ const NavDropdown = props => {
           </Dropdown.Item>
         ))} */}
         <Dropdown.Item href='/register'>Register</Dropdown.Item>
-        <Dropdown.Item href='/Projects'>Projects</Dropdown.Item>
-        <Dropdown.Item href='/NewProject'>New Project</Dropdown.Item>
-        <Dropdown.Item href='/Dashboard'>Dashboard</Dropdown.Item>
+        <Dropdown.Item href='/projects'>Projects</Dropdown.Item>
+        <Dropdown.Item href='/newProject'>New Project</Dropdown.Item>
+        <Dropdown.Item href='/dashboard'>Dashboard</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
