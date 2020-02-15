@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/index";
 import RLLayout from "../components/RLLayout";
 
 export default class Login extends Component {
@@ -88,8 +88,8 @@ export default class Login extends Component {
           {isError ? (
             <h1>{this.state.errorMsg}</h1>
           ) : (
-            <h1></h1>
-          )}
+              <h1></h1>
+            )}
         </RLLayout>
       </div>
     );

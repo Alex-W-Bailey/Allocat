@@ -1,8 +1,6 @@
-@mixin card-border {
-  border: 1px solid grey;
-  border-radius: 12px;
-}
+// PROJECT NAVIGATION STYLES
+@import '/components/Nav/style'; 
 
-.eProject-card {
-  @include card-border;
-}
+// PROJECT CARD STYLES
+@import '/components/NPCard/style';
+@import '/components/PCard/style';

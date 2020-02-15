@@ -1,8 +1,8 @@
-import NavDropdown from "./NavDropdown";
+import NavDropdown from "../NavDropdown";
 
 const Nav = props => {
   return (
-    <nav className='nav navbar-light bg-light'>
+    <nav className='nav navbar-light'>
       <a className='navbar-brand ml-3 test' href='/'>
         Logo Goes Here
       </a>

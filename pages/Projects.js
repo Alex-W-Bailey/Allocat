@@ -1,11 +1,11 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
 import "../styles.scss";
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import NPCard from "../components/NPCard";
-import PCard from "../components/PCard";
+import NPCard from "../components/NPCard/index";
+import PCard from "../components/PCard/index";
 
 export default class Projects extends Component {
   constructor(props) {

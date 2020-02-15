@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/index";
 import RLLayout from "../components/RLLayout";
 
 export default class Register extends Component {
@@ -30,22 +30,22 @@ export default class Register extends Component {
     console.log("clicked!");
     console.log(this.state);
 
-        let newUser = {
-            email: this.state.email,
-            fullName: this.state.fullName,
-            password: this.state.password
-        }
+    let newUser = {
+      email: this.state.email,
+      fullName: this.state.fullName,
+      password: this.state.password
+    }
 
 
     axios.post("/api/newUser", newUser).then((response) => {
-        if(response.data !== "email is already taken"){
-            if(response.status === 200) {
-                window.location.replace("/");
-            }
+      if (response.data !== "email is already taken") {
+        if (response.status === 200) {
+          window.location.replace("/");
         }
-        else{
-            console.log(response.data);
-        }
+      }
+      else {
+        console.log(response.data);
+      }
     });
   };
 

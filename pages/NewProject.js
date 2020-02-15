@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import Layout from "../components/Layout";
 import NPLayout from "../components/NPLayout";
@@ -177,7 +177,7 @@ export default class NewProject extends Component {
   async createCollaborators() {
     console.log("create collaborators")
 
-    for(var i = 0; i < this.state.allCollaborators.length; i++){
+    for (var i = 0; i < this.state.allCollaborators.length; i++) {
       var collaborator = this.state.allCollaborators[i];
       console.log("collab: " + collaborator);
 

@@ -1,0 +1,11 @@
+@mixin buttonStyles($btn-color, $btn-stroke, $btn-text) {
+    color: $btn-text;
+    border: 1px solid green; 
+    background-color: $btn-color;
+}
+
+.e-project-card { 
+    button{
+        @include buttonStyles(green, green, white);
+    }
+}
