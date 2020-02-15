@@ -24,7 +24,7 @@ const DashboardWindow = props => {
     return (
       <div className='col-md-10 mt-5'>
         <DBLayout>
-          <DashboardTeams timeline={props.timeline} />
+          <DashboardTimeline timeline={props.timeline} />
         </DBLayout>
       </div>
     );

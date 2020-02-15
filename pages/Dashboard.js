@@ -3,24 +3,25 @@ import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import Layout from "../components/Layout";
-import DBLayout from "../components/DBLayout";
 import axios from "axios";
 import DashboardWindow from "../components/DashboardWindow";
 
 export default class Dashboard extends Component {
-  // constructor(props) {
-  //   super(props);
   state = {
     pageTitle: "BootCamp Project 3 (Project Title)",
     categorySelected: "",
-    teams: [],
-    tasks: [],
-    timeline: []
+    teams: ["Backend", "Frontend"]
+    // collaborators: [
+    //   ["Rico", "Alex"],
+    //   ["Monica", "Danielle"]
+    // ],
+    // tasks: ["gdnjdklasd"],
+    // timeline: []
   };
   // }
 
   componentDidMount() {
-    // console.log("Will retrieve project info from database and update state.");
+    console.log("Component did mount");
   }
 
   updateCategory = categoryName => {
