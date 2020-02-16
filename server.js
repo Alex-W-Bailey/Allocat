@@ -48,6 +48,10 @@ nextApp.prepare()
 
 		app.get( '/newProject', (req, res) => {
 			return handle(req, res);
+		});
+
+		app.get( '/project/[id]', isAuthenticated, (req, res) => {
+			return handle(req, res);
 		})
 
 		app.get( '*', ( req, res ) => {

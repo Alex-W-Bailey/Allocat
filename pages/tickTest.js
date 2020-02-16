@@ -1,12 +1,20 @@
-class Clock extends React.Component {
+import React, { Component } from "react";
+import Layout from "../components/Layout";
+import axios from "axios";
+import Nav from "../components/Nav";
+import RLLayout from "../components/RLLayout";
+
+export default class Clock extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {date: new Date()};
+      this.state = {
+        users: []
+      }
     }
   
     componentDidMount() {
       this.timerID = setInterval(
-        () => this.tick(),
+        () => this.getData(),
         1000
       );
     }
@@ -15,23 +23,29 @@ class Clock extends React.Component {
       clearInterval(this.timerID);
     }
   
-    tick() {
+    async getData() {
+      var newArr = [];
+
+      await axios.get("/api/allUsers").then((users) => {
+        for(var i = 0; i < users.data.length; i++){
+          newArr.push(users.data[i].email);
+        }
+      })
+
       this.setState({
-        date: new Date()
-      });
+        users: newArr
+      })
     }
   
     render() {
       return (
         <div>
-          <h1>Hello, world!</h1>
-          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+          {this.state.users.map(user => {
+            return (
+            <h1>{user}</h1>
+            )
+          })}
         </div>
       );
     }
   }
-  
-  ReactDOM.render(
-    <Clock />,
-    document.getElementById('root')
-  );
