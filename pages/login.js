@@ -29,7 +29,7 @@ export default class Login extends Component {
     });
   };
 
-  handleRegisterClick = () => {
+  handleLoginClick = () => {
     console.log("clicked!");
     console.log(this.state);
 
@@ -83,7 +83,7 @@ export default class Login extends Component {
           />
           <br />
 
-          <button onClick={() => this.handleRegisterClick()}>Login</button>
+          <button onClick={() => this.handleLoginClick()}>Login</button>
           <br />
           {isError ? (
             <h1>{this.state.errorMsg}</h1>

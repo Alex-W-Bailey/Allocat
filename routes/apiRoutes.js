@@ -25,6 +25,13 @@ module.exports = function(app) {
         });
     });
 
+    app.get("/api/allUsers", (req, res) => {
+        db.User.findAll({})
+        .then((dbUsers) => {
+            res.json(dbUsers)
+        })
+    })
+
     app.get("/api/user/:userEmail", (req, res) => {
         db.User.findOne({
             where: {
