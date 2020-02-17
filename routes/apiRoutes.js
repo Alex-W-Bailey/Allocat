@@ -137,9 +137,23 @@ module.exports = function(app) {
                   projectId: projectFound.id  
                 }).then(() => {
                     res.status(200).end();
-                })
-            })
-        })
-    })
+                });
+            });
+        });
+    });
+
+    app.post("/api/newTask", (req, res) => {
+        db.Task.create({
+            userId: req.user.id,
+            taskName: req.body.taskName,
+            taskDescription: req.body.taskDescription,
+            taskDueDate: req.body.dueDate,
+            taskPriority: req.body.taskPriority,
+            taskTeam: req.body.taskTeam,
+            taskStatus: req.body.taskStatus
+        }).then(() => {
+            res.status(200).end();
+        });
+    });
 }
 
