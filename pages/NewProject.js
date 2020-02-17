@@ -1,3 +1,4 @@
+import '../styles.scss';
 import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
@@ -9,6 +10,7 @@ import FormTasks from "../components/FormTasks/index";
 import NewTeam from "../components/NewTeam/index";
 import NewCollaborator from "../components/NewCollaborator/index";
 import { Button } from "react-bootstrap";
+
 
 export default class NewProject extends Component {
   constructor(props) {

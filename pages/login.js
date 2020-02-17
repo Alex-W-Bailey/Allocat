@@ -83,7 +83,7 @@ export default class Login extends Component {
           />
           <br />
 
-          <button onClick={() => this.handleLoginClick()}>Login</button>
+          <button className='btn btn-primary' onClick={() => this.handleLoginClick()}>Login</button>
           <br />
           {isError ? (
             <h1>{this.state.errorMsg}</h1>
