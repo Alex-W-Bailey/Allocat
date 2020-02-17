@@ -1,6 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     var Task = sequelize.define("Task", {
         userId: DataTypes.INTEGER,
+        projectId: DataTypes.INTEGER,
         taskName: DataTypes.STRING,
         taskDescription: DataTypes.STRING,
         taskDueDate: DataTypes.STRING,
