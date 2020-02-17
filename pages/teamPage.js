@@ -1,6 +1,7 @@
 import TeamCard from "../components/TeamCard";
 import Layout from "../components/Layout";
 import Nav from "../components/Nav/index";
+import '../styles.scss';
 
 import React, { Component } from "react";
 
