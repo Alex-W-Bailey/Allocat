@@ -145,6 +145,7 @@ module.exports = function(app) {
     app.post("/api/newTask", (req, res) => {
         db.Task.create({
             userId: req.user.id,
+            projectId: req.body.projectId,
             taskName: req.body.taskName,
             taskDescription: req.body.taskDescription,
             taskDueDate: req.body.dueDate,

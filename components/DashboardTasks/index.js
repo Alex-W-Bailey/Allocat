@@ -29,7 +29,11 @@ handleChange = e => {
 }
 
 handleCreateTask = () => {
+  var url = window.location.href;
+  var splitUrl = url.split("/")[4];
+
   let newTask = {
+    projectId: splitUrl,
     taskName: this.state.TaskName,
     taskDescription: this.state.TaskDescription,
     taskDueDate: this.state.TaskDueDate,
