@@ -8,81 +8,93 @@ export default class DashboardTasks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        showForm: false,
-        setShowForm: false,
-        show: false,
-        setShow: false,
-        TaskName: "",
-        TaskDescription: "",
-        TaskTeam: "",
-        TaskDueDate: "",
+      showForm: false,
+      setShowForm: false,
+      show: false,
+      setShow: false,
+      TaskName: "",
+      TaskDescription: "",
+      TaskTeam: "",
+      TaskDueDate: ""
     };
-}
-
-handleChange = e => {
-  let objName = e.target.name;
-  let objValue = e.target.value;
-
-  this.setState({
-    [objName]: objValue
-  });
-}
-
-handleCreateTask = () => {
-  var url = window.location.href;
-  var splitUrl = url.split("/")[4];
-
-  let newTask = {
-    projectId: splitUrl,
-    taskName: this.state.TaskName,
-    taskDescription: this.state.TaskDescription,
-    taskDueDate: this.state.TaskDueDate,
-    taskPriority: "",
-    taskTeam: this.state.TaskTeam,
-    taskStatus: "Working On"
   }
-  
-  axios.post("/api/newTask", newTask).then((response) => {
-    if(response.status === 200){
-      console.log("created task");
-    }
-  });
-}
+
+  handleChange = e => {
+    let objName = e.target.name;
+    let objValue = e.target.value;
+
+    this.setState({
+      [objName]: objValue
+    });
+  };
+
+  handleCreateTask = () => {
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    let newTask = {
+      projectId: splitUrl,
+      taskName: this.state.TaskName,
+      taskDescription: this.state.TaskDescription,
+      taskDueDate: this.state.TaskDueDate,
+      taskPriority: "",
+      taskTeam: this.state.TaskTeam,
+      taskStatus: "Working On"
+    };
+
+    axios.post("/api/newTask", newTask).then(response => {
+      if (response.status === 200) {
+        console.log("created task");
+      }
+    });
+    this.handleShowAllTasks();
+  };
 
   handleClose = () => {
     this.setState({
       setShowForm: false
     });
-  }
+  };
 
   handleShow = () => {
     this.setState({
       setShowForm: true
     });
-  }
+  };
 
   handleShowModal = () => {
     this.setState({
       show: true
-    })
-  }
+    });
+  };
 
   handleHideModal = () => {
     this.setState({
-      show: false 
-    })
-  }
+      show: false
+    });
+  };
 
   handleNewShow = () => {
     this.setState({
       showForm: true
     });
-  }
+  };
+
+  handleShowAllTasks = () => {
+    this.setState({
+      showForm: false
+    });
+  };
 
   render() {
     if (this.state.showForm) {
       return (
         <NPLayout>
+          <div className='col-md-12'>
+            <Button onClick={() => this.handleShowAllTasks()}>
+              Back to All Tasks
+            </Button>
+          </div>
           <div className='row mt-5'>
             <div className='col-md-12 mx-auto'>
               <h2>Add Tasks to Complete</h2>
@@ -99,7 +111,9 @@ handleCreateTask = () => {
                       onChange={this.handleChange.bind(this)}
                     />
                     <br />
-                    <label htmlFor='TaskDescription'>Description of Task:</label>
+                    <label htmlFor='TaskDescription'>
+                      Description of Task:
+                    </label>
                     <input
                       type='text'
                       name='TaskDescription'
@@ -110,7 +124,7 @@ handleCreateTask = () => {
                     <br />
                     <label htmlFor='TaskTeam'>
                       Which Team is This a Task For?
-                  </label>
+                    </label>
                     <input
                       type='text'
                       name='TaskTeam'
@@ -137,7 +151,12 @@ handleCreateTask = () => {
                       </Form.Control>
                     </Form.Group>
                     <br />
-                    <button type="button" onClick={() => this.handleCreateTask()}>Add Task</button>
+                    <button
+                      type='button'
+                      onClick={() => this.handleCreateTask()}
+                    >
+                      Add Task
+                    </button>
                     <br />
                   </Form>
                 </div>
@@ -152,15 +171,13 @@ handleCreateTask = () => {
     } else {
       return (
         <div className='mt-5'>
-          <h5>This is a div that will render all of the tasks as cards</h5>
-
           <Card style={{ width: "18rem" }}>
             <Card.Body>
               <Card.Title>Create a New Task</Card.Title>
               <Card.Text>Assigned or Unassigned</Card.Text>
               <Button variant='primary' onClick={() => this.handleNewShow()}>
                 Create a New Task
-            </Button>
+              </Button>
             </Card.Body>
           </Card>
 
@@ -169,12 +186,12 @@ handleCreateTask = () => {
               <Card.Title>Task Name</Card.Title>
               <Card.Subtitle className='mb-2 text-muted'>
                 Level of Priority
-            </Card.Subtitle>
+              </Card.Subtitle>
               <Card.Text>Assigned or Unassigned</Card.Text>
               <Button variant='danger'>Claim Task</Button>
               <Button variant='primary' onClick={() => this.handleShowModal()}>
                 View Details
-            </Button>
+              </Button>
             </Card.Body>
           </Card>
 
@@ -190,16 +207,19 @@ handleCreateTask = () => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant='secondary' onClick={() => this.handleHideModal()}>
+              <Button
+                variant='secondary'
+                onClick={() => this.handleHideModal()}
+              >
                 Close
-            </Button>
+              </Button>
               <Button variant='danger' onClick={() => this.handleClose()}>
                 Claim Task
-            </Button>
+              </Button>
             </Modal.Footer>
           </Modal>
         </div>
       );
     }
   }
-};
+}
