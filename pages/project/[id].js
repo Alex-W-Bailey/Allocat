@@ -10,7 +10,7 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageTitle: "BootCamp Project 3 (Project Title)",
+            pageTitle: "",
             categorySelected: "",
             teams: [],
             tasks: [],
@@ -19,7 +19,14 @@ export default class Dashboard extends Component {
     }
 
     componentDidMount() {
-        // console.log("Will retrieve project info from database and update state.");
+        var url = window.location.href;
+        var splitUrl = url.split("/")[4];    
+        
+        axios.get(`/api/project/${splitUrl}`).then((response) => {
+            this.setState({
+                pageTitle: response.data.projectName
+            });
+        });
     }
 
     updateCategory = categoryName => {
