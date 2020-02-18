@@ -26,6 +26,25 @@ body {
   border-radius: 25px;
   justify-content: center;
 }
+button {
+  background-color: $allocatBlue;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.btn,
+.btn-primary,
+.dropdown-toggle {
+  background-color: $allocatBlue;
+  border-style: none;
+}
+
+.btn:hover,
+.btn-primary:hover,
+.dropdown-toggle:hover {
+  background-color: $allocatTeal;
+  border-style: none;
+}
 
 h5 {
   font-family: "Quicksand", sans-serif;

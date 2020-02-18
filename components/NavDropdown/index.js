@@ -3,9 +3,9 @@
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
-    <Dropdown className='mr-3 ' alignRight>
+    <Dropdown className='mr-3' alignRight>
       <Dropdown.Toggle
-        classname='dropdown-toggle dd-btn'
+        classname='dropdown-toggle'
         drop='left'
         id='dropdown-basic'
       >
