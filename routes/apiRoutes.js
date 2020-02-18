@@ -25,6 +25,16 @@ module.exports = function(app) {
         });
     });
 
+    app.get("/api/project/name/:projectName", (req, res) => {
+        db.Project.findOne({
+            where: {
+                projectName: req.params.projectName
+            }
+        }).then((dbProjectInfo) => {
+            res.json(dbProjectInfo);
+        });
+    })
+
     app.get("/api/allUsers", (req, res) => {
         db.User.findAll({})
         .then((dbUsers) => {
