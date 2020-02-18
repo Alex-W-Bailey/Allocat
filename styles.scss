@@ -1,24 +1,16 @@
-// PROJECT NAVIGATION STYLES
-@import "/components/Nav/style";
-
-//LAYOUT STYLES
-@import "/components/RLLayout/style";
-@import "/components/NPLayout/style";
-
-// PROJECT CARD STYLES
-@import "/components/NPCard/style";
-@import "/components/PCard/style";
-
-@import "/components/DashboardLayout/style";
-
-@mixin large-text {
-  font: {
-    family: Arial;
-    size: 20px;
-    weight: bold;
-  }
-  color: #ff0000;
-}
+// UI Palet
+$allocatTeal: #1cb2ba;
+$allocatBlue: #2190cc;
+$warmWhite: #f8f8f6;
+$container: #e3e3e3;
+$accentGrey: #a6a6a6;
+$darkCanvas: #595959;
+$darkText: #242424;
+//Indicator Colors
+$alertRed: #e1651b;
+// used for alerts, and to indicate tasks that are high priority or unclaimed
+$inProgress: #ffaa0a;
+$complete: #2ab009;
 
 .list-group-item {
   border: 0;
@@ -26,12 +18,13 @@
 
 body {
   font-family: "Quicksand", sans-serif;
-  background-color: #595959;
-  color: #242424;
+  background-color: $darkCanvas;
+  color: $darkText;
 }
 .container {
-  background-color: #e3e3e3;
+  background-color: $container;
   border-radius: 25px;
+  justify-content: center;
 }
 
 h5 {
@@ -46,3 +39,36 @@ h5 {
 .form-control {
   border-radius: 10px;
 }
+
+// NAVIGATION STYLES
+@import "/components/Nav/style";
+@import "/components/NavDropdown/style";
+
+//LAYOUT STYLES
+@import "/components/RLLayout/style";
+@import "/components/NPLayout/style";
+@import "/components/DashboardLayout/style";
+
+// PROJECT CARD STYLES
+@import "/components/NPCard/style";
+@import "/components/PCard/style";
+@import "/components/TeamCard/style";
+
+// FORM STYLES
+@import "/components/FormTeam/style";
+@import "/components/FormIndividualTasks/style";
+@import "/components/FormIndividualTeam/style";
+@import "/components/FormNewProject/style";
+@import "/components/FormTasks/style";
+@import "/components/FormTeam/style";
+
+// DASHBOARD STYLES
+@import "/components/DashboardTasks/style";
+@import "/components/DashboardTeams/style";
+@import "/components/DashboardTimeline/style";
+@import "/components/DashboardWindow/style";
+
+//everything else
+@import "/components/Header/style";
+@import "/components/NewCollaborator/style";
+@import "/components/NewTeam/style";

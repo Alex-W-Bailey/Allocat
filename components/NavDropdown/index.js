@@ -3,8 +3,12 @@
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
-    <Dropdown className='mr-3' alignRight>
-      <Dropdown.Toggle variant='success' drop='left' id='dropdown-basic'>
+    <Dropdown className='mr-3 ' alignRight>
+      <Dropdown.Toggle
+        classname='dropdown-toggle dd-btn'
+        drop='left'
+        id='dropdown-basic'
+      >
         Options
       </Dropdown.Toggle>
 
@@ -20,7 +24,9 @@ const NavDropdown = props => {
             {item.name}
           </Dropdown.Item>
         ))} */}
-        <Dropdown.Item href='/register'>Register</Dropdown.Item>
+        <Dropdown.Item className='dropdown-item' href='/register'>
+          Register
+        </Dropdown.Item>
         <Dropdown.Item href='/projects'>Projects</Dropdown.Item>
         <Dropdown.Item href='/newProject'>New Project</Dropdown.Item>
         <Dropdown.Item href='/dashboard'>Dashboard</Dropdown.Item>
