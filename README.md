@@ -1,2 +1,1 @@
-# project3
-KU Bootcamp project 3
+This is our killer project management app

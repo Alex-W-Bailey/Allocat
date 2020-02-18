@@ -1,0 +1,29 @@
+// PROJECT NAVIGATION STYLES
+@import '/components/Nav/style'; 
+
+// PROJECT CARD STYLES
+@import '/components/NPCard/style';
+@import '/components/PCard/style';
+
+@import '/components/DashboardLayout/style';
+
+.list-group-item {
+    border: 0;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+h5 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+}
+
+.card-title {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.form-control {
+    border-radius: 10px;
+}
