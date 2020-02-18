@@ -73,6 +73,7 @@ export default class DashboardTasks extends Component {
     });
   }
 
+
   handleChange = e => {
     let objName = e.target.name;
     let objValue = e.target.value;
@@ -80,7 +81,8 @@ export default class DashboardTasks extends Component {
     this.setState({
       [objName]: objValue
     });
-  }
+
+  };
 
   handleCreateTask = () => {
     var url = window.location.href;
@@ -97,46 +99,61 @@ export default class DashboardTasks extends Component {
     }
 
     axios.post("/api/newTask", newTask).then((response) => {
+
       if (response.status === 200) {
         console.log("created task");
       }
     });
-  }
+
+    this.handleShowAllTasks();
+  };
 
   handleClose = () => {
     this.setState({
       setShowForm: false
     });
-  }
+  };
 
   handleShow = () => {
     this.setState({
       setShowForm: true
     });
-  }
+  };
 
   handleShowModal = () => {
     this.setState({
       show: true
-    })
-  }
+    });
+  };
 
   handleHideModal = () => {
     this.setState({
       show: false
-    })
-  }
+
+    });
+  };
 
   handleNewShow = () => {
     this.setState({
       showForm: true
     });
-  }
+  };
+
+  handleShowAllTasks = () => {
+    this.setState({
+      showForm: false
+    });
+  };
 
   render() {
     if (this.state.showForm) {
       return (
         <NPLayout>
+          <div className='col-md-12'>
+            <Button onClick={() => this.handleShowAllTasks()}>
+              Back to All Tasks
+            </Button>
+          </div>
           <div className='row mt-5'>
             <div className='col-md-12 mx-auto'>
               <h2>Add Tasks to Complete</h2>
@@ -153,7 +170,9 @@ export default class DashboardTasks extends Component {
                       onChange={this.handleChange.bind(this)}
                     />
                     <br />
-                    <label htmlFor='TaskDescription'>Description of Task:</label>
+                    <label htmlFor='TaskDescription'>
+                      Description of Task:
+                    </label>
                     <input
                       type='text'
                       name='TaskDescription'
@@ -164,7 +183,7 @@ export default class DashboardTasks extends Component {
                     <br />
                     <label htmlFor='TaskTeam'>
                       Which Team is This a Task For?
-                  </label>
+                    </label>
                     <input
                       type='text'
                       name='TaskTeam'
@@ -191,7 +210,12 @@ export default class DashboardTasks extends Component {
                       </Form.Control>
                     </Form.Group>
                     <br />
-                    <button type="button" onClick={() => this.handleCreateTask()}>Add Task</button>
+                    <button
+                      type='button'
+                      onClick={() => this.handleCreateTask()}
+                    >
+                      Add Task
+                    </button>
                     <br />
                   </Form>
                 </div>
@@ -212,7 +236,7 @@ export default class DashboardTasks extends Component {
               <Card.Text>Assigned or Unassigned</Card.Text>
               <Button variant='primary' onClick={() => this.handleNewShow()}>
                 Create a New Task
-            </Button>
+              </Button>
             </Card.Body>
           </Card>
 
@@ -247,6 +271,7 @@ export default class DashboardTasks extends Component {
             })
           }
 
+
           <Modal show={this.state.show} onHide={() => this.handleClose()}>
             <Modal.Header closeButton>
               <Modal.Title>Project Title</Modal.Title>
@@ -259,16 +284,19 @@ export default class DashboardTasks extends Component {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant='secondary' onClick={() => this.handleHideModal()}>
+              <Button
+                variant='secondary'
+                onClick={() => this.handleHideModal()}
+              >
                 Close
-            </Button>
+              </Button>
               <Button variant='danger' onClick={() => this.handleClose()}>
                 Claim Task
-            </Button>
+              </Button>
             </Modal.Footer>
           </Modal>
         </div>
       );
     }
   }
-};
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { ListGroup, Button } from "react-bootstrap";
+import '../styles.scss';
 
 function Tasks({ task, index }) {
     return <div className="task-name">{task.name}</div>;

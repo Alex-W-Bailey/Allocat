@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import axios from "axios";
 import Nav from "../components/Nav/index";
 import RLLayout from "../components/RLLayout";
+import '../styles.scss';
 
 export default class Register extends Component {
 
@@ -86,7 +87,7 @@ export default class Register extends Component {
           <br />
 
 
-          <button onClick={() => this.handleRegisterClick()}>Register</button>
+          <button className='btn btn-primary' onClick={() => this.handleRegisterClick()}>Register</button>
         </RLLayout>
       </Layout>
     );
