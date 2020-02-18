@@ -7,12 +7,9 @@ const NavDropdown = props => {
       <Dropdown.Toggle
         classname='dropdown-toggle'
         drop='left'
-        id='dropdown-basic'
-      >
-        Options
-      </Dropdown.Toggle>
+      ></Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className='dd-menu'>
         {/* Switch statement for the first item of the dropdown. If user is logged in, first item will be logout. --- Set this to default
            If pageTitle= "Login",  option will be "Register New Account". if pagetitle="Register"  option will be Login to existing account*/}
         <Dropdown.Item href='/'>Logout</Dropdown.Item>

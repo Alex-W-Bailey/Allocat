@@ -1,8 +1,6 @@
 .nav {
-  background-color: #595959;
-  color: #f8f8f6;
+  background-color: $darkCanvas;
+  color: $warmWhite;
   min-height: 75px;
-}
-button {
-  background-color: $allocatTeal;
+  padding: 10px;
 }

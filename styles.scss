@@ -28,8 +28,10 @@ body {
 }
 button {
   background-color: $allocatBlue;
+  color: $warmWhite;
   border-radius: 10px;
   padding: 10px;
+  margin: 5px;
 }
 
 .btn,
@@ -37,6 +39,7 @@ button {
 .dropdown-toggle {
   background-color: $allocatBlue;
   border-style: none;
+  border-color: none;
 }
 
 .btn:hover,
@@ -44,6 +47,7 @@ button {
 .dropdown-toggle:hover {
   background-color: $allocatTeal;
   border-style: none;
+  border-color: none;
 }
 
 h5 {

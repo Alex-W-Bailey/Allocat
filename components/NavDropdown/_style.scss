@@ -1,17 +1,13 @@
-// .btn,
-// .btn-primary,
-// .dropdown-toggle {
-//   background-color: $allocatTeal;
-//   border-style: none;
-// }
-
-// .btn:hover,
-// .btn-primary:hover,
-// .dropdown-toggle:hover {
-//   background-color: $allocatBlue;
-//   border-style: none;
-// }
-
 .dropdown-item {
   background-color: $warmWhite;
+}
+.dropdown-item:hover {
+  background-color: $accentGrey;
+}
+.dropdown-toggle {
+  border-radius: 20px;
+}
+
+.dd-menu {
+  border-radius: 10px;
 }
