@@ -15,9 +15,64 @@ export default class DashboardTasks extends Component {
       TaskName: "",
       TaskDescription: "",
       TaskTeam: "",
-      TaskDueDate: ""
+      TaskDueDate: "",
+      allTeams: [],
+      allTasks: []
     };
   }
+
+  componentDidMount() {
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    this.getAllProjectTaskInfo(splitUrl);
+  }
+
+  async getAllProjectTaskInfo(projectId) {
+    await this.getAllTeams(projectId);
+    await this.getAllTasks(projectId);
+
+    console.log(this.state);
+  }
+
+  async getAllTeams(projectId) {
+    var newArr = [];
+
+    await axios.get(`/api/allTeams/${projectId}`).then((response) => {
+      for (var i = 0; i < response.data.length; i++) {
+        newArr.push(response.data[i].teamName);
+      }
+    });
+
+    this.setState({
+      allTeams: newArr
+    });
+  }
+
+  async getAllTasks(projectId) {
+    var newArr = [];
+    var allTeams = this.state.allTeams;
+
+    await axios.get(`/api/allTasks/${projectId}`).then((response) => {
+      for (var i = 0; i < response.data.length; i++) {
+        var newTask = {
+          name: response.data[i].taskName,
+          description: response.data[i].taskDescription,
+          dueDate: response.data[i].taskDueDate,
+          priority: response.data[i].taskPriority,
+          team: response.data[i].taskTeam,
+          status: response.data[i].taskStatus
+        }
+
+        newArr.push(newTask);
+      }
+    });
+
+    this.setState({
+      allTasks: newArr
+    });
+  }
+
 
   handleChange = e => {
     let objName = e.target.name;
@@ -26,6 +81,7 @@ export default class DashboardTasks extends Component {
     this.setState({
       [objName]: objValue
     });
+
   };
 
   handleCreateTask = () => {
@@ -39,14 +95,16 @@ export default class DashboardTasks extends Component {
       taskDueDate: this.state.TaskDueDate,
       taskPriority: "",
       taskTeam: this.state.TaskTeam,
-      taskStatus: "Working On"
-    };
+      taskStatus: "Unassigned"
+    }
 
-    axios.post("/api/newTask", newTask).then(response => {
+    axios.post("/api/newTask", newTask).then((response) => {
+
       if (response.status === 200) {
         console.log("created task");
       }
     });
+
     this.handleShowAllTasks();
   };
 
@@ -71,6 +129,7 @@ export default class DashboardTasks extends Component {
   handleHideModal = () => {
     this.setState({
       show: false
+
     });
   };
 
@@ -181,19 +240,37 @@ export default class DashboardTasks extends Component {
             </Card.Body>
           </Card>
 
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Task Name</Card.Title>
-              <Card.Subtitle className='mb-2 text-muted'>
-                Level of Priority
-              </Card.Subtitle>
-              <Card.Text>Assigned or Unassigned</Card.Text>
-              <Button variant='danger'>Claim Task</Button>
-              <Button variant='primary' onClick={() => this.handleShowModal()}>
-                View Details
-              </Button>
-            </Card.Body>
-          </Card>
+          {
+            this.state.allTeams.map(team => {
+              return (
+                <div>
+                  <h1>{team}</h1>
+                  {
+                    this.state.allTasks.map(task => {
+                      if (task.team === team) {
+                        return (
+                          <Card style={{ width: "18rem" }}>
+                            <Card.Body>
+                              <Card.Title>{task.name}</Card.Title>
+                              <Card.Subtitle className='mb-2 text-muted'>
+                                {task.priority}
+                              </Card.Subtitle>
+                              <Card.Text>{task.status}</Card.Text>
+                              <Button variant='danger'>Claim Task</Button>
+                              <Button variant='primary' onClick={() => this.handleShowModal()}>
+                                View Details
+                              </Button>
+                            </Card.Body>
+                          </Card>
+                        )
+                      }
+                    })
+                  }
+                </div>
+              )
+            })
+          }
+
 
           <Modal show={this.state.show} onHide={() => this.handleClose()}>
             <Modal.Header closeButton>

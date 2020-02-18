@@ -42,6 +42,26 @@ module.exports = function(app) {
         });
     });
 
+    app.get("/api/allTeams/:projectId", (req, res) => {
+        db.Team.findAll({
+            where: {
+                projectId: req.params.projectId
+            }
+        }).then((dbTeams) => {
+            res.json(dbTeams);
+        })
+    })
+
+    app.get("/api/allTasks/:projectId", (req, res) => {
+        db.Task.findAll({
+            where: {
+                projectId: req.params.projectId
+            }
+        }).then((dbTasks) => {
+            res.json(dbTasks);
+        });
+    });
+
     //POST
     app.post("/api/login", passport.authenticate("local"), (req, res) => {
         res.status(200).end();
