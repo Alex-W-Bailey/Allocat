@@ -15,6 +15,7 @@ export default class NewProject extends Component {
     super(props);
 
     this.state = {
+      pageNum: 0,
       pageTitle: "Create A New Project",
       projectName: "",
       projectDescription: "",
@@ -128,6 +129,30 @@ export default class NewProject extends Component {
   handleRedirectToProjects = () => {
     window.location.replace("/projects");
   }
+
+  handleNextPage = () => {
+    var pageNum = this.state.pageNum;
+
+    if(pageNum < 3){
+      pageNum++;
+
+      this.setState({
+        pageNum: pageNum
+      });
+    }
+  }
+
+  handleLastPage = () => {
+    var pageNum = this.state.pageNum;
+
+    if(pageNum > 0){
+      pageNum--;
+
+      this.setState({
+        pageNum: pageNum
+      });
+    }
+  }
  
   //Priority level 1: High, 2: Medium, 3: Low
 
@@ -229,6 +254,7 @@ export default class NewProject extends Component {
             />
           ) : isError ?  (
             <NPForm
+              pageNum={this.state.pageNum}
               pageTitle={this.state.pageTitle}
               collaboratorEmail={this.state.collaboratorEmail}
               collaboratorName={this.state.collaboratorName}
@@ -241,10 +267,13 @@ export default class NewProject extends Component {
               handleNewProject={this.handleNewProject}
               foundCollaborator={foundCollaborator}
               searchedForCollaborator={searchedForCollaborator}
+              handleNextPage={this.handleNextPage}
+              handleLastPage={this.handleLastPage}
               isError={isError}
               errorMsg={errorMsg}
             />) : (
                 <NPForm
+                pageNum={this.state.pageNum}
                   pageTitle={this.state.pageTitle}
                   collaboratorEmail={this.state.collaboratorEmail}
                   collaboratorName={this.state.collaboratorName}
@@ -257,6 +286,8 @@ export default class NewProject extends Component {
                   handleNewProject={this.handleNewProject}
                   foundCollaborator={foundCollaborator}
                   searchedForCollaborator={searchedForCollaborator}
+                  handleNextPage={this.handleNextPage}
+                  handleLastPage={this.handleLastPage}
                   isError={isError}
                   errorMsg={errorMsg}
                 />
