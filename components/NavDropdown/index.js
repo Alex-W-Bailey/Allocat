@@ -4,11 +4,12 @@ import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
     <Dropdown className='mr-3' alignRight>
-      <Dropdown.Toggle variant='success' drop='left' id='dropdown-basic'>
-        Options
-      </Dropdown.Toggle>
+      <Dropdown.Toggle
+        classname='dropdown-toggle'
+        drop='left'
+      ></Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className='dd-menu'>
         {/* Switch statement for the first item of the dropdown. If user is logged in, first item will be logout. --- Set this to default
            If pageTitle= "Login",  option will be "Register New Account". if pagetitle="Register"  option will be Login to existing account*/}
         <Dropdown.Item href='/'>Logout</Dropdown.Item>
@@ -20,7 +21,9 @@ const NavDropdown = props => {
             {item.name}
           </Dropdown.Item>
         ))} */}
-        <Dropdown.Item href='/register'>Register</Dropdown.Item>
+        <Dropdown.Item className='dropdown-item' href='/register'>
+          Register
+        </Dropdown.Item>
         <Dropdown.Item href='/projects'>Projects</Dropdown.Item>
         <Dropdown.Item href='/newProject'>New Project</Dropdown.Item>
         <Dropdown.Item href='/dashboard'>Dashboard</Dropdown.Item>

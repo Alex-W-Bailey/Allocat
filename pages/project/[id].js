@@ -10,16 +10,41 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageTitle: "BootCamp Project 3 (Project Title)",
+            pageTitle: "",
             categorySelected: "",
-            teams: [],
+            teamNames: [],
+            teamMembers: [],
             tasks: [],
-            timeline: []
+            timeline: [],
+            projectId: 0
         };
     }
 
     componentDidMount() {
-        // console.log("Will retrieve project info from database and update state.");
+        var url = window.location.href;
+        var splitUrl = url.split("/")[4]; 
+        
+        this.setState({
+            projectId: splitUrl
+        });
+        
+        axios.get(`/api/project/${splitUrl}`).then((response) => {
+            this.setState({
+                pageTitle: response.data.projectName
+            });
+        });
+
+        axios.get(`/api/allTeams/${splitUrl}`).then((response) => {
+            var newArr = [];
+            
+            for(var i = 0; i < response.data.length; i++){
+                newArr.push(response.data[i])
+            }
+
+            this.setState({
+                teamNames: newArr
+            })
+        })
     }
 
     updateCategory = categoryName => {
