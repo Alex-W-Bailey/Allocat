@@ -5,11 +5,11 @@ const PCard = props => {
     return (
         <div className="col-lg-3">
             <div className="card-style card">
-                <div className="card-body">
+                <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{props.projectName}</h5>
                     <p className="card-text">{props.description}</p>
                     <Link href="/project/[id]" as={`/project/${props.id}`}>
-                        <button className="btn btn-primary">
+                        <button className="mt-auto btn btn-primary">
                             View Project
                         </button>
                     </Link>
