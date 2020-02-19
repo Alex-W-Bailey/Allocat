@@ -1,5 +1,5 @@
-import TeamCard from "../components/TeamCard";
-import Layout from "../components/Layout";
+import TeamCard from "../components/TeamCard/TeamCard";
+import Layout from "../components/Layout/index";
 import Nav from "../components/Nav/index";
 import '../styles.scss';
 
