@@ -1,11 +1,10 @@
-@mixin buttonStyles($btn-color, $btn-stroke, $btn-text) {
-    color: $btn-text;
-    border: 1px solid green; 
-    background-color: $btn-color;
+.card-style {
+    border: 1px solid $softGrey;
+    border-radius: 25px;
 }
 
-.e-project-card { 
-    button{
-        @include buttonStyles(green, green, white);
-    }
+.card-title {
+    font-weight: 1000;
+    font-size: 1.35rem;
 }
+
