@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
 import axios from "axios";
-import FormNewProject from "../components/FormNewProject/index";
-import FormTeam from "../components/FormTeam/index";
-import FormTasks from "../components/FormTasks/index";
 import NewTeam from "../components/NewTeam/index";
-import NewCollaborator from "../components/NewCollaborator/index";
 import NPForm from "../components/NPForm/index";
 import CreatedProject from "../components/CreatedProject/index"
 import { Button } from "react-bootstrap";
@@ -29,7 +25,7 @@ export default class NewProject extends Component {
       allCollaborators: [],
       projectId: 0,
       projectCreatedSuccessfully: false,
-      isError: false,
+      isError: true,
       errorMsg: ""
     };
   }
