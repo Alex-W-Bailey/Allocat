@@ -105,6 +105,10 @@ const NPForm = props => {
               </button>
               <br />
                   <button onClick={() => props.handleLastPage()}>Last</button>
+              <br />
+              <button type='button' onClick={() => props.handleNewProject()}>
+                Create Project
+              </button>
                 </NPLayout>
               </div>
             )
