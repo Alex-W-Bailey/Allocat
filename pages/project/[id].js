@@ -12,21 +12,39 @@ export default class Dashboard extends Component {
         this.state = {
             pageTitle: "",
             categorySelected: "",
-            teams: [],
+            teamNames: [],
+            teamMembers: [],
             tasks: [],
-            timeline: []
+            timeline: [],
+            projectId: 0
         };
     }
 
     componentDidMount() {
         var url = window.location.href;
-        var splitUrl = url.split("/")[4];    
+        var splitUrl = url.split("/")[4]; 
+        
+        this.setState({
+            projectId: splitUrl
+        });
         
         axios.get(`/api/project/${splitUrl}`).then((response) => {
             this.setState({
                 pageTitle: response.data.projectName
             });
         });
+
+        axios.get(`/api/allTeams/${splitUrl}`).then((response) => {
+            var newArr = [];
+            
+            for(var i = 0; i < response.data.length; i++){
+                newArr.push(response.data[i])
+            }
+
+            this.setState({
+                teamNames: newArr
+            })
+        })
     }
 
     updateCategory = categoryName => {
