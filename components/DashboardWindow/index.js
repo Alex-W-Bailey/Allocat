@@ -18,7 +18,7 @@ const DashboardWindow = props => {
     );
   } else {
     return (
-      <div className='col-md-10 mt-5 text-center'>Select a Category</div>
+      <div className='col-md-10 text-center'>Select a Category</div>
     );
   }
 };

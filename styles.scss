@@ -3,6 +3,7 @@ $allocatTeal: #1cb2ba;
 $allocatBlue: #2190cc;
 $warmWhite: #f8f8f6;
 $container: #e3e3e3;
+$softGrey: #cfcfcf;
 $accentGrey: #a6a6a6;
 $darkCanvas: #595959;
 $darkText: #242424;
@@ -21,11 +22,25 @@ body {
   background-color: $darkCanvas;
   color: $darkText;
 }
-.container {
+.container-main {
   background-color: $container;
-  border-radius: 25px;
+  border: 1px solid $accentGrey;
+  border-radius: 25px 0 0px 25px;
   justify-content: center;
+  height: 500px;
+  //change this height to be viewport height
 }
+
+.container1 {
+  padding-right: 0px;
+}
+
+.project-header {
+  font-size: 2rem;
+  font-weight: 1000;
+  margin-top: 5px;
+}
+
 button {
   background-color: $allocatBlue;
   color: $warmWhite;

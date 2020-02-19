@@ -1,9 +1,6 @@
 
-@mixin projectBorder {
+.card-style {
+    border: 1px solid $softGrey;
     border-radius: 25px;
     height: 15rem;
-}
-
-.eProject-card {
-    @include projectBorder
 }

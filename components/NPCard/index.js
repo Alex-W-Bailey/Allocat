@@ -2,13 +2,12 @@ import Link from "next/link";
 
 const NPCard = props => {
   return (
-    <div className='col-lg-4'>
-      <div className='eProject-card card'>
+    <div className='col-lg-3'>
+      <div className='card-style card'>
         <div className='card-body'>
           <h5 className='card-title'>Add New Project</h5>
           <p className='card-text'>
-            Ready to get started on a new project? Add a new project to your
-            projects list.
+            Ready to start a new project?
           </p>
           <Link>
             <a href='/NewProject' className='btn btn-primary'>
