@@ -1,16 +1,14 @@
-import '../styles.scss';
-import Nav from "../components/Nav/index";
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
-import NPLayout from "../components/NPLayout/index";
 import axios from "axios";
 import FormNewProject from "../components/FormNewProject/index";
 import FormTeam from "../components/FormTeam/index";
 import FormTasks from "../components/FormTasks/index";
 import NewTeam from "../components/NewTeam/index";
 import NewCollaborator from "../components/NewCollaborator/index";
+import NPForm from "../components/NPForm/index";
+import CreatedProject from "../components/CreatedProject/index"
 import { Button } from "react-bootstrap";
-
 
 export default class NewProject extends Component {
   constructor(props) {
@@ -27,7 +25,11 @@ export default class NewProject extends Component {
       collaboratorEmail: "",
       collaboratorFound: false,
       collaboratorName: "",
-      allCollaborators: []
+      allCollaborators: [],
+      projectId: 0,
+      projectCreatedSuccessfully: false,
+      isError: false,
+      errorMsg: ""
     };
   }
 
@@ -123,6 +125,10 @@ export default class NewProject extends Component {
     console.log(this.state);
   }
 
+  handleRedirectToProjects = () => {
+    window.location.replace("/projects");
+  }
+ 
   //Priority level 1: High, 2: Medium, 3: Low
 
   async createProject() {
@@ -137,6 +143,8 @@ export default class NewProject extends Component {
         console.log("project name already taken");
       } else {
         console.log("project created...");
+
+        this.getId();
       }
     });
 
@@ -153,8 +161,10 @@ export default class NewProject extends Component {
     });
 
     await this.createCollaborators();
-
-    console.log("project creation process completed...");
+    
+    this.setState({
+      projectCreatedSuccessfully: true
+    })
   }
 
   async createTeams(i) {
@@ -191,105 +201,68 @@ export default class NewProject extends Component {
     }
   }
 
-  createTasks = newTasks => {
-    console.log("create Tasks triggered");
-    //
+  async getId(){
+    await axios.get(`/api/project/name/${this.state.projectName}`).then((response) => {
+      this.setState({
+        projectId: response.data.id
+      });
 
-    // this.setState({ tasks: newTasks });
-  };
-
-  finalizeProjectDetails = () => {
-    console.log("finalize project details");
-  };
+      console.log("retrieved id...")
+      console.log(this.state)
+    });
+  }
 
   render() {
     const searchedForCollaborator = this.state.searchedForCollaborator;
     const foundCollaborator = this.state.collaboratorFound;
+    const createdProject = this.state.projectCreatedSuccessfully;
+    const isError = this.state.isError;
+    const errorMsg = this.state.errorMsg;
 
     return (
       <Layout>
-        <Nav pageTitle={this.state.pageTitle} />
-        <NPLayout>
-          <div className='row mt-5'>
-            <div className='col-md-12 mx-auto'>
-              <h2>Project Title and Teams</h2>
-              <form>
-                <label htmlFor='projectName'>Project Title:</label>
-                <input
-                  type='text'
-                  name='projectName'
-                  className='form-control'
-                  id='projectName'
-                  placeholder='Project Title'
-                  onChange={this.handleTeamNameChange.bind(this)}
+        {
+          createdProject ? (
+            <CreatedProject 
+              projectId={this.state.projectId}
+              handleRedirectToProjects={this.handleRedirectToProjects}
+            />
+          ) : isError ?  (
+            <NPForm
+              pageTitle={this.state.pageTitle}
+              collaboratorEmail={this.state.collaboratorEmail}
+              collaboratorName={this.state.collaboratorName}
+              handleChange={this.handleChange}
+              handleTeamNameChange={this.handleTeamNameChange}
+              numberOfTeams={this.state.numberOfTeams}
+              handleNewTeam={this.handleNewTeam}
+              handleCollabSearch={this.handleCollabSearch}
+              handleAddNewCollaborator={this.handleAddNewCollaborator}
+              handleNewProject={this.handleNewProject}
+              foundCollaborator={foundCollaborator}
+              searchedForCollaborator={searchedForCollaborator}
+              isError={isError}
+              errorMsg={errorMsg}
+            />) : (
+                <NPForm
+                  pageTitle={this.state.pageTitle}
+                  collaboratorEmail={this.state.collaboratorEmail}
+                  collaboratorName={this.state.collaboratorName}
+                  handleChange={this.handleChange}
+                  handleTeamNameChange={this.handleTeamNameChange}
+                  numberOfTeams={this.state.numberOfTeams}
+                  handleNewTeam={this.handleNewTeam}
+                  handleCollabSearch={this.handleCollabSearch}
+                  handleAddNewCollaborator={this.handleAddNewCollaborator}
+                  handleNewProject={this.handleNewProject}
+                  foundCollaborator={foundCollaborator}
+                  searchedForCollaborator={searchedForCollaborator}
+                  isError={isError}
+                  errorMsg={errorMsg}
                 />
-                <label htmlFor='ProjectDescription'>Project Description:</label>
-                <input
-                  type='text'
-                  name='projectDescription'
-                  className='form-control'
-                  rows='5'
-                  id='projectDescription'
-                  placeholder='Project Description'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <label htmlFor='ProjectDescription'>Project Due Date:</label>
-                <input
-                  type='text'
-                  name='projectDueDate'
-                  className='form-control'
-                  rows='5'
-                  id='projectDueDate'
-                  placeholder='02/29/20'
-                  onChange={this.handleTeamNameChange.bind(this)}
-                />
-                <br />
-                {
-                  this.state.numberOfTeams.map((team, index) => {
-                    var i = parseInt(index);
-                    var elementNum = i + 1;
+              )
+        }
 
-                    return (
-                      <NewTeam
-                        elementNum={elementNum}
-                        handleChange={this.handleTeamNameChange.bind(this)}
-                      />
-                    )
-                  })
-                }
-                <button type='button' onClick={() => this.handleNewTeam()}>
-                  Add Another Team
-                </button>
-                <br />
-                <NewCollaborator
-                  value={this.state.collaboratorEmail}
-                  handleChange={this.handleChange.bind(this)}
-                />
-                {
-                  foundCollaborator ? (
-                    <p>{this.state.collaboratorName}</p>
-                  ) : searchedForCollaborator ? (
-                    <p>No user found...</p>
-                  ) : (
-                        <p></p>
-                      )
-                }
-                <button type="button" onClick={() => this.handleCollabSearch()}>
-                  Search
-                </button>
-                <button type="button" onClick={() => this.handleAddNewCollaborator()}>
-                  Add
-                </button>
-                <br />
-                <br />
-
-                <button type='button' onClick={() => this.handleNewProject()}>
-                  Create Project
-                </button>
-              </form>
-            </div>
-          </div>
-        </NPLayout>
       </Layout>
     );
   }
