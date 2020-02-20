@@ -1,20 +1,19 @@
-import React, { Component } from "react";
-import Layout from "../components/Layout";
-import axios from "axios";
-import Nav from "../components/Nav/index";
-import RLLayout from "../components/RLLayout";
+import React, { Component } from 'react';
+import Layout from '../components/Layout';
+import axios from 'axios';
+import Nav from '../components/Nav/index';
+import RLLayout from '../components/RLLayout';
 import '../styles.scss';
 
 export default class Register extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      pageTitle: "Register",
-      menuItem: ["something", "something2", "something3"],
-      email: "",
-      fullName: "",
-      password: ""
+      pageTitle: 'Register',
+      menuItem: ['something', 'something2', 'something3'],
+      email: '',
+      fullName: '',
+      password: ''
     };
   }
 
@@ -28,23 +27,25 @@ export default class Register extends Component {
   };
 
   handleRegisterClick = () => {
-    console.log("clicked!");
+    console.log('clicked!');
     console.log(this.state);
 
     let newUser = {
       email: this.state.email,
       fullName: this.state.fullName,
       password: this.state.password
+    };
+
+    if (this.state.email === null) {
+      console.log('email is already taken');
     }
 
-
-    axios.post("/api/newUser", newUser).then((response) => {
-      if (response.data !== "email is already taken") {
+    axios.post('/api/newUser', newUser).then(response => {
+      if (response.data !== 'email is already taken') {
         if (response.status === 200) {
-          window.location.replace("/");
+          window.location.replace('/');
         }
-      }
-      else {
+      } else {
         console.log(response.data);
       }
     });
@@ -55,39 +56,43 @@ export default class Register extends Component {
       <Layout>
         <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
         <RLLayout>
-          <label htmlFor='FullName'>Full Name:</label>
+          <label htmlFor="FullName">Full Name:</label>
           <input
-            type='text'
-            name='fullName'
-            className='form-control'
-            id='FullName'
-            placeholder='Full Name'
+            type="text"
+            name="fullName"
+            className="form-control"
+            id="FullName"
+            placeholder="Full Name"
             onChange={this.handleChange.bind(this)}
           />
           <br />
-          <label htmlFor='Email'>Email:</label>
+          <label htmlFor="Email">Email:</label>
           <input
-            type='text'
-            name='email'
-            className='form-control'
-            id='Email'
-            placeholder='Email'
+            type="text"
+            name="email"
+            className="form-control"
+            id="Email"
+            placeholder="Email"
             onChange={this.handleChange.bind(this)}
           />
           <br />
-          <label htmlFor='Password'>Password:</label>
+          <label htmlFor="Password">Password:</label>
           <input
-            type='text'
-            name='password'
-            className='form-control'
-            id='Password'
-            placeholder='Password'
+            type="text"
+            name="password"
+            className="form-control"
+            id="Password"
+            placeholder="Password"
             onChange={this.handleChange.bind(this)}
           />
           <br />
 
-
-          <button className='btn btn-primary' onClick={() => this.handleRegisterClick()}>Register</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.handleRegisterClick()}
+          >
+            Register
+          </button>
         </RLLayout>
       </Layout>
     );
