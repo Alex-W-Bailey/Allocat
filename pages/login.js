@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Nav from '../components/Nav';
 import RLLayout from '../components/RLLayout';
-import FormMessge from '../components/FormMessage/index';
+import FormMessage from '../components/FormMessage/index';
 import { useRouter } from 'next/router';
 import Link from "next/link";
 
@@ -70,7 +70,7 @@ export default class Login extends Component {
     }
 
     const loginInput = {
-      paddingTop: "150px"
+      paddingTop: "100px"
     }
 
     const allocatText = {
@@ -115,9 +115,9 @@ export default class Login extends Component {
                 onChange={this.handleChange.bind(this)}
               />
               <br />
-              <div style={{textAlign: "center"}}>
+              <div style={{ textAlign: "center" }}>
                 <p>
-                  Don't have login?   
+                  Don't have login?
                   <Link href="/register"><p style={registerText}>Register</p></Link>
                 </p>
               </div>
@@ -127,12 +127,12 @@ export default class Login extends Component {
               >
                 Login
           </button>
-              <br />
               {isError ? (
-                <FormMessge status="error" message={this.state.errorMsg} />
+                <FormMessage status="error" message={this.state.errorMsg} />
               ) : (
-                  <h1></h1>
+                  <FormMessage />
                 )}
+              <br />
             </div>
           </RLLayout>
         </div>

@@ -5,7 +5,7 @@
 
   return (
     <div className={color}>
-      <h1 className="">{props.message}</h1>
+      <p className="messageText">{props.message}</p>
     </div>
   )
 };

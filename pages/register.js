@@ -3,19 +3,23 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import Nav from '../components/Nav/index';
 import RLLayout from '../components/RLLayout';
-import '../styles.scss';
+import FormMessage from "../components/FormMessage/index";
 import { useRouter } from 'next/router';
 import Link from "next/link";
+import '../styles.scss';
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageTitle: 'Register',
+      pageTitle: "Register",
       menuItem: ['something', 'something2', 'something3'],
-      email: '',
-      fullName: '',
-      password: ''
+      email: "",
+      fullName: "",
+      password: "",
+      confPassword: "",
+      isError: false,
+      errorMsg: ""
     };
   }
 
@@ -29,8 +33,7 @@ export default class Register extends Component {
   };
 
   handleRegisterClick = () => {
-    console.log('clicked!');
-    console.log(this.state);
+    console.log(this.state)
 
     let newUser = {
       email: this.state.email,
@@ -38,22 +41,46 @@ export default class Register extends Component {
       password: this.state.password
     };
 
-    if (this.state.email === null) {
-      console.log('email is already taken');
+    if (this.state.fullName === "") {
+      this.setError(true, "Name is required")
     }
-
-    axios.post('/api/newUser', newUser).then(response => {
-      if (response.data !== 'email is already taken') {
-        if (response.status === 200) {
-          window.location.replace('/');
+    else if (this.state.email === "") {
+      this.setError(true, "Email is required")
+    }
+    else if (this.state.password === "") {
+      this.setError(true, "Password is required")
+    }
+    else if (this.state.confPassword === "") {
+      this.setError(true, "Confirmation Password is required")
+    }
+    else if (this.state.password !== this.state.confPassword) {
+      this.setError(true, "Passwords don't match")
+    }
+    else {
+      axios.post('/api/newUser', newUser).then(response => {
+        if (response.data !== 'email is already taken') {
+          if (response.status === 200) {
+            window.location.replace('/');
+          }
+        } else {
+          this.setError(true, "Email is already registered")
         }
-      } else {
-        console.log(response.data);
-      }
+      });
+    };
+  }
+
+  setError(isThereAnError, newErrorMsg) {
+    this.setState({
+      isError: isThereAnError,
+      errorMsg: newErrorMsg
     });
-  };
+  }
 
   render() {
+    var isError = this.state.isError;
+    console.log(this.state)
+
+
     const registerContainer = {
       padding: "40px",
       padding: "40px",
@@ -61,10 +88,10 @@ export default class Register extends Component {
       justifyContent: "center",
       height: "100vh",
       backgroundImage: "url('https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg')"
-    } 
+    }
 
     const registerInput = {
-      paddingTop: "75px"
+      paddingTop: "45px"
     }
 
     const allocatText = {
@@ -84,9 +111,9 @@ export default class Register extends Component {
         <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
         <div style={registerContainer}>
           <RLLayout>
-          <h1 style={allocatText}>(LOGO)</h1>
-          <div style={registerInput}>
-            <label htmlFor="FullName">Full Name:</label>
+            <h1 style={allocatText}>(LOGO)</h1>
+            <div style={registerInput}>
+              <label htmlFor="FullName">Full Name:</label>
               <input
                 type="text"
                 name="fullName"
@@ -116,9 +143,18 @@ export default class Register extends Component {
                 onChange={this.handleChange.bind(this)}
               />
               <br />
-              <div style={{textAlign: "center"}}>
+              <label htmlFor="confPassword">Confirm Password:</label>
+              <input
+                type="text"
+                name="confPassword"
+                className="form-control"
+                id="confPassword"
+                placeholder="Confirm Password"
+                onChange={this.handleChange.bind(this)}
+              />
+              <div style={{ textAlign: "center" }}>
                 <p>
-                  Already have an account?   
+                  Already have an account?
                   <Link href="/"><p style={registerText}>Login</p></Link>
                 </p>
               </div>
@@ -128,7 +164,12 @@ export default class Register extends Component {
               >
                 Register
               </button>
-          </div>
+              {isError ? (
+                <FormMessage status="error" message={this.state.errorMsg} />
+              ) : (
+                  <FormMessage />
+                )}
+            </div>
           </RLLayout>
         </div>
       </Layout>
