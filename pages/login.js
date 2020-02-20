@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Layout from '../components/Layout';
 import axios from 'axios';
 import Nav from '../components/Nav';
 import RLLayout from '../components/RLLayout';
 import FormMessge from '../components/FormMessage/index';
+import { useRouter } from 'next/router';
+import Link from "next/link";
 
 export default class Login extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ export default class Login extends Component {
 
     axios
       .post('/api/login', user)
-      .then(function(response) {
+      .then(function (response) {
         if (response.status === 200) {
           window.location.replace('/projects');
         }
@@ -59,47 +60,82 @@ export default class Login extends Component {
   render() {
     const isError = this.state.isError;
 
+    const loginContainer = {
+      padding: "40px",
+      padding: "40px",
+      border: "1px solid black",
+      justifyContent: "center",
+      height: "100vh",
+      backgroundImage: "url('https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg')"
+    }
+
+    const loginInput = {
+      paddingTop: "150px"
+    }
+
+    const allocatText = {
+      textAlign: "center",
+      color: "#2190cc",
+      fontWeight: "bold"
+    }
+
+    const registerText = {
+      color: "#2190cc",
+      fontWeight: "bold",
+      cursor: "pointer"
+    }
+
     return (
       <div>
         <Nav
           pageTitle={this.state.pageTitle}
           menuItems={this.state.menuItems}
         />
-        <RLLayout>
-          <label htmlFor="Email">Email:</label>
-          <input
-            type="text"
-            name="email"
-            className="form-control"
-            id="Email"
-            placeholder="Email"
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
-          <label htmlFor="Password">Password:</label>
-          <input
-            type="text"
-            name="password"
-            className="form-control"
-            id="Password"
-            placeholder="Password"
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
-
-          <button
-            className="btn btn-primary"
-            onClick={() => this.handleLoginClick()}
-          >
-            Login
+        <div style={loginContainer}>
+          <RLLayout>
+            <h1 style={allocatText}>(LOGO)</h1>
+            <div style={loginInput}>
+              <label htmlFor="Email">Email:</label>
+              <input
+                type="text"
+                name="email"
+                className="form-control"
+                id="Email"
+                placeholder="Email"
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <label htmlFor="Password">Password:</label>
+              <input
+                type="text"
+                name="password"
+                className="form-control"
+                id="Password"
+                placeholder="Password"
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <div style={{textAlign: "center"}}>
+                <p>
+                  Don't have login?   
+                  <Link href="/register"><p style={registerText}>Register</p></Link>
+                </p>
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.handleLoginClick()}
+              >
+                Login
           </button>
-          <br />
-          {isError ? (
-            <FormMessge status="error" message={this.state.errorMsg} />
-          ) : (
-            <h1></h1>
-          )}
-        </RLLayout>
+              <br />
+              {isError ? (
+                <FormMessge status="error" message={this.state.errorMsg} />
+              ) : (
+                  <h1></h1>
+                )}
+            </div>
+          </RLLayout>
+        </div>
       </div>
     );
   }
