@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import NPLayout from '../NPLayout';
-import { Form, ThemeProvider } from 'react-bootstrap';
-import { Card, Modal, Button } from 'react-bootstrap';
-import axios from 'axios';
-import FormMessage from '../FormMessage/index';
+import React, { Component } from "react";
+import NPLayout from "../NPLayout";
+import { Form, ThemeProvider } from "react-bootstrap";
+import { Card, Modal, Button } from "react-bootstrap";
+import axios from "axios";
+import FormMessage from "../FormMessage/index";
 
 export default class DashboardTasks extends Component {
   constructor(props) {
@@ -13,24 +13,21 @@ export default class DashboardTasks extends Component {
       setShowForm: false,
       show: false,
       setShow: false,
-      TaskName: '',
-      TaskDescription: '',
-      TaskTeam: '',
-      TaskDueDate: '',
+      TaskName: "",
+      TaskDescription: "",
+      TaskTeam: "",
+      TaskDueDate: "",
       allTeams: [],
       allTasks: [],
       isError: false,
-      errorMsg: ''
+      errorMsg: ""
     };
   }
 
   componentDidMount() {
     this.getAllProjectTaskInfo();
 
-    this.timerID = setInterval(
-      () => this.getAllProjectTaskInfo(),
-      1000
-    );
+    this.timerID = setInterval(() => this.getAllProjectTaskInfo(), 1000);
   }
 
   componentWillUnmount() {
@@ -95,41 +92,41 @@ export default class DashboardTasks extends Component {
 
   handleCreateTask = () => {
     var url = window.location.href;
-    var splitUrl = url.split('/')[4];
+    var splitUrl = url.split("/")[4];
 
     let newTask = {
       projectId: splitUrl,
       taskName: this.state.TaskName,
       taskDescription: this.state.TaskDescription,
       taskDueDate: this.state.TaskDueDate,
-      taskPriority: '',
+      taskPriority: "",
       taskTeam: this.state.TaskTeam,
-      taskStatus: 'Unassigned'
+      taskStatus: "Unassigned"
     };
 
-    if (this.state.TaskName === '') {
+    if (this.state.TaskName === "") {
       this.setState({
         isError: true,
-        errorMsg: 'Task Name Required'
+        errorMsg: "Task Name Required"
       });
     }
 
-    if (this.state.TaskDescription === '') {
+    if (this.state.TaskDescription === "") {
       this.setState({
         isError: true,
-        errorMsg: 'Task Description Required'
+        errorMsg: "Task Description Required"
       });
     }
 
-    if (this.state.TaskTeam === '') {
+    if (this.state.TaskTeam === "") {
       this.setState({
         isError: true,
-        errorMsg: 'Task Team Required'
+        errorMsg: "Task Team Required"
       });
     } else {
-      axios.post('/api/newTask', newTask).then(response => {
+      axios.post("/api/newTask", newTask).then(response => {
         if (response.status === 200) {
-          console.log('created task');
+          console.log("created task");
         }
         this.handleShowAllTasks();
       });
@@ -139,10 +136,10 @@ export default class DashboardTasks extends Component {
   handleClaimTask = e => {
     var objId = e.target.name;
 
-    axios.put(`/api/claimTask/${objId}`).then((response) => {
+    axios.put(`/api/claimTask/${objId}`).then(response => {
       console.log("updated task in db");
-    })
-  }
+    });
+  };
 
   handleClose = () => {
     this.setState({
@@ -188,61 +185,62 @@ export default class DashboardTasks extends Component {
     if (this.state.showForm) {
       return (
         <NPLayout>
-          <div className="col-md-12">
+          <div className='col-md-12'>
             <Button onClick={() => this.handleShowAllTasks()}>
               Back to All Tasks
             </Button>
           </div>
-          <div className="row mt-5">
-            <div className="col-md-12 mx-auto">
+          <div className='row mt-5'>
+            <div className='col-md-12 mx-auto'>
               <h2>Add Tasks to Complete</h2>
 
-              <div className="row">
-                <div className="col-md-8">
+              <div className='row'>
+                <div className='col-md-8'>
                   <Form>
-                    <label htmlFor="TaskName">Name of Tasks:</label>
+                    <label htmlFor='TaskName'>Name of Tasks:</label>
                     <input
-                      type="text"
-                      name="TaskName"
-                      className="form-control"
-                      placeholder="Task Name"
+                      type='text'
+                      name='TaskName'
+                      className='form-control'
+                      placeholder='Task Name'
                       onChange={this.handleChange.bind(this)}
                     />
                     <br />
-                    <label htmlFor="TaskDescription">
+                    <label htmlFor='TaskDescription'>
                       Description of Task:
                     </label>
                     <input
-                      type="text"
-                      name="TaskDescription"
-                      className="form-control"
-                      placeholder="Task Description"
+                      type='text'
+                      name='TaskDescription'
+                      className='form-control'
+                      placeholder='Task Description'
                       onChange={this.handleChange.bind(this)}
                     />
                     <br />
-                    <label htmlFor="TaskTeam">
+                    <label htmlFor='TaskTeam'>
                       Which Team is This a Task For?
                     </label>
-                    <input
-                      type="text"
-                      name="TaskTeam"
-                      className="form-control"
-                      placeholder="Team Name"
-                      onChange={this.handleChange.bind(this)}
-                    />
+                    <Form.Group controlId='exampleForm.ControlSelect1'>
+                      <Form.Control as='select'>
+                        <option disabled>Select A Team</option>
+                        {this.state.allTeams.map(team => {
+                          return <option>{team}</option>;
+                        })}
+                      </Form.Control>
+                    </Form.Group>
                     <br />
-                    <label htmlFor="taskDueDate">Due Date (MM/DD/YY): </label>
+                    <label htmlFor='taskDueDate'>Due Date (MM/DD/YY): </label>
                     <input
-                      type="text"
-                      name="TaskDueDate"
-                      className="form-control"
-                      placeholder="02/29/20"
+                      type='text'
+                      name='TaskDueDate'
+                      className='form-control'
+                      placeholder='02/29/20'
                       onChange={this.handleChange.bind(this)}
                     />
                     <br />
                     <Form.Group>
                       <Form.Label>Priority Level</Form.Label>
-                      <Form.Control as="select">
+                      <Form.Control as='select'>
                         <option>High Priority</option>
                         <option>Medium Priority</option>
                         <option>Low Priority</option>
@@ -251,14 +249,14 @@ export default class DashboardTasks extends Component {
                     <br />
                     {isError ? (
                       <FormMessage
-                        status="error"
+                        status='error'
                         message={this.state.errorMsg}
                       />
                     ) : (
-                        <h1></h1>
-                      )}
+                      <h1></h1>
+                    )}
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => this.handleCreateTask()}
                     >
                       Add Task
@@ -266,7 +264,7 @@ export default class DashboardTasks extends Component {
                     <br />
                   </Form>
                 </div>
-                <div className="col-md-4">
+                <div className='col-md-4'>
                   <p>This is where Tasks will show up</p>
                 </div>
               </div>
@@ -276,12 +274,12 @@ export default class DashboardTasks extends Component {
       );
     } else {
       return (
-        <div className="mt-5">
-          <Card style={{ width: '18rem' }}>
+        <div className='mt-5'>
+          <Card style={{ width: "18rem" }}>
             <Card.Body>
               <Card.Title>Create a New Task</Card.Title>
               <Card.Text>Assigned or Unassigned</Card.Text>
-              <Button variant="primary" onClick={() => this.handleNewShow()}>
+              <Button onClick={() => this.handleNewShow()}>
                 Create a New Task
               </Button>
             </Card.Body>
@@ -295,16 +293,22 @@ export default class DashboardTasks extends Component {
                   if (task.team === team) {
                     if (task.status === "Unassigned") {
                       return (
-                        <Card style={{ width: '18rem' }}>
+                        <Card style={{ width: "18rem" }}>
                           <Card.Body>
                             <Card.Title>{task.name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">
+                            <Card.Subtitle className='mb-2 text-muted'>
                               {task.priority}
                             </Card.Subtitle>
                             <Card.Text>{task.status}</Card.Text>
-                            <Button name={task.id} variant="danger" onClick={(e) => this.handleClaimTask(e)}>Claim Task</Button>
                             <Button
-                              variant="primary"
+                              name={task.id}
+                              variant='danger'
+                              onClick={e => this.handleClaimTask(e)}
+                            >
+                              Claim Task
+                            </Button>
+                            <Button
+                              variant='primary'
                               onClick={() => this.handleShowModal()}
                             >
                               View Details
@@ -324,20 +328,20 @@ export default class DashboardTasks extends Component {
               <Modal.Title>Project Title</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="container">
-                <div className="row">Project Description will go here</div>
-                <div className="row">Level of Priority</div>
-                <div className="row">Due Date</div>
+              <div className='container'>
+                <div className='row'>Project Description will go here</div>
+                <div className='row'>Level of Priority</div>
+                <div className='row'>Due Date</div>
               </div>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                variant="secondary"
+                variant='secondary'
                 onClick={() => this.handleHideModal()}
               >
                 Close
               </Button>
-              <Button variant="danger" onClick={() => this.handleClose()}>
+              <Button variant='danger' onClick={() => this.handleClose()}>
                 Claim Task
               </Button>
             </Modal.Footer>
