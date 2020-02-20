@@ -72,6 +72,7 @@ const NPForm = props => {
                   <h1></h1>
                 )
               }
+            </div>
             </NPLayout>
           </div>
         ) : isOnPage2 ? (
@@ -145,6 +146,8 @@ const NPForm = props => {
               className='cp-btn'
               onClick={() => props.handleNewProject()}
             >
+              Create
+            </button>
               {
                 isError ? (
                   errorPage === 2 ? (
@@ -159,7 +162,7 @@ const NPForm = props => {
                   <h1></h1>
                 )
               }
-                </NPLayout>
+              </NPLayout>
               </div>
             )
       }
