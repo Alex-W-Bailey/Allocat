@@ -22,13 +22,13 @@ export default class DashboardTasks extends Component {
   }
 
   componentDidMount() {
-    var url = window.location.href;
-    var splitUrl = url.split("/")[4];
-
-    this.getAllProjectTaskInfo(splitUrl);
+    this.getAllProjectTaskInfo();
   }
 
-  async getAllProjectTaskInfo(projectId) {
+  async getAllProjectTaskInfo() {
+    var url = window.location.href;
+    var projectId = url.split("/")[4];
+
     await this.getAllTeams(projectId);
     await this.getAllTasks(projectId);
 
@@ -55,6 +55,8 @@ export default class DashboardTasks extends Component {
 
     await axios.get(`/api/allTasks/${projectId}`).then((response) => {
       for (var i = 0; i < response.data.length; i++) {
+        console.log(response.data[i]);
+
         var newTask = {
           name: response.data[i].taskName,
           description: response.data[i].taskDescription,
@@ -140,6 +142,8 @@ export default class DashboardTasks extends Component {
   };
 
   handleShowAllTasks = () => {
+    this.getAllProjectTaskInfo();
+
     this.setState({
       showForm: false
     });
