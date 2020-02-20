@@ -181,7 +181,6 @@ module.exports = function(app) {
 
     app.post("/api/newTask", (req, res) => {
         db.Task.create({
-            userId: req.user.id,
             projectId: req.body.projectId,
             taskName: req.body.taskName,
             taskDescription: req.body.taskDescription,
@@ -193,5 +192,31 @@ module.exports = function(app) {
             res.status(200).end();
         });
     });
+
+    //Update
+    app.put("/api/claimTask/:taskId", (req, res) => {
+        var userID = req.user.id;
+
+        db.Task.update(
+            {userId: userID},
+            {where: 
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            db.Task.update(
+                {taskStatus: "Working On"},
+                {where: 
+                    {
+                        id: req.params.taskId
+                    }
+                }
+            ).then((rowsUpdated) => {
+                res.json(rowsUpdated)
+            })    
+        })    
+    })
+
 }
 
