@@ -2,11 +2,17 @@ import Nav from "../Nav/index";
 import NPLayout from "../NPLayout/index";
 import NewTeam from "../NewTeam/index";
 import NewCollaborator from "../NewCollaborator/index";
+import FormMessage from "../FormMessage/index";
+
 
 const NPForm = props => {
   var isOnPage1 = props.pageNum === 0;
   var isOnPage2 = props.pageNum === 1;
   var isOnPage3 = props.pageNum === 2;
+
+  var isError = props.isError;
+  var errorMsg = props.errorMsg;
+  var errorPage = props.errorPage;
 
   return (
     <div>
@@ -51,13 +57,26 @@ const NPForm = props => {
                   />
                 </form>
               </div>
-            </div>
-            <button onClick={() => props.handleNextPage()}>Next</button>
-          </NPLayout>
-        </div>
-      ) : isOnPage2 ? (
-        <div>
-          <NPLayout>
+              <button onClick={() => props.handleNextPage()}>Next</button>
+              {
+                isError ? (
+                  errorPage === 0 ? (
+                    <FormMessage
+                    status="error"
+                    message={props.errorMsg}
+                  />
+                  ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
+            </NPLayout>
+          </div>
+        ) : isOnPage2 ? (
+          <div>
+            <NPLayout>
             <h2>Project Teams</h2>
             {props.numberOfTeams.map((team, index) => {
               var i = parseInt(index);
@@ -73,51 +92,77 @@ const NPForm = props => {
             <button type='button' onClick={() => props.handleNewTeam()}>
               Add Another Team
             </button>
-            <br />
-            <button onClick={() => props.handleLastPage()}>Last</button>
-            <button onClick={() => props.handleNextPage()}>Next</button>
-          </NPLayout>
-        </div>
-      ) : (
-        <div>
-          <NPLayout>
-            <h2>Project Collaborators</h2>
-            <NewCollaborator
-              value={props.collaboratorEmail}
-              handleChange={props.handleChange}
-            />
-            {props.foundCollaborator ? (
-              <p>{props.collaboratorName}</p>
-            ) : props.searchedForCollaborator ? (
-              <p>No user found...</p>
-            ) : (
-              <p></p>
-            )}
-            <button type='button' onClick={() => props.handleCollabSearch()}>
-              Search
-            </button>
-            <button
-              type='button'
-              onClick={() => props.handleAddNewCollaborator()}
-            >
-              Add
-            </button>
-            <br />
+              <br />
+              <button onClick={() => props.handleLastPage()}>Last</button>
+              <button onClick={() => props.handleNextPage()}>Next</button>
+              {
+                isError ? (
+                  errorPage === 1 ? (
+                    <FormMessage
+                    status="error"
+                    message={props.errorMsg}
+                  />
+                  ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
+            </NPLayout>
+          </div>
+        ) : (
+              <div>
+                <NPLayout>
+                <h2>Project Collaborators</h2>
+                  <NewCollaborator
+                    value={props.collaboratorEmail}
+                    handleChange={props.handleChange}
+                  />
+                  {
+                    props.foundCollaborator ? (
+                      <p>{props.collaboratorName}</p>
+                    ) : props.searchedForCollaborator ? (
+                      <p>No user found...</p>
+                    ) : (
+                          <p></p>
+                        )
+                  }
+                  <button type="button" onClick={() => props.handleCollabSearch()}>
+                    Search
+              </button>
+                  <button type="button" onClick={() => props.handleAddNewCollaborator()}>
+                    Add
+              </button>
+              <br />
             <button onClick={() => props.handleLastPage()}>
               <span class='glyphicon glyphicon-triangle-left' />
               Back
-            </button>
+            </button>              
             <br />
             <button
               type='button'
               className='cp-btn'
               onClick={() => props.handleNewProject()}
             >
-              Create Project
-            </button>
-          </NPLayout>
-        </div>
-      )}
+              {
+                isError ? (
+                  errorPage === 2 ? (
+                    <FormMessage
+                      status="error"
+                      message={props.errorMsg}
+                    />
+                    ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
+                </NPLayout>
+              </div>
+            )
+      }
     </div>
   );
 };

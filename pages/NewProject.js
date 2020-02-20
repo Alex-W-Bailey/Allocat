@@ -2,11 +2,7 @@ import "../styles.scss";
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
 import axios from "axios";
-import FormNewProject from "../components/FormNewProject/index";
-import FormTeam from "../components/FormTeam/index";
-import FormTasks from "../components/FormTasks/index";
 import NewTeam from "../components/NewTeam/index";
-import NewCollaborator from "../components/NewCollaborator/index";
 import NPForm from "../components/NPForm/index";
 import CreatedProject from "../components/CreatedProject/index";
 import { Button } from "react-bootstrap";
@@ -31,7 +27,8 @@ export default class NewProject extends Component {
       projectId: 0,
       projectCreatedSuccessfully: false,
       isError: false,
-      errorMsg: ""
+      errorMsg: "",
+      errorPage: 0
     };
   }
 
@@ -155,38 +152,66 @@ export default class NewProject extends Component {
   };
 
   async createProject() {
-    let newProject = {
-      projectName: this.state.projectName,
-      projectDescription: this.state.projectDescription,
-      dueDate: this.state.dueDate
-    };
+    var isFormLeftEmpty = this.validateForm();
 
-    await axios.post("/api/newProject", newProject).then(response => {
-      if (response.data === "err") {
-        console.log("project name already taken");
-      } else {
-        console.log("project created...");
+    if(isFormLeftEmpty === false){
+      let newProject = {
+        projectName: this.state.projectName,
+        projectDescription: this.state.projectDescription,
+        dueDate: this.state.dueDate
+      };
+  
+      await axios.post("/api/newProject", newProject).then(response => {
+        if (response.data === "err") {
+          console.log("project name already taken");
+        } else {
+          console.log("project created...");
+  
+          this.getId();
+        }
+      });
+  
+      var newCreator = {
+        projectName: this.state.projectName
+      };
+  
+      await axios.post("/api/projectCreator", newCreator).then(response => {
+        for (var i = 0; i < this.state.allTeams.length; i++) {
+          console.log("creating team...");
+  
+          this.createTeams(i);
+        }
+      });
+  
+      await this.createCollaborators();
+      
+      this.setState({
+        projectCreatedSuccessfully: true
+      });
+    }
+  }
 
-        this.getId();
-      }
-    });
+  validateForm() {
+    var isFormLeftEmpty = false
 
-    var newCreator = {
-      projectName: this.state.projectName
-    };
+    //Checks project info
+    if(this.state.projectName === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project name is required!", 0);
+    }
+    else if(this.state.projectDescription === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project description is required!", 0);
+    }
 
-    await axios.post("/api/projectCreator", newCreator).then(response => {
-      for (var i = 0; i < this.state.allTeams.length; i++) {
-        console.log("creating team...");
+    return isFormLeftEmpty;
+  }
 
-        this.createTeams(i);
-      }
-    });
-
-    await this.createCollaborators();
-
+  setErrorState(isError, errorMsg, pageNum) {
     this.setState({
-      projectCreatedSuccessfully: true
+      pageNum: pageNum,
+      isError: isError,
+      errorMsg: errorMsg
     });
   }
 
@@ -248,52 +273,55 @@ export default class NewProject extends Component {
 
     return (
       <Layout>
-        {createdProject ? (
-          <CreatedProject
-            projectId={this.state.projectId}
-            handleRedirectToProjects={this.handleRedirectToProjects}
-          />
-        ) : isError ? (
-          <NPForm
-            pageNum={this.state.pageNum}
-            pageTitle={this.state.pageTitle}
-            collaboratorEmail={this.state.collaboratorEmail}
-            collaboratorName={this.state.collaboratorName}
-            handleChange={this.handleChange}
-            handleTeamNameChange={this.handleTeamNameChange}
-            numberOfTeams={this.state.numberOfTeams}
-            handleNewTeam={this.handleNewTeam}
-            handleCollabSearch={this.handleCollabSearch}
-            handleAddNewCollaborator={this.handleAddNewCollaborator}
-            handleNewProject={this.handleNewProject}
-            foundCollaborator={foundCollaborator}
-            searchedForCollaborator={searchedForCollaborator}
-            handleNextPage={this.handleNextPage}
-            handleLastPage={this.handleLastPage}
-            isError={isError}
-            errorMsg={errorMsg}
-          />
-        ) : (
-          <NPForm
-            pageNum={this.state.pageNum}
-            pageTitle={this.state.pageTitle}
-            collaboratorEmail={this.state.collaboratorEmail}
-            collaboratorName={this.state.collaboratorName}
-            handleChange={this.handleChange}
-            handleTeamNameChange={this.handleTeamNameChange}
-            numberOfTeams={this.state.numberOfTeams}
-            handleNewTeam={this.handleNewTeam}
-            handleCollabSearch={this.handleCollabSearch}
-            handleAddNewCollaborator={this.handleAddNewCollaborator}
-            handleNewProject={this.handleNewProject}
-            foundCollaborator={foundCollaborator}
-            searchedForCollaborator={searchedForCollaborator}
-            handleNextPage={this.handleNextPage}
-            handleLastPage={this.handleLastPage}
-            isError={isError}
-            errorMsg={errorMsg}
-          />
-        )}
+       {
+          createdProject ? (
+            <CreatedProject 
+              projectId={this.state.projectId}
+              handleRedirectToProjects={this.handleRedirectToProjects}
+            />
+          ) : isError ?  (
+            <NPForm
+              pageNum={this.state.pageNum}
+              pageTitle={this.state.pageTitle}
+              collaboratorEmail={this.state.collaboratorEmail}
+              collaboratorName={this.state.collaboratorName}
+              handleChange={this.handleChange}
+              handleTeamNameChange={this.handleTeamNameChange}
+              numberOfTeams={this.state.numberOfTeams}
+              handleNewTeam={this.handleNewTeam}
+              handleCollabSearch={this.handleCollabSearch}
+              handleAddNewCollaborator={this.handleAddNewCollaborator}
+              handleNewProject={this.handleNewProject}
+              foundCollaborator={foundCollaborator}
+              searchedForCollaborator={searchedForCollaborator}
+              handleNextPage={this.handleNextPage}
+              handleLastPage={this.handleLastPage}
+              isError={this.state.isError}
+              errorMsg={this.state.errorMsg}
+              errorPage={this.state.errorPage}
+            />) : (
+                <NPForm
+                pageNum={this.state.pageNum}
+                  pageTitle={this.state.pageTitle}
+                  collaboratorEmail={this.state.collaboratorEmail}
+                  collaboratorName={this.state.collaboratorName}
+                  handleChange={this.handleChange}
+                  handleTeamNameChange={this.handleTeamNameChange}
+                  numberOfTeams={this.state.numberOfTeams}
+                  handleNewTeam={this.handleNewTeam}
+                  handleCollabSearch={this.handleCollabSearch}
+                  handleAddNewCollaborator={this.handleAddNewCollaborator}
+                  handleNewProject={this.handleNewProject}
+                  foundCollaborator={foundCollaborator}
+                  searchedForCollaborator={searchedForCollaborator}
+                  handleNextPage={this.handleNextPage}
+                  handleLastPage={this.handleLastPage}
+                  isError={this.state.isError}
+                  errorMsg={this.state.errorMsg}
+                  errorPage={this.state.errorPage}
+                />
+              )
+        }
       </Layout>
     );
   }

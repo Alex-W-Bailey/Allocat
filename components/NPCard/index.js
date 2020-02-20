@@ -9,8 +9,8 @@ const NPCard = props => {
           <p className='card-text'>
             Ready to start a new project?
           </p>
-          <Link>
-            <button href='/NewProject' className='mt-auto btn btn-primary'>
+          <Link href='/NewProject'>
+            <button className='mt-auto btn btn-primary'>
               Create New Project
             </button>
           </Link>
