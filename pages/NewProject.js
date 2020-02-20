@@ -154,8 +154,6 @@ export default class NewProject extends Component {
     }
   };
 
-  //Priority level 1: High, 2: Medium, 3: Low
-
   async createProject() {
     let newProject = {
       projectName: this.state.projectName,

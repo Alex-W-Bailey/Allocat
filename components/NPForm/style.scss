@@ -1,1 +1,8 @@
-
+.cp-btn {
+  border-color: $warmWhite;
+  border-width: medium;
+  &:hover {
+    border-color: $accentGrey;
+    border-width: medium;
+  }
+}

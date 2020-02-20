@@ -103,9 +103,16 @@ const NPForm = props => {
               Add
             </button>
             <br />
-            <button onClick={() => props.handleLastPage()}>Last</button>
+            <button onClick={() => props.handleLastPage()}>
+              <span class='glyphicon glyphicon-triangle-left' />
+              Back
+            </button>
             <br />
-            <button type='button' onClick={() => props.handleNewProject()}>
+            <button
+              type='button'
+              className='cp-btn'
+              onClick={() => props.handleNewProject()}
+            >
               Create Project
             </button>
           </NPLayout>
