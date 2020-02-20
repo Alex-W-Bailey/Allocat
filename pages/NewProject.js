@@ -25,8 +25,9 @@ export default class NewProject extends Component {
       allCollaborators: [],
       projectId: 0,
       projectCreatedSuccessfully: false,
-      isError: true,
-      errorMsg: ""
+      isError: false,
+      errorMsg: "",
+      errorPage: 0
     };
   }
 
@@ -153,39 +154,67 @@ export default class NewProject extends Component {
   //Priority level 1: High, 2: Medium, 3: Low
 
   async createProject() {
-    let newProject = {
-      projectName: this.state.projectName,
-      projectDescription: this.state.projectDescription,
-      dueDate: this.state.dueDate
-    };
+    var isFormLeftEmpty = this.validateForm();
 
-    await axios.post("/api/newProject", newProject).then(response => {
-      if (response.data === "err") {
-        console.log("project name already taken");
-      } else {
-        console.log("project created...");
+    if(isFormLeftEmpty === false){
+      let newProject = {
+        projectName: this.state.projectName,
+        projectDescription: this.state.projectDescription,
+        dueDate: this.state.dueDate
+      };
+  
+      await axios.post("/api/newProject", newProject).then(response => {
+        if (response.data === "err") {
+          console.log("project name already taken");
+        } else {
+          console.log("project created...");
+  
+          this.getId();
+        }
+      });
+  
+      var newCreator = {
+        projectName: this.state.projectName
+      };
+  
+      await axios.post("/api/projectCreator", newCreator).then(response => {
+        for (var i = 0; i < this.state.allTeams.length; i++) {
+          console.log("creating team...");
+  
+          this.createTeams(i);
+        }
+      });
+  
+      await this.createCollaborators();
+      
+      this.setState({
+        projectCreatedSuccessfully: true
+      });
+    }
+  }
 
-        this.getId();
-      }
-    });
+  validateForm() {
+    var isFormLeftEmpty = false
 
-    var newCreator = {
-      projectName: this.state.projectName
-    };
+    //Checks project info
+    if(this.state.projectName === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project name is required!", 0);
+    }
+    else if(this.state.projectDescription === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project description is required!", 0);
+    }
 
-    await axios.post("/api/projectCreator", newCreator).then(response => {
-      for (var i = 0; i < this.state.allTeams.length; i++) {
-        console.log("creating team...");
+    return isFormLeftEmpty;
+  }
 
-        this.createTeams(i);
-      }
-    });
-
-    await this.createCollaborators();
-    
+  setErrorState(isError, errorMsg, pageNum) {
     this.setState({
-      projectCreatedSuccessfully: true
-    })
+      pageNum: pageNum,
+      isError: isError,
+      errorMsg: errorMsg
+    });
   }
 
   async createTeams(i) {
@@ -265,8 +294,9 @@ export default class NewProject extends Component {
               searchedForCollaborator={searchedForCollaborator}
               handleNextPage={this.handleNextPage}
               handleLastPage={this.handleLastPage}
-              isError={isError}
-              errorMsg={errorMsg}
+              isError={this.state.isError}
+              errorMsg={this.state.errorMsg}
+              errorPage={this.state.errorPage}
             />) : (
                 <NPForm
                 pageNum={this.state.pageNum}
@@ -284,8 +314,9 @@ export default class NewProject extends Component {
                   searchedForCollaborator={searchedForCollaborator}
                   handleNextPage={this.handleNextPage}
                   handleLastPage={this.handleLastPage}
-                  isError={isError}
-                  errorMsg={errorMsg}
+                  isError={this.state.isError}
+                  errorMsg={this.state.errorMsg}
+                  errorPage={this.state.errorPage}
                 />
               )
         }
