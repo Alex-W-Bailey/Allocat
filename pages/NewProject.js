@@ -1,9 +1,10 @@
+import "../styles.scss";
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
 import axios from "axios";
 import NewTeam from "../components/NewTeam/index";
 import NPForm from "../components/NPForm/index";
-import CreatedProject from "../components/CreatedProject/index"
+import CreatedProject from "../components/CreatedProject/index";
 import { Button } from "react-bootstrap";
 
 export default class NewProject extends Component {
@@ -38,7 +39,7 @@ export default class NewProject extends Component {
     this.setState({
       [objName]: objValue
     });
-  }
+  };
 
   handleTeamNameChange = e => {
     let objName = e.target.name;
@@ -83,7 +84,7 @@ export default class NewProject extends Component {
     this.setState({
       numberOfTeams: newArr
     });
-  }
+  };
 
   handleCollabSearch = () => {
     console.log("searching..." + this.state.collaboratorEmail);
@@ -95,8 +96,7 @@ export default class NewProject extends Component {
           collaboratorFound: true,
           collaboratorName: usersFound.data.fullName
         });
-      }
-      else {
+      } else {
         console.log("none");
         this.setState({
           searchedForCollaborator: true,
@@ -104,9 +104,9 @@ export default class NewProject extends Component {
         });
       }
 
-      console.log(this.state)
+      console.log(this.state);
     });
-  }
+  };
 
   handleAddNewCollaborator = () => {
     console.log("Add new collaborator");
@@ -121,37 +121,35 @@ export default class NewProject extends Component {
     });
 
     console.log(this.state);
-  }
+  };
 
   handleRedirectToProjects = () => {
     window.location.replace("/projects");
-  }
+  };
 
   handleNextPage = () => {
     var pageNum = this.state.pageNum;
 
-    if(pageNum < 3){
+    if (pageNum < 3) {
       pageNum++;
 
       this.setState({
         pageNum: pageNum
       });
     }
-  }
+  };
 
   handleLastPage = () => {
     var pageNum = this.state.pageNum;
 
-    if(pageNum > 0){
+    if (pageNum > 0) {
       pageNum--;
 
       this.setState({
         pageNum: pageNum
       });
     }
-  }
- 
-  //Priority level 1: High, 2: Medium, 3: Low
+  };
 
   async createProject() {
     var isFormLeftEmpty = this.validateForm();
@@ -234,32 +232,36 @@ export default class NewProject extends Component {
         console.log("New Team created!");
       }
     });
-  };
+  }
 
   async createCollaborators() {
-    console.log("create collaborators")
+    console.log("create collaborators");
 
     for (var i = 0; i < this.state.allCollaborators.length; i++) {
       var collaborator = this.state.allCollaborators[i];
       console.log("collab: " + collaborator);
 
-      axios.post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`).then((response) => {
-        if (response.status === 200) {
-          console.log("added collaborators");
-        }
-      })
+      axios
+        .post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`)
+        .then(response => {
+          if (response.status === 200) {
+            console.log("added collaborators");
+          }
+        });
     }
   }
 
-  async getId(){
-    await axios.get(`/api/project/name/${this.state.projectName}`).then((response) => {
-      this.setState({
-        projectId: response.data.id
-      });
+  async getId() {
+    await axios
+      .get(`/api/project/name/${this.state.projectName}`)
+      .then(response => {
+        this.setState({
+          projectId: response.data.id
+        });
 
-      console.log("retrieved id...")
-      console.log(this.state)
-    });
+        console.log("retrieved id...");
+        console.log(this.state);
+      });
   }
 
   render() {
@@ -271,7 +273,7 @@ export default class NewProject extends Component {
 
     return (
       <Layout>
-        {
+       {
           createdProject ? (
             <CreatedProject 
               projectId={this.state.projectId}
@@ -320,7 +322,6 @@ export default class NewProject extends Component {
                 />
               )
         }
-
       </Layout>
     );
   }

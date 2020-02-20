@@ -1,8 +1,9 @@
-import Nav from "../Nav/index"
+import Nav from "../Nav/index";
 import NPLayout from "../NPLayout/index";
 import NewTeam from "../NewTeam/index";
 import NewCollaborator from "../NewCollaborator/index";
 import FormMessage from "../FormMessage/index";
+
 
 const NPForm = props => {
   var isOnPage1 = props.pageNum === 0;
@@ -15,46 +16,46 @@ const NPForm = props => {
 
   return (
     <div>
-      <Nav pageTitle="Project Creation" />
-      {
-        isOnPage1 ? (
-          <div>
-            <NPLayout>
-              <div className='row mt-5'>
-                <div className='col-md-12 mx-auto'>
-                  <h2>Project Info</h2>
-                  <form>
-                    <label htmlFor='projectName'>Project Name:</label>
-                    <input
-                      type='text'
-                      name='projectName'
-                      className='form-control'
-                      id='projectName'
-                      placeholder='Project Title'
-                      onChange={props.handleTeamNameChange}
-                    />
-                    <label htmlFor='ProjectDescription'>Project Description:</label>
-                    <input
-                      type='text'
-                      name='projectDescription'
-                      className='form-control'
-                      rows='5'
-                      id='projectDescription'
-                      placeholder='Project Description'
-                      onChange={props.handleChange}
-                    />
-                    <label htmlFor='ProjectDescription'>Project Due Date:</label>
-                    <input
-                      type='text'
-                      name='projectDueDate'
-                      className='form-control'
-                      rows='5'
-                      id='projectDueDate'
-                      placeholder='02/29/20'
-                      onChange={props.handleTeamNameChange}
-                    />
-                  </form>
-                </div>
+      <Nav pageTitle='Project Creation' />
+      {isOnPage1 ? (
+        <div>
+          <NPLayout>
+            <div className='row'>
+              <div className='col-md-12 mx-auto'>
+                <h2>Project Info</h2>
+                <form>
+                  <label htmlFor='projectName'>Project Name:</label>
+                  <input
+                    type='text'
+                    name='projectName'
+                    className='form-control'
+                    id='projectName'
+                    placeholder='Project Title'
+                    onChange={props.handleTeamNameChange}
+                  />
+                  <label htmlFor='ProjectDescription'>
+                    Project Description:
+                  </label>
+                  <input
+                    type='text'
+                    name='projectDescription'
+                    className='form-control'
+                    rows='5'
+                    id='projectDescription'
+                    placeholder='Project Description'
+                    onChange={props.handleChange}
+                  />
+                  <label htmlFor='ProjectDescription'>Project Due Date:</label>
+                  <input
+                    type='text'
+                    name='projectDueDate'
+                    className='form-control'
+                    rows='5'
+                    id='projectDueDate'
+                    placeholder='02/29/20'
+                    onChange={props.handleTeamNameChange}
+                  />
+                </form>
               </div>
               <button onClick={() => props.handleNextPage()}>Next</button>
               {
@@ -77,21 +78,19 @@ const NPForm = props => {
           <div>
             <NPLayout>
             <h2>Project Teams</h2>
-              {
-                props.numberOfTeams.map((team, index) => {
-                  var i = parseInt(index);
-                  var elementNum = i + 1;
+            {props.numberOfTeams.map((team, index) => {
+              var i = parseInt(index);
+              var elementNum = i + 1;
 
-                  return (
-                    <NewTeam
-                      elementNum={elementNum}
-                      handleChange={props.handleTeamNameChange}
-                    />
-                  )
-                })
-              }
-              <button type='button' onClick={() => props.handleNewTeam()}>
-                Add Another Team
+              return (
+                <NewTeam
+                  elementNum={elementNum}
+                  handleChange={props.handleTeamNameChange}
+                />
+              );
+            })}
+            <button type='button' onClick={() => props.handleNewTeam()}>
+              Add Another Team
             </button>
               <br />
               <button onClick={() => props.handleLastPage()}>Last</button>
@@ -136,11 +135,16 @@ const NPForm = props => {
                     Add
               </button>
               <br />
-                  <button onClick={() => props.handleLastPage()}>Last</button>
-              <br />
-              <button type='button' onClick={() => props.handleNewProject()}>
-                Create Project
-              </button>
+            <button onClick={() => props.handleLastPage()}>
+              <span class='glyphicon glyphicon-triangle-left' />
+              Back
+            </button>              
+            <br />
+            <button
+              type='button'
+              className='cp-btn'
+              onClick={() => props.handleNewProject()}
+            >
               {
                 isError ? (
                   errorPage === 2 ? (

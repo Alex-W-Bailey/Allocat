@@ -40,29 +40,26 @@ body {
   font-weight: 1000;
   margin-top: 5px;
 }
-
+.btn,
+.btn-primary,
+.dropdown-toggle,
 button {
   background-color: $allocatBlue;
+  border-color: $allocatBlue;
   color: $warmWhite;
   border-radius: 10px;
   padding: 10px;
   margin: 5px;
-}
-
-.btn,
-.btn-primary,
-.dropdown-toggle {
-  background-color: $allocatBlue;
-  border-style: none;
-  border-color: none;
-}
-
-.btn:hover,
-.btn-primary:hover,
-.dropdown-toggle:hover {
-  background-color: $allocatTeal;
-  border-style: none;
-  border-color: none;
+  &:hover {
+    background-color: $allocatTeal;
+    border-style: none;
+    border-color: none;
+  }
+  //   &::after {
+  //     background-color: $allocatTeal;
+  //     border-style: none;
+  //     border-color: none;
+  //   }
 }
 
 h5 {
@@ -76,6 +73,16 @@ h5 {
 
 .form-control {
   border-radius: 10px;
+}
+a {
+  color: $warmWhite;
+  &:hover {
+    color: $softGrey;
+  }
+}
+
+input {
+  margin-bottom: 10px;
 }
 
 // NAVIGATION STYLES
@@ -99,6 +106,7 @@ h5 {
 @import "/components/FormNewProject/style";
 @import "/components/FormTasks/style";
 @import "/components/FormTeam/style";
+@import "/components/NPForm/style.scss";
 
 // DASHBOARD STYLES
 @import "/components/DashboardTasks/style";
