@@ -159,27 +159,31 @@ export default class DashboardTeams extends Component {
       );
     } else {
       return (
-        <div className='col-md-8 mt-5'>
-          <div className='row'>
+        <NPLayout>
+          <div className='col-md-12'>
             <Button onClick={() => this.handleShowNewTeamForm()}>
               Back To Team Overview
             </Button>
           </div>
           <div className='row mt-3'>
-            <Form>
-              <label htmlFor='newTeam'>Team Name:</label>
-              <input
-                type='text'
-                name='newTeam'
-                className='form-control'
-                placeholder='Team Name'
-                onChange={this.handleChange.bind(this)}
-              />
-              <br />
-              <Button onClick={() => this.addNewTeam()}>Create New Team</Button>
-            </Form>
+            <div className='col-md-12 mx-auto'>
+              <Form>
+                <label htmlFor='newTeam'>Team Name:</label>
+                <input
+                  type='text'
+                  name='newTeam'
+                  className='form-control'
+                  placeholder='Team Name'
+                  onChange={this.handleChange.bind(this)}
+                />
+                <br />
+                <Button onClick={() => this.addNewTeam()}>
+                  Create New Team
+                </Button>
+              </Form>
+            </div>
           </div>
-        </div>
+        </NPLayout>
       );
     }
   }

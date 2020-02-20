@@ -194,80 +194,63 @@ export default class DashboardTasks extends Component {
             <div className='col-md-12 mx-auto'>
               <h2>Add Tasks to Complete</h2>
 
-              <div className='row'>
-                <div className='col-md-8'>
-                  <Form>
-                    <label htmlFor='TaskName'>Name of Tasks:</label>
-                    <input
-                      type='text'
-                      name='TaskName'
-                      className='form-control'
-                      placeholder='Task Name'
-                      onChange={this.handleChange.bind(this)}
-                    />
-                    <br />
-                    <label htmlFor='TaskDescription'>
-                      Description of Task:
-                    </label>
-                    <input
-                      type='text'
-                      name='TaskDescription'
-                      className='form-control'
-                      placeholder='Task Description'
-                      onChange={this.handleChange.bind(this)}
-                    />
-                    <br />
-                    <label htmlFor='TaskTeam'>
-                      Which Team is This a Task For?
-                    </label>
-                    <Form.Group controlId='exampleForm.ControlSelect1'>
-                      <Form.Control as='select'>
-                        <option disabled>Select A Team</option>
-                        {this.state.allTeams.map(team => {
-                          return <option>{team}</option>;
-                        })}
-                      </Form.Control>
-                    </Form.Group>
-                    <br />
-                    <label htmlFor='taskDueDate'>Due Date (MM/DD/YY): </label>
-                    <input
-                      type='text'
-                      name='TaskDueDate'
-                      className='form-control'
-                      placeholder='02/29/20'
-                      onChange={this.handleChange.bind(this)}
-                    />
-                    <br />
-                    <Form.Group>
-                      <Form.Label>Priority Level</Form.Label>
-                      <Form.Control as='select'>
-                        <option>High Priority</option>
-                        <option>Medium Priority</option>
-                        <option>Low Priority</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <br />
-                    {isError ? (
-                      <FormMessage
-                        status='error'
-                        message={this.state.errorMsg}
-                      />
-                    ) : (
-                      <h1></h1>
-                    )}
-                    <button
-                      type='button'
-                      onClick={() => this.handleCreateTask()}
-                    >
-                      Add Task
-                    </button>
-                    <br />
-                  </Form>
-                </div>
-                <div className='col-md-4'>
-                  <p>This is where Tasks will show up</p>
-                </div>
-              </div>
+              <Form>
+                <label htmlFor='TaskName'>Name of Tasks:</label>
+                <input
+                  type='text'
+                  name='TaskName'
+                  className='form-control'
+                  placeholder='Task Name'
+                  onChange={this.handleChange.bind(this)}
+                />
+                <br />
+                <label htmlFor='TaskDescription'>Description of Task:</label>
+                <input
+                  type='text'
+                  name='TaskDescription'
+                  className='form-control'
+                  placeholder='Task Description'
+                  onChange={this.handleChange.bind(this)}
+                />
+                <br />
+                <label htmlFor='TaskTeam'>Which Team is This a Task For?</label>
+                <Form.Group controlId='exampleForm.ControlSelect1'>
+                  <Form.Control as='select'>
+                    <option disabled>Select A Team</option>
+                    {this.state.allTeams.map(team => {
+                      return <option>{team}</option>;
+                    })}
+                  </Form.Control>
+                </Form.Group>
+                <br />
+                <label htmlFor='taskDueDate'>Due Date (MM/DD/YY): </label>
+                <input
+                  type='text'
+                  name='TaskDueDate'
+                  className='form-control'
+                  placeholder='02/29/20'
+                  onChange={this.handleChange.bind(this)}
+                />
+                <br />
+                <Form.Group>
+                  <Form.Label>Priority Level</Form.Label>
+                  <Form.Control as='select'>
+                    <option>High Priority</option>
+                    <option>Medium Priority</option>
+                    <option>Low Priority</option>
+                  </Form.Control>
+                </Form.Group>
+                <br />
+                {isError ? (
+                  <FormMessage status='error' message={this.state.errorMsg} />
+                ) : (
+                  <h1></h1>
+                )}
+                <button type='button' onClick={() => this.handleCreateTask()}>
+                  Add Task
+                </button>
+                <br />
+              </Form>
             </div>
           </div>
         </NPLayout>
