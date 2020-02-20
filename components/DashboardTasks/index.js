@@ -26,6 +26,15 @@ export default class DashboardTasks extends Component {
 
   componentDidMount() {
     this.getAllProjectTaskInfo();
+
+    this.timerID = setInterval(
+      () => this.getAllProjectTaskInfo(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   async getAllProjectTaskInfo() {
@@ -34,14 +43,12 @@ export default class DashboardTasks extends Component {
 
     await this.getAllTeams(projectId);
     await this.getAllTasks(projectId);
-
-    console.log(this.state);
   }
 
   async getAllTeams(projectId) {
     var newArr = [];
 
-    await axios.get(`/api/${projectId}`).then(response => {
+    await axios.get(`/api/allTeams/${projectId}`).then(response => {
       for (var i = 0; i < response.data.length; i++) {
         newArr.push(response.data[i].teamName);
       }
@@ -58,9 +65,8 @@ export default class DashboardTasks extends Component {
 
     await axios.get(`/api/allTasks/${projectId}`).then(response => {
       for (var i = 0; i < response.data.length; i++) {
-        console.log(response.data[i]);
-
         var newTask = {
+          id: response.data[i].id,
           name: response.data[i].taskName,
           description: response.data[i].taskDescription,
           dueDate: response.data[i].taskDueDate,
@@ -129,6 +135,14 @@ export default class DashboardTasks extends Component {
       });
     }
   };
+
+  handleClaimTask = e => {
+    var objId = e.target.name;
+
+    axios.put(`/api/claimTask/${objId}`).then((response) => {
+      console.log("updated task in db");
+    })
+  }
 
   handleClose = () => {
     this.setState({
@@ -241,8 +255,8 @@ export default class DashboardTasks extends Component {
                         message={this.state.errorMsg}
                       />
                     ) : (
-                      <h1></h1>
-                    )}
+                        <h1></h1>
+                      )}
                     <button
                       type="button"
                       onClick={() => this.handleCreateTask()}
@@ -279,24 +293,26 @@ export default class DashboardTasks extends Component {
                 <h1>{team}</h1>
                 {this.state.allTasks.map(task => {
                   if (task.team === team) {
-                    return (
-                      <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                          <Card.Title>{task.name}</Card.Title>
-                          <Card.Subtitle className="mb-2 text-muted">
-                            {task.priority}
-                          </Card.Subtitle>
-                          <Card.Text>{task.status}</Card.Text>
-                          <Button variant="danger">Claim Task</Button>
-                          <Button
-                            variant="primary"
-                            onClick={() => this.handleShowModal()}
-                          >
-                            View Details
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    );
+                    if (task.status === "Unassigned") {
+                      return (
+                        <Card style={{ width: '18rem' }}>
+                          <Card.Body>
+                            <Card.Title>{task.name}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {task.priority}
+                            </Card.Subtitle>
+                            <Card.Text>{task.status}</Card.Text>
+                            <Button name={task.id} variant="danger" onClick={(e) => this.handleClaimTask(e)}>Claim Task</Button>
+                            <Button
+                              variant="primary"
+                              onClick={() => this.handleShowModal()}
+                            >
+                              View Details
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      );
+                    }
                   }
                 })}
               </div>
