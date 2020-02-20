@@ -2,12 +2,16 @@ import Nav from "../Nav/index"
 import NPLayout from "../NPLayout/index";
 import NewTeam from "../NewTeam/index";
 import NewCollaborator from "../NewCollaborator/index";
-
+import FormMessage from "../FormMessage/index";
 
 const NPForm = props => {
   var isOnPage1 = props.pageNum === 0;
   var isOnPage2 = props.pageNum === 1;
   var isOnPage3 = props.pageNum === 2;
+
+  var isError = props.isError;
+  var errorMsg = props.errorMsg;
+  var errorPage = props.errorPage;
 
   return (
     <div>
@@ -53,6 +57,20 @@ const NPForm = props => {
                 </div>
               </div>
               <button onClick={() => props.handleNextPage()}>Next</button>
+              {
+                isError ? (
+                  errorPage === 0 ? (
+                    <FormMessage
+                    status="error"
+                    message={props.errorMsg}
+                  />
+                  ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
             </NPLayout>
           </div>
         ) : isOnPage2 ? (
@@ -78,6 +96,20 @@ const NPForm = props => {
               <br />
               <button onClick={() => props.handleLastPage()}>Last</button>
               <button onClick={() => props.handleNextPage()}>Next</button>
+              {
+                isError ? (
+                  errorPage === 1 ? (
+                    <FormMessage
+                    status="error"
+                    message={props.errorMsg}
+                  />
+                  ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
             </NPLayout>
           </div>
         ) : (
@@ -109,6 +141,20 @@ const NPForm = props => {
               <button type='button' onClick={() => props.handleNewProject()}>
                 Create Project
               </button>
+              {
+                isError ? (
+                  errorPage === 2 ? (
+                    <FormMessage
+                      status="error"
+                      message={props.errorMsg}
+                    />
+                    ) : (
+                    <h1></h1>
+                  )
+                ) : (
+                  <h1></h1>
+                )
+              }
                 </NPLayout>
               </div>
             )
