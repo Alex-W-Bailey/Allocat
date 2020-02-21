@@ -28,14 +28,14 @@ body {
   border-radius: 25px 0 0px 25px;
   justify-content: center;
   height: calc(100vh - 75px);
-  //changed this to viewport but it didn't work how i planned... 
+  //changed this to viewport but it didn't work how i planned...
 }
 
 .container1 {
   padding-right: 0px;
 }
 
-.project-header, 
+.project-header,
 .task-header {
   font-size: 2rem;
   font-weight: 1000;
@@ -61,6 +61,9 @@ button {
   }
 }
 
+h1,
+h2,
+h3,
 h5 {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
