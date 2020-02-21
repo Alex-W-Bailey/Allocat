@@ -1,4 +1,5 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
+import '../../styles.scss';
 import Nav from "../../components/Nav/index";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
@@ -56,27 +57,26 @@ export default class Dashboard extends Component {
             <div>
                 <Layout>
                     <Nav pageTitle={this.state.pageTitle} />
-                    <div className=' mt-5'>
-                        <div className='row'>
-                            <div className='col-md-2 dashboard-menu verticle-align mt-5'>
-                                <ListGroup variant='flush' className='verticle-align'>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("teams")}>
-                                            Teams
-                                                </Button>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("tasks")}>
-                                            Tasks
-                                        </Button>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("timeline")}>
-                                            Timeline
-                                        </Button>
-                                    </ListGroup.Item>
-                                </ListGroup>
-                            </div>
+                    <div class="row">
+                    <div className="col-lg-2 dashboard-menu">
+                        <ListGroup variant="flush" className="verticle-align">
+                            <ListGroup.Item>
+                                <Button onClick={() => this.updateCategory("teams")}>
+                                    Teams
+                                </Button>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Button onClick={() => this.updateCategory("tasks")}>Tasks
+                                </Button>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Button onClick={() => this.updateCategory("timeline")}>Timeline
+                                    </Button>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </div>
+                    <div className="col-lg-10 container-main float-right">
+                        <div className="row">
                             <DashboardWindow
                                 categorySelected={this.state.categorySelected}
                                 tasks={this.state.tasks}
@@ -84,6 +84,7 @@ export default class Dashboard extends Component {
                                 timeline={this.state.timeline}
                             />
                         </div>
+                    </div>
                     </div>
                 </Layout>
             </div>
