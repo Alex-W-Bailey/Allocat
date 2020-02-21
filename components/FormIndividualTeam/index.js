@@ -40,12 +40,6 @@ const FormIndividualTeam = props => {
                 <button>Finalize {props.name} Collaborators</button>
               </Form>
             </div>
-            <div className='col-md-4'>
-              <p>
-                This is where Team Member names will show up as you type them
-                in.
-              </p>
-            </div>
           </div>
         </div>
       </div>
