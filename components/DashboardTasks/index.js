@@ -16,9 +16,11 @@ export default class DashboardTasks extends Component {
       TaskName: "",
       TaskDescription: "",
       TaskTeam: "",
+      TaskPriority: "",
       TaskDueDate: "",
       allTeams: [],
       allTasks: [],
+      userTasks: [],
       isError: false,
       errorMsg: ""
     };
@@ -40,6 +42,7 @@ export default class DashboardTasks extends Component {
 
     await this.getAllTeams(projectId);
     await this.getAllTasks(projectId);
+    await this.getUserTasks(projectId);
   }
 
   async getAllTeams(projectId) {
@@ -58,7 +61,6 @@ export default class DashboardTasks extends Component {
 
   async getAllTasks(projectId) {
     var newArr = [];
-    var allTeams = this.state.allTeams;
 
     await axios.get(`/api/allTasks/${projectId}`).then(response => {
       for (var i = 0; i < response.data.length; i++) {
@@ -99,7 +101,7 @@ export default class DashboardTasks extends Component {
       taskName: this.state.TaskName,
       taskDescription: this.state.TaskDescription,
       taskDueDate: this.state.TaskDueDate,
-      taskPriority: "",
+      taskPriority: this.state.TaskPriority,
       taskTeam: this.state.TaskTeam,
       taskStatus: "Unassigned"
     };
@@ -179,6 +181,30 @@ export default class DashboardTasks extends Component {
     });
   };
 
+  async getUserTasks(projectId) {
+    var newArr = [];
+
+    await axios.get(`/api/userTasks/${projectId}`).then((response) => {
+      for (var i = 0; i < response.data.length; i++) {
+        var newTask = {
+          id: response.data[i].id,
+          name: response.data[i].taskName,
+          description: response.data[i].taskDescription,
+          dueDate: response.data[i].taskDueDate,
+          priority: response.data[i].taskPriority,
+          team: response.data[i].taskTeam,
+          status: response.data[i].taskStatus
+        };
+
+        newArr.push(newTask);
+      }
+    });
+
+    this.setState({
+      userTasks: newArr
+    });
+  }
+
   render() {
     const isError = this.state.isError;
 
@@ -215,10 +241,10 @@ export default class DashboardTasks extends Component {
                 <br />
                 <label htmlFor='TaskTeam'>Which Team is This a Task For?</label>
                 <Form.Group controlId='exampleForm.ControlSelect1'>
-                  <Form.Control as='select'>
-                    <option disabled>Select A Team</option>
+                  <Form.Control onChange={this.handleChange.bind(this)} as='select' name="TaskTeam">
+                    <option>Select A Team</option>
                     {this.state.allTeams.map(team => {
-                      return <option>{team}</option>;
+                      return <option value={team}>{team}</option>;
                     })}
                   </Form.Control>
                 </Form.Group>
@@ -234,7 +260,7 @@ export default class DashboardTasks extends Component {
                 <br />
                 <Form.Group>
                   <Form.Label>Priority Level</Form.Label>
-                  <Form.Control as='select'>
+                  <Form.Control onChange={this.handleChange.bind(this)} as='select' name="TaskPriority">
                     <option>High Priority</option>
                     <option>Medium Priority</option>
                     <option>Low Priority</option>
@@ -244,8 +270,8 @@ export default class DashboardTasks extends Component {
                 {isError ? (
                   <FormMessage status='error' message={this.state.errorMsg} />
                 ) : (
-                  <h1></h1>
-                )}
+                    <h1></h1>
+                  )}
                 <button type='button' onClick={() => this.handleCreateTask()}>
                   Add Task
                 </button>
@@ -258,6 +284,37 @@ export default class DashboardTasks extends Component {
     } else {
       return (
         <div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1>My Tasks</h1>
+              {this.state.allTasks.map(task => {
+                return (
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Body>
+                      <Card.Title>{task.name}</Card.Title>
+                      <Card.Subtitle className='mb-2 text-muted'>
+                        {task.priority}
+                      </Card.Subtitle>
+                      <Card.Text>{task.status}</Card.Text>
+                      <Button
+                        name={task.id}
+                        variant='danger'
+                        onClick={e => this.handleClaimTask(e)}
+                      >
+                        Claim Task
+      </Button>
+                      <Button
+                        variant='primary'
+                        onClick={() => this.handleShowModal()}
+                      >
+                        View Details
+      </Button>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
           <Card className='card-task card-style card-title'>
             <Card.Body>
               <Card.Title>Create a New Task</Card.Title>
