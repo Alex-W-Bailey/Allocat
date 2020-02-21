@@ -23,12 +23,12 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
         var url = window.location.href;
-        var splitUrl = url.split("/")[4]; 
-        
+        var splitUrl = url.split("/")[4];
+
         this.setState({
             projectId: splitUrl
         });
-        
+
         axios.get(`/api/project/${splitUrl}`).then((response) => {
             this.setState({
                 pageTitle: response.data.projectName
@@ -37,8 +37,8 @@ export default class Dashboard extends Component {
 
         axios.get(`/api/allTeams/${splitUrl}`).then((response) => {
             var newArr = [];
-            
-            for(var i = 0; i < response.data.length; i++){
+
+            for (var i = 0; i < response.data.length; i++) {
                 newArr.push(response.data[i])
             }
 
@@ -58,33 +58,39 @@ export default class Dashboard extends Component {
                 <Layout>
                     <Nav pageTitle={this.state.pageTitle} />
                     <div class="row">
-                    <div className="col-lg-2 dashboard-menu">
-                        <ListGroup variant="flush" className="verticle-align">
-                            <ListGroup.Item>
-                                <Button onClick={() => this.updateCategory("teams")}>
-                                    Teams
+                        <div className="col-lg-2 dashboard-menu float-left">
+                            <ListGroup variant="flush" className="verticle-align">
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("teams")}>
+                                        Teams
                                 </Button>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Button onClick={() => this.updateCategory("tasks")}>Tasks
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("tasks")}>Tasks
                                 </Button>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Button onClick={() => this.updateCategory("timeline")}>Timeline
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("timeline")}>Timeline
                                     </Button>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </div>
-                    <div className="col-lg-10 container-main float-right">
-                        <div className="row">
-                            <DashboardWindow
-                                categorySelected={this.state.categorySelected}
-                                tasks={this.state.tasks}
-                                teams={this.state.teams}
-                                timeline={this.state.timeline}
-                            />
+                                </ListGroup.Item>
+                            </ListGroup>
                         </div>
-                    </div>
+                        <div className="col-lg-10 container-main float-right">
+                            <div className="pt-4">
+                                <div className="row">
+                                    <div className="col-8 my-2 pl-5">
+                                        <h5 className="task-header">Your  {this.state.categorySelected}</h5>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <DashboardWindow
+                                    categorySelected={this.state.categorySelected}
+                                    tasks={this.state.tasks}
+                                    teams={this.state.teams}
+                                    timeline={this.state.timeline}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </Layout>
             </div>

@@ -283,85 +283,60 @@ export default class DashboardTasks extends Component {
       );
     } else {
       return (
-        <div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1>My Tasks</h1>
-              {this.state.allTasks.map(task => {
-                return (
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Body>
-                      <Card.Title>{task.name}</Card.Title>
-                      <Card.Subtitle className='mb-2 text-muted'>
-                        {task.priority}
-                      </Card.Subtitle>
-                      <Card.Text>{task.status}</Card.Text>
-                      <Button
-                        name={task.id}
-                        variant='danger'
-                        onClick={e => this.handleClaimTask(e)}
-                      >
-                        Claim Task
-      </Button>
-                      <Button
-                        variant='primary'
-                        onClick={() => this.handleShowModal()}
-                      >
-                        View Details
-      </Button>
-                    </Card.Body>
-                  </Card>
-                );
-              })}
+
+        <React.Fragment>
+          <div className="col-lg-3 mb-2">
+            <div className="card-style card">
+              <Card.Body className="d-flex flex-column over">
+                <i class="start-icon fas fa-plus-circle mx-auto fa-5x my-auto"></i>
+                <Card.Title className="card-title mx-auto mt-3">Create a New Task</Card.Title>
+                <Card.Text>Assigned or Unassigned</Card.Text>
+                <Button variant="primary" onClick={() => this.handleNewShow()}>
+                  Create a New Task
+              </Button>
+              </Card.Body>
             </div>
           </div>
-          <Card className='card-task card-style card-title'>
-            <Card.Body>
-              <Card.Title>Create a New Task</Card.Title>
-              <Card.Text>Assigned or Unassigned</Card.Text>
-              <Button onClick={() => this.handleNewShow()}>
-                Create a New Task
-              </Button>
-            </Card.Body>
-          </Card>
 
-          {this.state.allTeams.map(team => {
-            return (
-              <div>
-                <h1>{team}</h1>
-                {this.state.allTasks.map(task => {
-                  if (task.team === team) {
-                    if (task.status === "Unassigned") {
-                      return (
-                        <Card style={{ width: "18rem" }}>
-                          <Card.Body>
-                            <Card.Title>{task.name}</Card.Title>
-                            <Card.Subtitle className='mb-2 text-muted'>
-                              {task.priority}
-                            </Card.Subtitle>
-                            <Card.Text>{task.status}</Card.Text>
-                            <Button
-                              name={task.id}
-                              variant='danger'
-                              onClick={e => this.handleClaimTask(e)}
-                            >
-                              Claim Task
-                            </Button>
-                            <Button
-                              variant='primary'
-                              onClick={() => this.handleShowModal()}
-                            >
-                              View Details
-                            </Button>
-                          </Card.Body>
-                        </Card>
-                      );
+          {
+            this.state.allTeams.map(team => {
+              return (
+                <React.Fragment>
+                  <div class="row pl-5">
+                    <h1 className="team-header">{team}</h1>
+                  </div>
+                  <div class="row ml-1">
+                    {
+                      this.state.allTasks.map(task => {
+                        if (task.team === team) {
+                          return (
+                            <div className="col-lg-3 mb2">
+                              <div className="task-card card">
+                                <div className="card-body d-flex flex-column over">
+                                  <h5 className="task-name card-title mx-auto mt-3">{task.name}</h5>
+                                  <div className="card-subtitle mb-2 text-muted">
+                                    {task.priority}
+                                  </div>
+                                  <Card.Text>{task.status}</Card.Text>
+                                  <div className="row">
+                                    <Button variant='danger'>Claim Task</Button>
+                                    <Button variant='primary' onClick={() => this.handleShowModal()}>
+                                      View Details
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        }
+                      })
                     }
-                  }
-                })}
-              </div>
-            );
-          })}
+                  </div>
+                </React.Fragment>
+              )
+            })
+          }
+
 
           <Modal show={this.state.show} onHide={() => this.handleClose()}>
             <Modal.Header closeButton>
@@ -386,7 +361,7 @@ export default class DashboardTasks extends Component {
               </Button>
             </Modal.Footer>
           </Modal>
-        </div>
+        </React.Fragment>
       );
     }
   }
