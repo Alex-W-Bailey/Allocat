@@ -27,19 +27,22 @@ body {
   border: 1px solid $accentGrey;
   border-radius: 25px 0 0px 25px;
   justify-content: center;
-  height: 500px;
-  //change this height to be viewport height
+  height: calc(100vh - 75px);
+  //changed this to viewport but it didn't work how i planned... 
 }
 
 .container1 {
   padding-right: 0px;
 }
 
-.project-header {
+.project-header, 
+.task-header {
   font-size: 2rem;
   font-weight: 1000;
   margin-top: 5px;
+  text-transform: capitalize;
 }
+
 .btn,
 .btn-primary,
 .dropdown-toggle,

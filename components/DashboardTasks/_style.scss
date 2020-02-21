@@ -1,14 +1,23 @@
-.card-task { 
-    
+.task-card {
+    height: 13rem;
+    border: 1px solid $softGrey;
+    border-radius: 25px;
 }
 
-.card-style {
-        border: 1px solid $softGrey;
-        border-radius: 25px;
-    }
+.card-title {
+    font-weight: 1000;
+    font-size: 1.35rem;
+}
 
-    .card-title {
-        font-weight: 1000;
-        font-size: 1.35rem;
-    }
+.team-header {
+    font-size: 1.5rem;
+    font-weight: 1000;
+    margin-top: 5px;
+    text-transform: capitalize;
+}
+
+.task-name {
+    text-transform: capitalize;
+}
+
 
