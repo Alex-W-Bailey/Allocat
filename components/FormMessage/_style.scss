@@ -1,18 +1,29 @@
 .messageText {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .errorBorder {
-    border: 8px solid #ff0000;
-    background-color: #ee6a6a;
-    text-align: center;
-    height: 50px;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  min-width: 50%;
+  border: 6px solid #ff0000;
+  background-color: #fa9a9a;
+  text-align: center;
+  height: 50px;
 }
 
 .successBorder {
-    border: 8px solid #00FF00;
-    background-color: #CCFFCC;
-    text-align: center;
+  margin-top: 10px;
+  padding: 5px;
+  min-width: 50%;
+  border-radius: 10px;
+  border: 6px solid #33fc9e;
+  background-color: #ccfff0;
+  text-align: center;
 }
 
+.justify-center {
+  justify-content: center;
+}

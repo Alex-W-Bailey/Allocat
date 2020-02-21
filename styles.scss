@@ -82,7 +82,9 @@ a {
     color: $softGrey;
   }
 }
-
+.justify-center {
+  justify-content: center;
+}
 input {
   margin-bottom: 10px;
 }

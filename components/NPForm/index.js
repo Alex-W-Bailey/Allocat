@@ -54,6 +54,8 @@ const NPForm = props => {
               </form>
             </div>
             <button onClick={() => props.handleNextPage()}>Next</button>
+          </div>
+          <div className='row justify-center'>
             {isError ? (
               errorPage === 0 ? (
                 <FormMessage status='error' message={props.errorMsg} />
@@ -88,16 +90,19 @@ const NPForm = props => {
               <br />
               <button onClick={() => props.handleLastPage()}>Last</button>
               <button onClick={() => props.handleNextPage()}>Next</button>
-              {isError ? (
-                errorPage === 1 ? (
-                  <FormMessage status='error' message={props.errorMsg} />
-                ) : (
-                  <h1></h1>
-                )
+            </div>
+          </div>
+
+          <div className='row mx-auto justify-center'>
+            {isError ? (
+              errorPage === 1 ? (
+                <FormMessage status='error' message={props.errorMsg} />
               ) : (
                 <h1></h1>
-              )}
-            </div>
+              )
+            ) : (
+              <h1></h1>
+            )}
           </div>
         </NPLayout>
       ) : (
@@ -130,16 +135,18 @@ const NPForm = props => {
           </button>
           <br />
 
-          {isError ? (
-            errorPage === 2 ? (
-              <FormMessage status='error' message={props.errorMsg} />
+          <div className='row justify-center'>
+            {isError ? (
+              errorPage === 2 ? (
+                <FormMessage status='error' message={props.errorMsg} />
+              ) : (
+                <h1></h1>
+              )
             ) : (
               <h1></h1>
-            )
-          ) : (
-            <h1></h1>
-          )}
-          <div className='cp-btn-div row mx-auto'>
+            )}
+          </div>
+          <div className='justify-center row mx-auto'>
             <button className='cp-btn' onClick={() => props.handleNewProject()}>
               Create Project
             </button>
