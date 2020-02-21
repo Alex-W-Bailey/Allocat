@@ -125,36 +125,13 @@ export default class DashboardTasks extends Component {
       if (response.status === 200) {
         console.log("created task");
       }
+
+      this.setState({
+        isCreatingTask: false
+      });
+
       this.handleShowAllTasks();
     });
-
-    // if (this.state.TaskName === "") {
-    //   this.setState({
-    //     isError: true,
-    //     errorMsg: "Task Name Required"
-    //   });
-    // }
-
-    // if (this.state.TaskDescription === "") {
-    //   this.setState({
-    //     isError: true,
-    //     errorMsg: "Task Description Required"
-    //   });
-    // }
-
-    // if (this.state.TaskTeam === "") {
-    //   this.setState({
-    //     isError: true,
-    //     errorMsg: "Task Team Required"
-    //   });
-    // } else {
-      // axios.post("/api/newTask", newTask).then(response => {
-      //   if (response.status === 200) {
-      //     console.log("created task");
-      //   }
-      //   this.handleShowAllTasks();
-      // });
-    // }
   };
 
   handleCancelCreation = () => {
