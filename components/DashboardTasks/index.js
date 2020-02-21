@@ -21,6 +21,15 @@ export default class DashboardTasks extends Component {
       allTeams: [],
       allTasks: [],
       userTasks: [],
+      isCreatingTask: false,
+      isNameClicked: false,
+      isDescriptionClicked: false,
+      newTaskNameHover: false,
+      newTaskDescriptionHover: false,
+      newTaskName: "",
+      newTaskDescription: "",
+      newTaskDueDate: "",
+      newTaskPriority: "",
       isError: false,
       errorMsg: ""
     };
@@ -32,17 +41,21 @@ export default class DashboardTasks extends Component {
     this.timerID = setInterval(() => this.getAllProjectTaskInfo(), 1000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.timerID);
+  // }
 
   async getAllProjectTaskInfo() {
-    var url = window.location.href;
-    var projectId = url.split("/")[4];
+    var isCreatingTask = this.state.isCreatingTask;
 
-    await this.getAllTeams(projectId);
-    await this.getAllTasks(projectId);
-    await this.getUserTasks(projectId);
+    if (isCreatingTask === false) {
+      var url = window.location.href;
+      var projectId = url.split("/")[4];
+
+      await this.getAllTeams(projectId);
+      await this.getAllTasks(projectId);
+      await this.getUserTasks(projectId);
+    }
   }
 
   async getAllTeams(projectId) {
@@ -92,48 +105,63 @@ export default class DashboardTasks extends Component {
     });
   };
 
-  handleCreateTask = () => {
+  handleCreateTask = (team) => {
+    var teamName = Object.values(team)[0];
+
     var url = window.location.href;
     var splitUrl = url.split("/")[4];
 
     let newTask = {
       projectId: splitUrl,
-      taskName: this.state.TaskName,
-      taskDescription: this.state.TaskDescription,
-      taskDueDate: this.state.TaskDueDate,
-      taskPriority: this.state.TaskPriority,
-      taskTeam: this.state.TaskTeam,
+      taskName: this.state.newTaskName,
+      taskDescription: this.state.newTaskDescription,
+      taskDueDate: this.state.newTaskDueDate,
+      taskPriority: this.state.newTaskPriority,
+      taskTeam: teamName,
       taskStatus: "Unassigned"
     };
 
-    if (this.state.TaskName === "") {
-      this.setState({
-        isError: true,
-        errorMsg: "Task Name Required"
-      });
-    }
+    axios.post("/api/newTask", newTask).then(response => {
+      if (response.status === 200) {
+        console.log("created task");
+      }
+      this.handleShowAllTasks();
+    });
 
-    if (this.state.TaskDescription === "") {
-      this.setState({
-        isError: true,
-        errorMsg: "Task Description Required"
-      });
-    }
+    // if (this.state.TaskName === "") {
+    //   this.setState({
+    //     isError: true,
+    //     errorMsg: "Task Name Required"
+    //   });
+    // }
 
-    if (this.state.TaskTeam === "") {
-      this.setState({
-        isError: true,
-        errorMsg: "Task Team Required"
-      });
-    } else {
-      axios.post("/api/newTask", newTask).then(response => {
-        if (response.status === 200) {
-          console.log("created task");
-        }
-        this.handleShowAllTasks();
-      });
-    }
+    // if (this.state.TaskDescription === "") {
+    //   this.setState({
+    //     isError: true,
+    //     errorMsg: "Task Description Required"
+    //   });
+    // }
+
+    // if (this.state.TaskTeam === "") {
+    //   this.setState({
+    //     isError: true,
+    //     errorMsg: "Task Team Required"
+    //   });
+    // } else {
+      // axios.post("/api/newTask", newTask).then(response => {
+      //   if (response.status === 200) {
+      //     console.log("created task");
+      //   }
+      //   this.handleShowAllTasks();
+      // });
+    // }
   };
+
+  handleCancelCreation = () => {
+    this.setState({
+      isCreatingTask: false
+    });
+  }
 
   handleClaimTask = e => {
     var objId = e.target.name;
@@ -181,6 +209,15 @@ export default class DashboardTasks extends Component {
     });
   };
 
+  handleToggleMouseOver = (obj) => {
+    var stateName = obj + "Hover"
+    var oppositeVal = !this.state[stateName];
+
+    this.setState({
+      [stateName]: oppositeVal
+    });
+  }
+
   async getUserTasks(projectId) {
     var newArr = [];
 
@@ -205,8 +242,88 @@ export default class DashboardTasks extends Component {
     });
   }
 
+  createTask(team) {
+    console.log(this.state)
+
+    this.setState({
+      isCreatingTask: true
+    });
+
+    var teamName = Object.values(team)[0];
+    var newArr = [];
+
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+    let newTask = {
+      id: -1,
+      name: "Task Name",
+      description: "Task Description",
+      dueDate: "Task Due Date",
+      priority: "Task Priority",
+      team: teamName,
+      status: "Unassigned"
+    };
+
+    newArr.push(newTask);
+
+    var allTasks = this.state.allTasks;
+    for (var i = 0; i < allTasks.length; i++) {
+      newArr.push(allTasks[i]);
+    }
+
+    this.setState({
+      allTasks: newArr
+    });
+
+    console.log("updated")
+  }
+
+  edit(elementToEdit) {
+    if (elementToEdit === "name") {
+      this.setState({
+        isNameClicked: true,
+        isDescriptionClicked: false,
+        newTaskNameHover: false,
+        newTaskDescriptionHover: false
+      });
+    }
+    else if (elementToEdit === "description") {
+      this.setState({
+        isNameClicked: false,
+        isDescriptionClicked: true,
+        newTaskNameHover: false,
+        newTaskDescriptionHover: false
+      });
+    }
+    else if (elementToEdit === "none") {
+      this.setState({
+        isNameClicked: false,
+        isDescriptionClicked: false,
+        newTaskNameHover: false,
+        newTaskDescriptionHover: false
+      });
+    }
+  }
+
   render() {
     const isError = this.state.isError;
+    const isNameClicked = this.state.isNameClicked;
+    const isDescriptionClicked = this.state.isDescriptionClicked;
+
+    var newTaskNameStyle;
+    var newTaskDescriptionStyle;
+
+    if (this.state.newTaskNameHover) {
+      newTaskNameStyle = { color: "#2190cc", fontWeight: "bolder", border: "1px solid #2190cc", cursor: "pointer" }
+    } else (
+      newTaskNameStyle = { color: "#242424", border: "none", cursor: "pointer" }
+    )
+
+    if (this.state.newTaskDescriptionHover) {
+      newTaskDescriptionStyle = { color: "#2190cc", fontWeight: "bolder", border: "1px solid #2190cc", cursor: "pointer" }
+    } else (
+      newTaskDescriptionStyle = { color: "#242424", border: "none", cursor: "pointer" }
+    )
 
     if (this.state.showForm) {
       return (
@@ -283,7 +400,6 @@ export default class DashboardTasks extends Component {
       );
     } else {
       return (
-
         <React.Fragment>
           <div className="col-lg-3 mb-2">
             <div className="card-style card">
@@ -303,30 +419,134 @@ export default class DashboardTasks extends Component {
               return (
                 <React.Fragment>
                   <div class="row pl-5">
-                    <h1 className="team-header">{team}</h1>
+                    <h1 className="team-header">{team} <button onClick={() => this.createTask({ team })}>New</button></h1>
                   </div>
                   <div class="row ml-1">
                     {
                       this.state.allTasks.map(task => {
                         if (task.team === team) {
                           return (
-                            <div className="col-lg-3 mb2">
-                              <div className="task-card card">
-                                <div className="card-body d-flex flex-column over">
-                                  <h5 className="task-name card-title mx-auto mt-3">{task.name}</h5>
-                                  <div className="card-subtitle mb-2 text-muted">
-                                    {task.priority}
-                                  </div>
-                                  <Card.Text>{task.status}</Card.Text>
-                                  <div className="row">
-                                    <Button variant='danger'>Claim Task</Button>
-                                    <Button variant='primary' onClick={() => this.handleShowModal()}>
-                                      View Details
+                            task.id === -1 ? (
+                              <div className="col-lg-3 mb2">
+                                <div className="task-card card">
+                                  <div className="card-body d-flex flex-column over">
+                                    {
+                                      isNameClicked ? (
+                                        <div>
+                                          <h5 className="task-name card-title mx-auto mt-3"><input text="text" name="newTaskName" value={this.state.newTaskName} onChange={this.handleChange.bind(this)}></input></h5>
+                                          <div className="card-subtitle mb-2 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
+                                            {
+                                              this.state.newTaskDescription === "" ?
+                                                (
+                                                  <p style={newTaskDescriptionStyle}>{task.description}</p>
+                                                ) : (
+                                                  <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
+                                                )
+                                            }
+                                          </div>
+                                          <div className="card-subtitle mb-2 text-muted" onClick={() => this.edit("none")}>
+                                          <Form.Group>
+                                                  <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                    <option value="N/A" disabled selected>Select Priority Level</option>
+                                                    <option value="High" style={{color:"#e1651b", fontWeight:"bold"}}>High Priority</option>
+                                                    <option value="Medium" style={{color:"#ffaa0a", fontWeight:"bold"}}>Medium Priority</option>
+                                                    <option value="Low" style={{color:"#2ab009", fontWeight:"bold"}}>Low Priority</option>
+                                                  </Form.Control>
+                                                </Form.Group>
+                                          </div>
+                                          <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                        </div>
+                                      ) : isDescriptionClicked ? (
+                                        <div>
+                                          <h5 className="task-name card-title mx-auto mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
+                                            {
+                                              this.state.newTaskName === "" ?
+                                                (
+                                                  <p style={newTaskNameStyle}>{task.name}</p>
+                                                ) : (
+                                                  <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
+                                                )
+                                            }
+                                          </h5>
+                                          <div className="card-subtitle mb-2 text-muted">
+                                            <input text="text" name="newTaskDescription" value={this.state.newTaskDescription} onChange={this.handleChange.bind(this)}></input>
+                                          </div>
+                                          <div className="card-subtitle mb-2 text-muted" onClick={() => this.edit("none")}>
+                                          <Form.Group>
+                                                  <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                    <option value="N/A" disabled selected>Select Priority Level</option>
+                                                    <option value="High" style={{color:"#e1651b", fontWeight:"bold"}}>High Priority</option>
+                                                    <option value="Medium" style={{color:"#ffaa0a", fontWeight:"bold"}}>Medium Priority</option>
+                                                    <option value="Low" style={{color:"#2ab009", fontWeight:"bold"}}>Low Priority</option>
+                                                  </Form.Control>
+                                                </Form.Group>
+                                          </div>
+                                          <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                        </div>
+                                      ) : (
+                                            <div>
+                                              <h5 className="task-name card-title mx-auto mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onMouseLeave={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
+                                                {
+                                                  this.state.newTaskName === "" ?
+                                                    (
+                                                      <p style={newTaskNameStyle}>{task.name}</p>
+                                                    ) : (
+                                                      <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
+                                                    )
+                                                }
+                                              </h5>
+                                              <div className="card-subtitle mb-2 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onMouseLeave={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
+                                                {
+                                                  this.state.newTaskDescription === "" ?
+                                                    (
+                                                      <p style={newTaskDescriptionStyle}>{task.description}</p>
+                                                    ) : (
+                                                      <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
+                                                    )
+                                                }
+                                              </div>
+                                              <div className="card-subtitle mb-2 text-muted" onClick={() => this.edit("none")}>
+                                                <Form.Group>
+                                                  <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                    <option value="N/A" disabled selected>Select Priority Level</option>
+                                                    <option value="High" style={{color:"#e1651b", fontWeight:"bold"}}>High Priority</option>
+                                                    <option value="Medium" style={{color:"#ffaa0a", fontWeight:"bold"}}>Medium Priority</option>
+                                                    <option value="Low" style={{color:"#2ab009", fontWeight:"bold"}}>Low Priority</option>
+                                                  </Form.Control>
+                                                </Form.Group>
+                                              </div>
+                                              <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                            </div>
+                                          )
+                                    }
+                                    <div className="row">
+                                      <Button variant='danger' onClick={() => this.handleCreateTask({ team })}>Create Task</Button>
+                                      <Button variant='primary' onClick={() => this.handleCancelCreation()}>
+                                        Cancel
                                     </Button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            ) : (
+                                <div className="col-lg-3 mb2">
+                                  <div className="task-card card">
+                                    <div className="card-body d-flex flex-column over">
+                                      <h5 className="task-name card-title mx-auto mt-3">{task.name}</h5>
+                                      <div className="card-subtitle mb-2 text-muted">
+                                        {task.priority}
+                                      </div>
+                                      <Card.Text>{task.status}</Card.Text>
+                                      <div className="row">
+                                        <Button variant='danger'>Claim Task</Button>
+                                        <Button variant='primary' onClick={() => this.handleShowModal()}>
+                                          View Details
+                                    </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
                           )
                         }
                       })
