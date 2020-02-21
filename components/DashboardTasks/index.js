@@ -233,8 +233,8 @@ export default class DashboardTasks extends Component {
       );
     } else {
       return (
-        <div className='mt-5'>
-          <Card style={{ width: "18rem" }}>
+        <div>
+          <Card className='card-task card-style card-title'>
             <Card.Body>
               <Card.Title>Create a New Task</Card.Title>
               <Card.Text>Assigned or Unassigned</Card.Text>
