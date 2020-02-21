@@ -1,8 +1,14 @@
+.messageText {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .errorBorder {
     border-radius: 25px;
     border: 8px solid #ff0000;
     background-color: #ee6a6a;
     text-align: center;
+    height: 50px;
 }
 
 .successBorder {

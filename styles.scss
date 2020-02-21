@@ -52,14 +52,10 @@ button {
   margin: 5px;
   &:hover {
     background-color: $allocatTeal;
-    border-style: none;
-    border-color: none;
   }
-  //   &::after {
-  //     background-color: $allocatTeal;
-  //     border-style: none;
-  //     border-color: none;
-  //   }
+  &:active {
+    background-color: $allocatTeal;
+  }
 }
 
 h5 {
