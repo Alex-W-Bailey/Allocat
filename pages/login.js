@@ -127,11 +127,7 @@ export default class Login extends Component {
               >
                 Login
           </button>
-              {isError ? (
-                <FormMessage status="error" message={this.state.errorMsg} />
-              ) : (
-                  <FormMessage />
-                )}
+               
               <br />
             </div>
           </RLLayout>
