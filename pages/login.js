@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import Layout from "../components/Layout";
-import axios from "axios";
-import Nav from "../components/Nav/index";
-import RLLayout from "../components/RLLayout";
+import React, { Component } from 'react';
+import Layout from '../components/Layout';
+import axios from 'axios';
+import Nav from '../components/Nav/index';
+import RLLayout from '../components/RLLayout';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      pageTitle: "Login",
+      email: '',
+      password: '',
+      pageTitle: 'Login',
       menuItems: [
-        { name: "Logout", href: "/", id: 1 },
-        { name: "Projects", href: "/Projects", id: 2 }
+        { name: 'Logout', href: '/', id: 1 },
+        { name: 'Projects', href: '/Projects', id: 2 }
       ],
       isError: false,
-      errorMsg: "Email or Password incorrect"
+      errorMsg: 'Email or Password incorrect'
     };
   }
 
@@ -30,7 +30,7 @@ export default class Login extends Component {
   };
 
   handleRegisterClick = () => {
-    console.log("clicked!");
+    console.log('clicked!');
     console.log(this.state);
 
     let user = {
@@ -38,18 +38,21 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    axios.post("/api/login", user).then(function (response) {
-      if (response.status === 200) {
-        window.location.replace("/projects");
-      }
-    }).catch((err) => {
-      if (err.response) {
-        console.log('err');
-        this.setState({
-          isError: true
-        });
-      }
-    });
+    axios
+      .post('/api/login', user)
+      .then(function(response) {
+        if (response.status === 200) {
+          window.location.replace('/projects');
+        }
+      })
+      .catch(err => {
+        if (err.response) {
+          console.log('err');
+          this.setState({
+            isError: true
+          });
+        }
+      });
   };
 
   render() {
@@ -62,34 +65,30 @@ export default class Login extends Component {
           menuItems={this.state.menuItems}
         />
         <RLLayout>
-          <label htmlFor='Email'>Email:</label>
+          <label htmlFor="Email">Email:</label>
           <input
-            type='text'
-            name='email'
-            className='form-control'
-            id='Email'
-            placeholder='Email'
+            type="text"
+            name="email"
+            className="form-control"
+            id="Email"
+            placeholder="Email"
             onChange={this.handleChange.bind(this)}
           />
           <br />
-          <label htmlFor='Password'>Password:</label>
+          <label htmlFor="Password">Password:</label>
           <input
-            type='text'
-            name='password'
-            className='form-control'
-            id='Password'
-            placeholder='Password'
+            type="password"
+            name="password"
+            className="form-control"
+            id="Password"
+            placeholder="Password"
             onChange={this.handleChange.bind(this)}
           />
           <br />
 
           <button onClick={() => this.handleRegisterClick()}>Login</button>
           <br />
-          {isError ? (
-            <h1>{this.state.errorMsg}</h1>
-          ) : (
-              <h1></h1>
-            )}
+          {isError ? <h1>{this.state.errorMsg}</h1> : <h1></h1>}
         </RLLayout>
       </div>
     );
