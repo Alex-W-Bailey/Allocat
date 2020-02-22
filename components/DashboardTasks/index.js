@@ -310,7 +310,7 @@ export default class DashboardTasks extends Component {
               Back to All Tasks
             </Button>
           </div>
-          <div className='row mt-5'>
+          <div className='row mt-2'>
             <div className='col-md-12 mx-auto'>
               <h2>Add Tasks to Complete</h2>
 
@@ -378,18 +378,17 @@ export default class DashboardTasks extends Component {
     } else {
       return (
         <React.Fragment>
-          <div className="team-container mr-5">
-            <div className="row pl-5">
-              <div className="row">
-                <div className="">
-                  <h1>My Tasks</h1>
-                </div>
+          <div className="team-container px-2">
+            <div className="row">
+              <div className="col-lg-6">
+                <h2 className="team-header">My Tasks</h2>
               </div>
-              <div className="row">
+            </div>
+            <div className="row">
               {
                 this.state.userTasks.map((userTask) => {
                   return (
-                    <div className="col-lg-3 mb2">
+                    <div className="col-lg-3 mb-2">
                       <div className="task-card card">
                         <div className="card-body d-flex flex-column over">
                           <h5 className="task-name card-title mt-3">{userTask.name}</h5>
@@ -410,24 +409,23 @@ export default class DashboardTasks extends Component {
                   )
                 })
               }
-              </div>
             </div>
           </div>
           {
             this.state.allTeams.map(team => {
               return (
                 <React.Fragment>
-                  <div className="team-container mr-5">
-                    <div className="row pl-5">
+                  <div className="team-container mt-2 px-2">
+                    <div className="row px-2">
                       <div className="col-lg-6">
-                        <h1 className="team-header align-middle">{team}</h1>
+                        <h2 className="team-header align-middle">{team}</h2>
                       </div>
                       <div className="col-lg-6">
                         <button className="btn px-5 float-right" onClick={() => this.createTask({ team })}>Create New Task</button>
                       </div>
                     </div>
 
-                    <div className="row pl-5 my-3">
+                    <div className="row px-2 my-3">
                       {
                         this.state.allTasks.map(task => {
                           if (task.team === team) {
