@@ -22,49 +22,56 @@ body {
   background-color: $darkCanvas;
   color: $darkText;
 }
+
 .container-main {
+  background-color: $container;
+  border: 1px solid $accentGrey;
+  justify-content: center;
+  height: inherit;
+}
+
+.container-main-task {
   background-color: $container;
   border: 1px solid $accentGrey;
   border-radius: 25px 0 0px 25px;
   justify-content: center;
-  height: 500px;
-  //change this height to be viewport height
+  height: inherit;
+  min-height: 100vh;
 }
 
 .container1 {
   padding-right: 0px;
 }
 
-.project-header {
+.project-header,
+.task-header {
   font-size: 2rem;
   font-weight: 1000;
   margin-top: 5px;
-}
-
-button {
-  background-color: $allocatBlue;
-  color: $warmWhite;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 5px;
+  text-transform: capitalize;
 }
 
 .btn,
 .btn-primary,
-.dropdown-toggle {
+.dropdown-toggle,
+button {
   background-color: $allocatBlue;
-  border-style: none;
-  border-color: none;
+  border-color: $allocatBlue;
+  color: $warmWhite;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  &:hover {
+    background-color: $allocatTeal;
+  }
+  &:active {
+    background-color: $allocatTeal;
+  }
 }
 
-.btn:hover,
-.btn-primary:hover,
-.dropdown-toggle:hover {
-  background-color: $allocatTeal;
-  border-style: none;
-  border-color: none;
-}
-
+h1,
+h2,
+h3,
 h5 {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
@@ -76,6 +83,22 @@ h5 {
 
 .form-control {
   border-radius: 10px;
+}
+a {
+  color: $warmWhite;
+  &:hover {
+    color: $softGrey;
+  }
+}
+.justify-center {
+  justify-content: center;
+}
+input {
+  margin-bottom: 10px;
+}
+
+.dashboard-menu {
+  padding: 0px;
 }
 
 // NAVIGATION STYLES
@@ -99,6 +122,7 @@ h5 {
 @import "/components/FormNewProject/style";
 @import "/components/FormTasks/style";
 @import "/components/FormTeam/style";
+@import "/components/NPForm/style.scss";
 
 // DASHBOARD STYLES
 @import "/components/DashboardTasks/style";
@@ -110,3 +134,4 @@ h5 {
 @import "/components/Header/style";
 @import "/components/NewCollaborator/style";
 @import "/components/NewTeam/style";
+@import "/components/FormMessage/style";

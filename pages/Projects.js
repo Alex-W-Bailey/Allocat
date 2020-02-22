@@ -54,18 +54,15 @@ export default class Projects extends Component {
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
-          <div className="col-lg-2">
-            {/* add the side nav here */}
-          </div>
-          <div className="col-lg-10 container1 float-right">
-            <div className="container-main p-4">
+          <div className="col-lg-12 container-main float-right">
+            <div className="pt-4">
               <div className="row">
                 <div className="col-8 my-2 pl-5">
                   <h5 className="project-header">Your Projects</h5>
                 </div>
                 <hr />
               </div>
-              <div className='row m-3'>
+              <div className='row m-2'>
                 <NPCard />
                 {
                   this.state.projectInfo.map(project => {

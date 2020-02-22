@@ -1,13 +1,10 @@
+import "../styles.scss";
 import React, { Component } from "react";
 import Layout from "../components/Layout/index";
 import axios from "axios";
-import FormNewProject from "../components/FormNewProject/index";
-import FormTeam from "../components/FormTeam/index";
-import FormTasks from "../components/FormTasks/index";
 import NewTeam from "../components/NewTeam/index";
-import NewCollaborator from "../components/NewCollaborator/index";
 import NPForm from "../components/NPForm/index";
-import CreatedProject from "../components/CreatedProject/index"
+import CreatedProject from "../components/CreatedProject/index";
 import { Button } from "react-bootstrap";
 
 export default class NewProject extends Component {
@@ -30,7 +27,8 @@ export default class NewProject extends Component {
       projectId: 0,
       projectCreatedSuccessfully: false,
       isError: false,
-      errorMsg: ""
+      errorMsg: "",
+      errorPage: 0
     };
   }
 
@@ -41,7 +39,7 @@ export default class NewProject extends Component {
     this.setState({
       [objName]: objValue
     });
-  }
+  };
 
   handleTeamNameChange = e => {
     let objName = e.target.name;
@@ -86,7 +84,7 @@ export default class NewProject extends Component {
     this.setState({
       numberOfTeams: newArr
     });
-  }
+  };
 
   handleCollabSearch = () => {
     console.log("searching..." + this.state.collaboratorEmail);
@@ -98,8 +96,7 @@ export default class NewProject extends Component {
           collaboratorFound: true,
           collaboratorName: usersFound.data.fullName
         });
-      }
-      else {
+      } else {
         console.log("none");
         this.setState({
           searchedForCollaborator: true,
@@ -107,9 +104,9 @@ export default class NewProject extends Component {
         });
       }
 
-      console.log(this.state)
+      console.log(this.state);
     });
-  }
+  };
 
   handleAddNewCollaborator = () => {
     console.log("Add new collaborator");
@@ -124,72 +121,98 @@ export default class NewProject extends Component {
     });
 
     console.log(this.state);
-  }
+  };
 
   handleRedirectToProjects = () => {
     window.location.replace("/projects");
-  }
+  };
 
   handleNextPage = () => {
     var pageNum = this.state.pageNum;
 
-    if(pageNum < 3){
+    if (pageNum < 3) {
       pageNum++;
 
       this.setState({
         pageNum: pageNum
       });
     }
-  }
+  };
 
   handleLastPage = () => {
     var pageNum = this.state.pageNum;
 
-    if(pageNum > 0){
+    if (pageNum > 0) {
       pageNum--;
 
       this.setState({
         pageNum: pageNum
       });
     }
-  }
- 
-  //Priority level 1: High, 2: Medium, 3: Low
+  };
 
   async createProject() {
-    let newProject = {
-      projectName: this.state.projectName,
-      projectDescription: this.state.projectDescription,
-      dueDate: this.state.dueDate
-    };
+    var isFormLeftEmpty = this.validateForm();
 
-    await axios.post("/api/newProject", newProject).then(response => {
-      if (response.data === "err") {
-        console.log("project name already taken");
-      } else {
-        console.log("project created...");
+    if(isFormLeftEmpty === false){
+      let newProject = {
+        projectName: this.state.projectName,
+        projectDescription: this.state.projectDescription,
+        dueDate: this.state.dueDate
+      };
+  
+      await axios.post("/api/newProject", newProject).then(response => {
+        if (response.data === "err") {
+          console.log("project name already taken");
+        } else {
+          console.log("project created...");
+  
+          this.getId();
+        }
+      });
+  
+      var newCreator = {
+        projectName: this.state.projectName
+      };
+  
+      await axios.post("/api/projectCreator", newCreator).then(response => {
+        for (var i = 0; i < this.state.allTeams.length; i++) {
+          console.log("creating team...");
+  
+          this.createTeams(i);
+        }
+      });
+  
+      await this.createCollaborators();
+      
+      this.setState({
+        projectCreatedSuccessfully: true
+      });
+    }
+  }
 
-        this.getId();
-      }
-    });
+  validateForm() {
+    var isFormLeftEmpty = false
 
-    var newCreator = {
-      projectName: this.state.projectName
-    };
+    //Checks project info
+    if(this.state.projectName === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project name is required!", 0);
+    }
+    else if(this.state.projectDescription === ""){
+      isFormLeftEmpty = true;
+      this.setErrorState(isFormLeftEmpty, "Project description is required!", 0);
+    }
 
-    await axios.post("/api/projectCreator", newCreator).then(response => {
-      for (var i = 0; i < this.state.allTeams.length; i++) {
-        console.log("creating team...");
+    return isFormLeftEmpty;
+  }
 
-        this.createTeams(i);
-      }
-    });
-
-    await this.createCollaborators();
-    
+  setErrorState(isError, errorMsg, pageNum) {
     this.setState({
-      projectCreatedSuccessfully: true
-    })
+      pageNum: pageNum,
+      isError: isError,
+      errorMsg: errorMsg
+    });
   }
 
   async createTeams(i) {
@@ -209,32 +232,36 @@ export default class NewProject extends Component {
         console.log("New Team created!");
       }
     });
-  };
+  }
 
   async createCollaborators() {
-    console.log("create collaborators")
+    console.log("create collaborators");
 
     for (var i = 0; i < this.state.allCollaborators.length; i++) {
       var collaborator = this.state.allCollaborators[i];
       console.log("collab: " + collaborator);
 
-      axios.post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`).then((response) => {
-        if (response.status === 200) {
-          console.log("added collaborators");
-        }
-      })
+      axios
+        .post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`)
+        .then(response => {
+          if (response.status === 200) {
+            console.log("added collaborators");
+          }
+        });
     }
   }
 
-  async getId(){
-    await axios.get(`/api/project/name/${this.state.projectName}`).then((response) => {
-      this.setState({
-        projectId: response.data.id
-      });
+  async getId() {
+    await axios
+      .get(`/api/project/name/${this.state.projectName}`)
+      .then(response => {
+        this.setState({
+          projectId: response.data.id
+        });
 
-      console.log("retrieved id...")
-      console.log(this.state)
-    });
+        console.log("retrieved id...");
+        console.log(this.state);
+      });
   }
 
   render() {
@@ -246,7 +273,7 @@ export default class NewProject extends Component {
 
     return (
       <Layout>
-        {
+       {
           createdProject ? (
             <CreatedProject 
               projectId={this.state.projectId}
@@ -269,8 +296,9 @@ export default class NewProject extends Component {
               searchedForCollaborator={searchedForCollaborator}
               handleNextPage={this.handleNextPage}
               handleLastPage={this.handleLastPage}
-              isError={isError}
-              errorMsg={errorMsg}
+              isError={this.state.isError}
+              errorMsg={this.state.errorMsg}
+              errorPage={this.state.errorPage}
             />) : (
                 <NPForm
                 pageNum={this.state.pageNum}
@@ -288,12 +316,12 @@ export default class NewProject extends Component {
                   searchedForCollaborator={searchedForCollaborator}
                   handleNextPage={this.handleNextPage}
                   handleLastPage={this.handleLastPage}
-                  isError={isError}
-                  errorMsg={errorMsg}
+                  isError={this.state.isError}
+                  errorMsg={this.state.errorMsg}
+                  errorPage={this.state.errorPage}
                 />
               )
         }
-
       </Layout>
     );
   }
