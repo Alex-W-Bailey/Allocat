@@ -33,6 +33,7 @@ export default class Register extends Component {
   };
 
   handleRegisterClick = () => {
+    console.log("clicked!");
     console.log(this.state);
 
     let newUser = {
@@ -143,7 +144,7 @@ export default class Register extends Component {
               <br />
               <label htmlFor='confPassword'>Confirm Password:</label>
               <input
-                type='text'
+                type='password'
                 name='confPassword'
                 className='form-control'
                 id='confPassword'
