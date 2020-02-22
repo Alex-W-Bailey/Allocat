@@ -22,6 +22,7 @@ body {
   background-color: $darkCanvas;
   color: $darkText;
 }
+
 .container-main {
   background-color: $container;
   border: 1px solid $accentGrey;
@@ -34,7 +35,8 @@ body {
   border: 1px solid $accentGrey;
   border-radius: 25px 0 0px 25px;
   justify-content: center;
-  height: calc(100vh - 75px);
+  height: inherit;
+  min-height: 100vh;
 }
 
 .container1 {

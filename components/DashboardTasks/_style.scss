@@ -1,7 +1,12 @@
 .task-card {
-    height: 13rem;
     border: 1px solid $softGrey;
     border-radius: 25px;
+    height: inherit;
+    min-height: 13rem; 
+}
+
+.task-btn {
+    font-size: 14px;
 }
 
 .card-title {
@@ -18,6 +23,11 @@
 
 .task-name {
     text-transform: capitalize;
+}
+
+.text-muted {
+    color: $alertRed;
+    font-weight: bold;
 }
 
 
