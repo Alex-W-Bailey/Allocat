@@ -565,7 +565,6 @@ export default class DashboardTasks extends Component {
             })
           }
 
-
           <Modal show={this.state.show} onHide={() => this.handleClose()}>
             <Modal.Header closeButton>
               <Modal.Title>Project Title</Modal.Title>

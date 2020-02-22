@@ -1,10 +1,10 @@
-const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
-const cors = require('cors');
-const session = require('express-session');
-const next = require( 'next' );
+const path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+const helmet = require("helmet");
+const cors = require("cors");
+const session = require("express-session");
+const next = require("next");
 
 const db = require("./models");
 const passport = require("passport");
@@ -25,53 +25,51 @@ app.use(session({ secret: "TBD", resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname + "/public")));
 
 require("./routes/apiRoutes")(app);
 
-nextApp.prepare()
-	.then( () => {
-		app.get( '/', ( req, res ) => {
-			return handle( req, res);
-		});
+nextApp.prepare().then(() => {
+  app.get("/", (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '/login', ( req, res ) => {
-			return handle( req, res);
-		});
+  app.get("/login", (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '/register', ( req, res ) => {
-			return handle( req, res);
-		});
+  app.get("/register", (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '/projects', isAuthenticated, ( req, res ) => {
-			return handle(req, res);
-		});
+  app.get("/projects", isAuthenticated, (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '/newProject', (req, res) => {
-			return handle(req, res);
-		});
+  app.get("/newProject", (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '/project/[id]', isAuthenticated, (req, res) => {
-			return handle(req, res);
-		})
+  app.get("/project/[id]", isAuthenticated, (req, res) => {
+    return handle(req, res);
+  });
 
-		app.get( '*', ( req, res ) => {
-			return handle( req, res);
-		});
-		const FORCE_SCHEMA = process.env.NODE_ENV === 'test';
+  app.get("*", (req, res) => {
+    return handle(req, res);
+  });
+  const FORCE_SCHEMA = process.env.NODE_ENV === "test";
 
-		db.sequelize
-		.authenticate()
-		.then(() => {
-		  db.sequelize.sync({ force: false }).then(() => {			
-			app.listen( PORT, ( err ) => {
-				if ( err ) {
-					throw err;
-				}
-				console.warn( `Ready on http://localhost:${PORT}` );
-			} );
-		  });
-		})
-		.catch(console.error);
-
-	} );
-
+  db.sequelize
+    .authenticate()
+    .then(() => {
+      db.sequelize.sync({ force: false }).then(() => {
+        app.listen(PORT, err => {
+          if (err) {
+            throw err;
+          }
+          console.warn(`Ready on http://localhost:${PORT}`);
+        });
+      });
+    })
+    .catch(console.error);
+});
