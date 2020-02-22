@@ -75,11 +75,11 @@ export default class Dashboard extends Component {
                                 </ListGroup.Item>
                             </ListGroup>
                         </div>
-                        <div className="col-lg-10 container-main-task float-right">
+                        <div className="col-lg-10 container-main-task float-right px-5">
                             <div className="pt-4">
                                 <div className="row">
-                                    <div className="col-12 my-2 px-5">
-                                        <h5 className="task-header">Your  {this.state.categorySelected}</h5>
+                                    <div className="col-12">
+                                        <h1 className="task-header">Your  {this.state.categorySelected}</h1>
                                         <hr></hr>
                                     </div>
                                     <hr />
