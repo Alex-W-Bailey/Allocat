@@ -1,4 +1,5 @@
 // This will need to take in a Project Card Component and map out a card for each project in the database.
+import '../../styles.scss';
 import Nav from "../../components/Nav/index";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
@@ -10,16 +11,41 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageTitle: "BootCamp Project 3 (Project Title)",
+            pageTitle: "",
             categorySelected: "",
-            teams: [],
+            teamNames: [],
+            teamMembers: [],
             tasks: [],
-            timeline: []
+            timeline: [],
+            projectId: 0
         };
     }
 
     componentDidMount() {
-        // console.log("Will retrieve project info from database and update state.");
+        var url = window.location.href;
+        var splitUrl = url.split("/")[4];
+
+        this.setState({
+            projectId: splitUrl
+        });
+
+        axios.get(`/api/project/${splitUrl}`).then((response) => {
+            this.setState({
+                pageTitle: response.data.projectName
+            });
+        });
+
+        axios.get(`/api/allTeams/${splitUrl}`).then((response) => {
+            var newArr = [];
+
+            for (var i = 0; i < response.data.length; i++) {
+                newArr.push(response.data[i])
+            }
+
+            this.setState({
+                teamNames: newArr
+            })
+        })
     }
 
     updateCategory = categoryName => {
@@ -31,33 +57,40 @@ export default class Dashboard extends Component {
             <div>
                 <Layout>
                     <Nav pageTitle={this.state.pageTitle} />
-                    <div className=' mt-5'>
-                        <div className='row'>
-                            <div className='col-md-2 dashboard-menu verticle-align mt-5'>
-                                <ListGroup variant='flush' className='verticle-align'>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("teams")}>
-                                            Teams
-                                                </Button>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("tasks")}>
-                                            Tasks
-                                        </Button>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <Button onClick={() => this.updateCategory("timeline")}>
-                                            Timeline
-                                        </Button>
-                                    </ListGroup.Item>
-                                </ListGroup>
+                    <div class="row">
+                        <div className="col-lg-2 dashboard-menu float-left">
+                            <ListGroup variant="flush" className="verticle-align">
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("teams")}>
+                                        Teams
+                                </Button>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("tasks")}>Tasks
+                                </Button>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Button onClick={() => this.updateCategory("timeline")}>Timeline
+                                    </Button>
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </div>
+                        <div className="col-lg-10 container-main-task float-right px-5">
+                            <div className="pt-4">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <h1 className="task-header">Your  {this.state.categorySelected}</h1>
+                                        <hr></hr>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <DashboardWindow
+                                    categorySelected={this.state.categorySelected}
+                                    tasks={this.state.tasks}
+                                    teams={this.state.teams}
+                                    timeline={this.state.timeline}
+                                />
                             </div>
-                            <DashboardWindow
-                                categorySelected={this.state.categorySelected}
-                                tasks={this.state.tasks}
-                                teams={this.state.teams}
-                                timeline={this.state.timeline}
-                            />
                         </div>
                     </div>
                 </Layout>

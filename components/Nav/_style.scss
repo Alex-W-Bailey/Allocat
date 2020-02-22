@@ -1,3 +1,9 @@
 .nav {
-    background-color: #7CA76F;
+  background-color: $darkCanvas;
+  color: $warmWhite;
+  min-height: 75px;
+  padding: 10px;
+}
+.nav-logo {
+  max-height: 50px;
 }

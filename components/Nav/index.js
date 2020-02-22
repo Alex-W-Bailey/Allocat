@@ -4,7 +4,7 @@ const Nav = props => {
   return (
     <nav className='nav navbar-light'>
       <a className='navbar-brand ml-3 test' href='/'>
-        Logo Goes Here
+        <img className='nav-logo' src='/allocat_blue.png' alt='Allocat logo' />
       </a>
       <h3 className='mx-auto text-center font-weight-bold'>
         {props.pageTitle}

@@ -1,0 +1,37 @@
+.task-card {
+    border: 1px solid $softGrey;
+    border-radius: 25px;
+    height: inherit;
+    min-height: 13rem; 
+}
+
+.task-btn {
+    font-size: 14px;
+}
+
+.card-title {
+    font-weight: 1000;
+    font-size: 1.35rem;
+}
+
+.team-header {
+    font-size: 1.5rem;
+    font-weight: 1000;
+    margin-top: 5px;
+    text-transform: capitalize;
+}
+
+.task-name {
+    text-transform: capitalize;
+}
+
+.text-muted {
+    color: $alertRed;
+    font-weight: bold;
+}
+
+.team-container {
+    border: 1px solid red; 
+}
+
+

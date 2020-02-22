@@ -1,4 +1,3 @@
-// This will need to take in a Project Card Component and map out a card for each project in the database.
 import "../styles.scss";
 import Nav from "../components/Nav";
 import React, { Component } from "react";
@@ -54,26 +53,30 @@ export default class Projects extends Component {
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
-          <div className='container'>
-            <div className="row mt-5">
-              <h5>Your Projects</h5>
-              <hr />
-            </div>
-            <div className='row m-3'>
-              <NPCard />
-              {
-                this.state.projectInfo.map(project => {
-                  return (
-                    <PCard
-                      key={project.id}
-                      id={project.id}
-                      projectName={project.projectName}
-                      description={project.projectDescription}
-                      dueDate={project.dueDate}
-                    />
-                  )
-                })
-              }
+          <div className="col-lg-12 container-main float-right">
+            <div className="pt-4">
+              <div className="row">
+                <div className="col-8 my-2 pl-5">
+                  <h5 className="project-header">Your Projects</h5>
+                </div>
+                <hr />
+              </div>
+              <div className='row m-2'>
+                <NPCard />
+                {
+                  this.state.projectInfo.map(project => {
+                    return (
+                      <PCard
+                        key={project.id}
+                        id={project.id}
+                        projectName={project.projectName}
+                        description={project.projectDescription}
+                        dueDate={project.dueDate}
+                      />
+                    )
+                  })
+                }
+              </div>
             </div>
           </div>
         </Layout>
