@@ -6,7 +6,7 @@ import RLLayout from '../components/RLLayout';
 import FormMessage from "../components/FormMessage/index";
 import { useRouter } from 'next/router';
 import Link from "next/link";
-import '../styles.scss';
+
 
 export default class Register extends Component {
   constructor(props) {
@@ -33,7 +33,8 @@ export default class Register extends Component {
   };
 
   handleRegisterClick = () => {
-    console.log(this.state)
+    console.log('clicked!');
+    console.log(this.state);
 
     let newUser = {
       email: this.state.email,
@@ -135,7 +136,7 @@ export default class Register extends Component {
               <br />
               <label htmlFor="Password">Password:</label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 className="form-control"
                 id="Password"
@@ -145,7 +146,7 @@ export default class Register extends Component {
               <br />
               <label htmlFor="confPassword">Confirm Password:</label>
               <input
-                type="text"
+                type="password"
                 name="confPassword"
                 className="form-control"
                 id="confPassword"
