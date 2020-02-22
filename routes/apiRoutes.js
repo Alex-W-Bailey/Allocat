@@ -25,6 +25,23 @@ module.exports = function(app) {
         });
     });
 
+    app.get("/api/project/name/:projectName", (req, res) => {
+        db.Project.findOne({
+            where: {
+                projectName: req.params.projectName
+            }
+        }).then((dbProjectInfo) => {
+            res.json(dbProjectInfo);
+        });
+    });
+
+    app.get("/api/allUsers", (req, res) => {
+        db.User.findAll({})
+        .then((dbUsers) => {
+            res.json(dbUsers)
+        });
+    });
+
     app.get("/api/user/:userEmail", (req, res) => {
         db.User.findOne({
             where: {
@@ -32,6 +49,37 @@ module.exports = function(app) {
             }
         }).then((dbUser) => {
             res.json(dbUser);
+        });
+    });
+
+    app.get("/api/allTeams/:projectId", (req, res) => {
+        db.Team.findAll({
+            where: {
+                projectId: req.params.projectId
+            }
+        }).then((dbTeams) => {
+            res.json(dbTeams);
+        });
+    })
+
+    app.get("/api/allTasks/:projectId", (req, res) => {
+        db.Task.findAll({
+            where: {
+                projectId: req.params.projectId
+            }
+        }).then((dbTasks) => {
+            res.json(dbTasks);
+        });
+    });
+
+    app.get("/api/userTasks/:projectId", (req, res) => {
+        db.Task.findAll({
+            where: {
+                userId: req.user.id,
+                projectId: req.params.projectId
+            }
+        }).then((dbTasks) => {
+            res.json(dbTasks);
         });
     });
 
@@ -137,9 +185,48 @@ module.exports = function(app) {
                   projectId: projectFound.id  
                 }).then(() => {
                     res.status(200).end();
-                })
-            })
-        })
-    })
+                });
+            });
+        });
+    });
+
+    app.post("/api/newTask", (req, res) => {
+        db.Task.create({
+            projectId: req.body.projectId,
+            taskName: req.body.taskName,
+            taskDescription: req.body.taskDescription,
+            taskDueDate: req.body.dueDate,
+            taskPriority: req.body.taskPriority,
+            taskTeam: req.body.taskTeam,
+            taskStatus: req.body.taskStatus
+        }).then(() => {
+            res.status(200).end();
+        });
+    });
+
+    //Update
+    app.put("/api/claimTask/:taskId", (req, res) => {
+        var userID = req.user.id;
+
+        db.Task.update(
+            {userId: userID},
+            {where: 
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            db.Task.update(
+                {taskStatus: "Working On"},
+                {where: 
+                    {
+                        id: req.params.taskId
+                    }
+                }
+            ).then((rowsUpdated) => {
+                res.json(rowsUpdated)
+            });    
+        });  
+    });
 }
 

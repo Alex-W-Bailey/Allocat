@@ -1,5 +1,5 @@
 //This Will need to take in a click event that triggers a function NewProject that changes the state to update it with new Team Members.
-import NPLayout from "../components/NPLayout";
+import NPLayout from "../NPLayout";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 
@@ -39,12 +39,6 @@ const FormIndividualTeam = props => {
                 <br />
                 <button>Finalize {props.name} Collaborators</button>
               </Form>
-            </div>
-            <div className='col-md-4'>
-              <p>
-                This is where Team Member names will show up as you type them
-                in.
-              </p>
             </div>
           </div>
         </div>
