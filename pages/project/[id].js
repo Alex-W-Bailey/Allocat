@@ -75,7 +75,7 @@ export default class Dashboard extends Component {
                                 </ListGroup.Item>
                             </ListGroup>
                         </div>
-                        <div className="col-lg-10 container-main float-right">
+                        <div className="col-lg-10 container-main-task float-right">
                             <div className="pt-4">
                                 <div className="row">
                                     <div className="col-8 my-2 pl-5">
