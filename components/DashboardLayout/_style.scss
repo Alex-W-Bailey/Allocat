@@ -1,6 +1,12 @@
-.container-test {
-    background-color: green;
-    border-radius: 25px 0 0 25px;
-    min-height: 200px;
-}
 
+
+
+
+.main-container {
+  color: $container;
+  border-radius: 25px;
+  justify-content: center;
+  max-height: 500px;
+
+
+}

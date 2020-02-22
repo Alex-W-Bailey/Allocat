@@ -1,22 +1,24 @@
-import React, { Component } from "react";
-import Layout from "../components/Layout";
-import axios from "axios";
-import Nav from "../components/Nav";
-import RLLayout from "../components/RLLayout";
+import React, { Component } from 'react';
+import axios from 'axios';
+import Nav from '../components/Nav';
+import RLLayout from '../components/RLLayout';
+import FormMessage from '../components/FormMessage/index';
+import { useRouter } from 'next/router';
+import Link from "next/link";
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      pageTitle: "Login",
+      email: '',
+      password: '',
+      pageTitle: 'Login',
       menuItems: [
-        { name: "Logout", href: "/", id: 1 },
-        { name: "Projects", href: "/Projects", id: 2 }
+        { name: 'Logout', href: '/', id: 1 },
+        { name: 'Projects', href: '/Projects', id: 2 }
       ],
       isError: false,
-      errorMsg: "Email or Password incorrect"
+      errorMsg: 'Email or Password incorrect'
     };
   }
 
@@ -30,7 +32,7 @@ export default class Login extends Component {
   };
 
   handleLoginClick = () => {
-    console.log("clicked!");
+    console.log('clicked!');
     console.log(this.state);
 
     let user = {
@@ -38,22 +40,50 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    axios.post("/api/login", user).then(function (response) {
-      if (response.status === 200) {
-        window.location.replace("/projects");
-      }
-    }).catch((err) => {
-      if (err.response) {
-        console.log('err');
-        this.setState({
-          isError: true
-        });
-      }
-    });
+    axios
+      .post('/api/login', user)
+      .then(function (response) {
+        if (response.status === 200) {
+          window.location.replace('/projects');
+        }
+      })
+      .catch(err => {
+        if (err.response) {
+          console.log('err');
+          this.setState({
+            isError: true
+          });
+        }
+      });
   };
 
   render() {
     const isError = this.state.isError;
+
+    const loginContainer = {
+      padding: "40px",
+      padding: "40px",
+      border: "1px solid black",
+      justifyContent: "center",
+      height: "100vh",
+      backgroundImage: "url('https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg')"
+    }
+
+    const loginInput = {
+      paddingTop: "100px"
+    }
+
+    const allocatText = {
+      textAlign: "center",
+      color: "#2190cc",
+      fontWeight: "bold"
+    }
+
+    const registerText = {
+      color: "#2190cc",
+      fontWeight: "bold",
+      cursor: "pointer"
+    }
 
     return (
       <div>
@@ -61,36 +91,47 @@ export default class Login extends Component {
           pageTitle={this.state.pageTitle}
           menuItems={this.state.menuItems}
         />
-        <RLLayout>
-          <label htmlFor='Email'>Email:</label>
-          <input
-            type='text'
-            name='email'
-            className='form-control'
-            id='Email'
-            placeholder='Email'
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
-          <label htmlFor='Password'>Password:</label>
-          <input
-            type='text'
-            name='password'
-            className='form-control'
-            id='Password'
-            placeholder='Password'
-            onChange={this.handleChange.bind(this)}
-          />
-          <br />
-
-          <button className='btn btn-primary' onClick={() => this.handleLoginClick()}>Login</button>
-          <br />
-          {isError ? (
-            <h1>{this.state.errorMsg}</h1>
-          ) : (
-              <h1></h1>
-            )}
-        </RLLayout>
+        <div style={loginContainer}>
+          <RLLayout>
+            <h1 style={allocatText}>(LOGO)</h1>
+            <div style={loginInput}>
+              <label htmlFor="Email">Email:</label>
+              <input
+                type="text"
+                name="email"
+                className="form-control"
+                id="Email"
+                placeholder="Email"
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <label htmlFor="Password">Password:</label>
+              <input
+                type="text"
+                name="password"
+                className="form-control"
+                id="Password"
+                placeholder="Password"
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <div style={{ textAlign: "center" }}>
+                <p>
+                  Don't have login?
+                  <Link href="/register"><p style={registerText}>Register</p></Link>
+                </p>
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.handleLoginClick()}
+              >
+                Login
+          </button>
+               
+              <br />
+            </div>
+          </RLLayout>
+        </div>
       </div>
     );
   }

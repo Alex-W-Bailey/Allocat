@@ -1,29 +1,137 @@
-// PROJECT NAVIGATION STYLES
-@import '/components/Nav/style'; 
-
-// PROJECT CARD STYLES
-@import '/components/NPCard/style';
-@import '/components/PCard/style';
-
-@import '/components/DashboardLayout/style';
+// UI Palet
+$allocatTeal: #1cb2ba;
+$allocatBlue: #2190cc;
+$warmWhite: #f8f8f6;
+$container: #e3e3e3;
+$softGrey: #cfcfcf;
+$accentGrey: #a6a6a6;
+$darkCanvas: #595959;
+$darkText: #242424;
+//Indicator Colors
+$alertRed: #e1651b;
+// used for alerts, and to indicate tasks that are high priority or unclaimed
+$inProgress: #ffaa0a;
+$complete: #2ab009;
 
 .list-group-item {
-    border: 0;
+  border: 0;
 }
 
 body {
-    font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
+  background-color: $darkCanvas;
+  color: $darkText;
 }
 
+.container-main {
+  background-color: $container;
+  border: 1px solid $accentGrey;
+  justify-content: center;
+  height: inherit;
+}
+
+.container-main-task {
+  background-color: $container;
+  border: 1px solid $accentGrey;
+  border-radius: 25px 0 0px 25px;
+  justify-content: center;
+  height: inherit;
+  min-height: 100vh;
+}
+
+.container1 {
+  padding-right: 0px;
+}
+
+.project-header,
+.task-header {
+  font-size: 2rem;
+  font-weight: 1000;
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+.btn,
+.btn-primary,
+.dropdown-toggle,
+button {
+  background-color: $allocatBlue;
+  border-color: $allocatBlue;
+  color: $warmWhite;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  &:hover {
+    background-color: $allocatTeal;
+  }
+  &:active {
+    background-color: $allocatTeal;
+  }
+}
+
+h1,
+h2,
+h3,
 h5 {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: bold;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
 }
 
 .card-title {
-    font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 .form-control {
-    border-radius: 10px;
+  border-radius: 10px;
 }
+a {
+  color: $warmWhite;
+  &:hover {
+    color: $softGrey;
+  }
+}
+.justify-center {
+  justify-content: center;
+}
+input {
+  margin-bottom: 10px;
+}
+
+.dashboard-menu {
+  padding: 0px;
+}
+
+// NAVIGATION STYLES
+@import "/components/Nav/style";
+@import "/components/NavDropdown/style";
+
+//LAYOUT STYLES
+@import "/components/RLLayout/style";
+@import "/components/NPLayout/style";
+@import "/components/DashboardLayout/style";
+
+// PROJECT CARD STYLES
+@import "/components/NPCard/style";
+@import "/components/PCard/style";
+@import "/components/TeamCard/style";
+
+// FORM STYLES
+@import "/components/FormTeam/style";
+@import "/components/FormIndividualTasks/style";
+@import "/components/FormIndividualTeam/style";
+@import "/components/FormNewProject/style";
+@import "/components/FormTasks/style";
+@import "/components/FormTeam/style";
+@import "/components/NPForm/style.scss";
+
+// DASHBOARD STYLES
+@import "/components/DashboardTasks/style";
+@import "/components/DashboardTeams/style";
+@import "/components/DashboardTimeline/style";
+@import "/components/DashboardWindow/style";
+
+//everything else
+@import "/components/Header/style";
+@import "/components/NewCollaborator/style";
+@import "/components/NewTeam/style";
+@import "/components/FormMessage/style";
