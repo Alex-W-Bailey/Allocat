@@ -6,13 +6,11 @@ import DashboardTasks from "../DashboardTasks";
 const DashboardWindow = props => {
   if (props.categorySelected === "teams") {
     return <DashboardTeams teams={props.teams} />;
-  } else if (props.categorySelected === "tasks") {
-    return <DashboardTasks tasks={props.tasks} />;
   } else if (props.categorySelected === "timeline") {
     return <DashboardTimeline timeline={props.timeline} />;
   } else {
-    return <div className='col-md-10 text-center'>Select a Category</div>;
   }
+  return <DashboardTasks tasks={props.tasks} />;
 };
 
 export default DashboardWindow;
