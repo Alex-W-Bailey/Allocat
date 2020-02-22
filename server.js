@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const session = require('express-session');
-const next = require( 'next' );
+const next = require('next');
 
 const db = require("./models");
 const passport = require("passport");
