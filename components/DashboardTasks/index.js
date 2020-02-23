@@ -41,10 +41,6 @@ export default class DashboardTasks extends Component {
     this.timerID = setInterval(() => this.getAllProjectTaskInfo(), 1000);
   }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timerID);
-  // }
-
   async getAllProjectTaskInfo() {
     var isCreatingTask = this.state.isCreatingTask;
 
@@ -105,6 +101,42 @@ export default class DashboardTasks extends Component {
     });
   };
 
+  handleTaskStatusChange = e => {
+    let objName = e.target.name;
+    let objValue = e.target.value;
+    let objId = parseInt(e.target.id);
+
+    var newAllTasks = [];
+
+    for(var i = 0; i < this.state.userTasks.length; i++) {
+      console.log("pushing... " + this.state.userTasks[i])
+      newAllTasks.push(this.state.userTasks[i]);
+    }
+
+    for(var i = 0; i < newAllTasks.length; i++){
+      if(newAllTasks[i].id === objId){
+        console.log("found : " + newAllTasks[i].id)
+        newAllTasks[i].status = objValue
+      }
+    }
+
+    this.setState({
+      allTasks: newAllTasks
+    })
+
+    this.updateTaskStatus(objId, objValue);
+  }
+
+  async updateTaskStatus(id, value) {
+    var newVal = {
+      taskStatus: value
+    }
+
+    await axios.put(`/api/updateStatus/${id}`, newVal).then((response) => {
+      console.log("updated db");
+    })
+  }
+
   handleCreateTask = (team) => {
     var teamName = Object.values(team)[0];
 
@@ -147,6 +179,16 @@ export default class DashboardTasks extends Component {
       console.log("updated task in db");
     });
   };
+
+  handleUnclaimTask = e => {
+    var objId = e.target.name;
+
+    console.log(this.state);
+
+    // axios.put(`/api/unclaimTask/${objId}`).then(response => {
+    //   console.log("updated task in db");
+    // });
+  }
 
   handleClose = () => {
     this.setState({
@@ -301,295 +343,227 @@ export default class DashboardTasks extends Component {
     } else {
       newTaskDescriptionStyle = { color: "#242424", border: "none", cursor: "pointer" }
     }
-
-    if (this.state.showForm) {
-      return (
-        <NPLayout>
-          <div className='col-md-12'>
-            <Button onClick={() => this.handleShowAllTasks()}>
-              Back to All Tasks
-            </Button>
-          </div>
-          <div className='row mt-2'>
-            <div className='col-md-12 mx-auto'>
-              <h2>Add Tasks to Complete</h2>
-
-              <Form>
-                <label htmlFor='TaskName'>Name of Tasks:</label>
-                <input
-                  type='text'
-                  name='TaskName'
-                  className='form-control'
-                  placeholder='Task Name'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <br />
-                <label htmlFor='TaskDescription'>Description of Task:</label>
-                <input
-                  type='text'
-                  name='TaskDescription'
-                  className='form-control'
-                  placeholder='Task Description'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <br />
-                <label htmlFor='TaskTeam'>Which Team is This a Task For?</label>
-                <Form.Group controlId='exampleForm.ControlSelect1'>
-                  <Form.Control onChange={this.handleChange.bind(this)} as='select' name="TaskTeam">
-                    <option>Select A Team</option>
-                    {this.state.allTeams.map(team => {
-                      return <option value={team}>{team}</option>;
-                    })}
-                  </Form.Control>
-                </Form.Group>
-                <br />
-                <label htmlFor='taskDueDate'>Due Date (MM/DD/YY): </label>
-                <input
-                  type='text'
-                  name='TaskDueDate'
-                  className='form-control'
-                  placeholder='02/29/20'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <br />
-                <Form.Group>
-                  <Form.Label>Priority Level</Form.Label>
-                  <Form.Control onChange={this.handleChange.bind(this)} as='select' name="TaskPriority">
-                    <option>High Priority</option>
-                    <option>Medium Priority</option>
-                    <option>Low Priority</option>
-                  </Form.Control>
-                </Form.Group>
-                <br />
-                {isError ? (
-                  <FormMessage status='error' message={this.state.errorMsg} />
-                ) : (
-                    <h1></h1>
-                  )}
-                <button type='button' onClick={() => this.handleCreateTask()}>
-                  Add Task
-                </button>
-                <br />
-              </Form>
+    
+    return (
+      <React.Fragment>
+        <div className="team-container px-2">
+          <div className="row">
+            <div className="col-lg-6">
+              <h2 className="team-header">My Tasks</h2>
             </div>
           </div>
-        </NPLayout>
-      );
-    } else {
-      return (
-        <React.Fragment>
-          <div className="team-container px-2">
-            <div className="row">
-              <div className="col-lg-6">
-                <h2 className="team-header">My Tasks</h2>
-              </div>
-            </div>
-            <div className="row">
-              {
-                this.state.userTasks.map((userTask) => {
-                  return (
-                    <div className="col-lg-3 mb-2">
-                      <div className="task-card card">
-                        <div className="card-body d-flex flex-column over">
-                          <h5 className="task-name card-title mt-3">{userTask.name}</h5>
-                          <div className="card-subtitle mb-1 text-muted">
-                            {userTask.priority}
-                          </div>
-                          <Card.Text>{userTask.status}</Card.Text>
-                          <div className="row my-auto">
-                            <Button name={userTask.id} variant='danger'
-                              className="task-btn" onClick={(e) => { this.handleClaimTask(e) }}>Claim Task</Button>
-                            <Button variant='primary' className="task-btn" onClick={() => this.handleShowModal()}>
-                              View Details
-                    </Button>
-                          </div>
+          <div className="row">
+            {
+              this.state.userTasks.map((userTask) => {
+                return (
+                  <div className="col-lg-3 mb-2">
+                    <div className="task-card card">
+                      <div className="card-body d-flex flex-column over">
+                        <h5 className="task-name card-title mt-3">{userTask.name}</h5>
+                        <div className="card-subtitle mb-1 text-muted">
+                          {userTask.description}
+                        </div>
+                        <div className="card-subtitle mb-1 text-muted">
+                          {userTask.priority}
+                        </div>
+                        <Form.Group>
+                          <Form.Control id={userTask.id} placeholder="Task Status" defaultValue={userTask.status} onChange={this.handleTaskStatusChange.bind(this)} as='select' name="newTaskPriority">
+                            <option value="N/A" disabled selected>Task Status</option>
+                            <option value="Working On" style={{ color: "#2ab009", fontWeight: "bold" }}>Working On</option>
+                            <option value="Stuck" style={{ color: "#e1651b", fontWeight: "bold" }}>Stuck</option>
+                            <option value="Completed" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Completed</option>
+                          </Form.Control>
+                        </Form.Group>
+                        <div className="row my-auto">
+                          <Button name={userTask.id} variant='danger'
+                            className="task-btn" onClick={(e) => { this.handleUnclaimTask(e) }}>Unclaim Task</Button>
                         </div>
                       </div>
                     </div>
-                  )
-                })
-              }
-            </div>
+                  </div>
+                )
+              })
+            }
           </div>
-          {
-            this.state.allTeams.map(team => {
-              return (
-                <React.Fragment>
-                  <div className="team-container mt-2 px-2">
-                    <div className="row px-2">
-                      <div className="col-lg-6">
-                        <h2 className="team-header align-middle">{team}</h2>
-                      </div>
-                      <div className="col-lg-6">
-                        <button className="btn px-5 float-right" onClick={() => this.createTask({ team })}>Create New Task</button>
-                      </div>
+        </div>
+        {
+          this.state.allTeams.map(team => {
+            return (
+              <React.Fragment>
+                <div className="team-container mt-2 px-2">
+                  <div className="row px-2">
+                    <div className="col-lg-6">
+                      <h2 className="team-header align-middle">{team}</h2>
                     </div>
+                    <div className="col-lg-6">
+                      <button className="btn px-5 float-right" onClick={() => this.createTask({ team })}>Create New Task</button>
+                    </div>
+                  </div>
 
-                    <div className="row px-2 my-3">
-                      {
-                        this.state.allTasks.map(task => {
-                          if (task.team === team) {
-                            if (task.status === "Unassigned") {
-                              return (
-                                task.id === -1 ? (
-                                  <div className="col-lg-3 mb-2">
+                  <div className="row px-2 my-3">
+                    {
+                      this.state.allTasks.map(task => {
+                        if (task.team === team) {
+                          if (task.status === "Unassigned") {
+                            return (
+                              task.id === -1 ? (
+                                <div className="col-lg-3 mb-2">
+                                  <div className="task-card card">
+                                    <div className="card-body d-flex flex-column over">
+                                      {
+                                        isNameClicked ? (
+                                          <div>
+                                            <h5 className="task-name mx-auto  card-title mt-3"><input text="text" name="newTaskName" value={this.state.newTaskName} onChange={this.handleChange.bind(this)}></input></h5>
+                                            <div className="card-subtitle mb-1 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
+                                              {
+                                                this.state.newTaskDescription === "" ?
+                                                  (
+                                                    <p style={newTaskDescriptionStyle}>{task.description}</p>
+                                                  ) : (
+                                                    <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
+                                                  )
+                                              }
+                                            </div>
+                                            <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
+                                              <Form.Group>
+                                                <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                  <option value="N/A" disabled selected>Select Priority Level</option>
+                                                  <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
+                                                  <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
+                                                  <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
+                                                </Form.Control>
+                                              </Form.Group>
+                                            </div>
+                                            <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                          </div>
+                                        ) : isDescriptionClicked ? (
+                                          <div>
+                                            <h5 className="task-name mx-auto card-title mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
+                                              {
+                                                this.state.newTaskName === "" ?
+                                                  (
+                                                    <p style={newTaskNameStyle}>{task.name}</p>
+                                                  ) : (
+                                                    <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
+                                                  )
+                                              }
+                                            </h5>
+                                            <div className="card-subtitle mb-1 text-muted">
+                                              <input text="text" name="newTaskDescription" value={this.state.newTaskDescription} onChange={this.handleChange.bind(this)}></input>
+                                            </div>
+                                            <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
+                                              <Form.Group>
+                                                <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                  <option value="N/A" disabled selected>Select Priority Level</option>
+                                                  <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
+                                                  <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
+                                                  <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
+                                                </Form.Control>
+                                              </Form.Group>
+                                            </div>
+                                            <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                          </div>
+                                        ) : (
+                                              <div>
+                                                <h5 className="task-name card-title mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onMouseLeave={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
+                                                  {
+                                                    this.state.newTaskName === "" ?
+                                                      (
+                                                        <p style={newTaskNameStyle}>{task.name}</p>
+                                                      ) : (
+                                                        <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
+                                                      )
+                                                  }
+                                                </h5>
+                                                <div className="card-subtitle mb-1 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onMouseLeave={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
+                                                  {
+                                                    this.state.newTaskDescription === "" ?
+                                                      (
+                                                        <p style={newTaskDescriptionStyle}>{task.description}</p>
+                                                      ) : (
+                                                        <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
+                                                      )
+                                                  }
+                                                </div>
+                                                <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
+                                                  <Form.Group>
+                                                    <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
+                                                      <option value="N/A" disabled selected>Select Priority Level</option>
+                                                      <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
+                                                      <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
+                                                      <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
+                                                    </Form.Control>
+                                                  </Form.Group>
+                                                </div>
+                                                <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
+                                              </div>
+                                            )
+                                      }
+                                      <div className="row">
+                                        <Button variant='danger' className="task-btn" onClick={() => this.handleCreateTask({ team })}>Create Task</Button>
+                                        <Button variant='primary' className="task-btn" onClick={() => this.handleCancelCreation()}>
+                                          Cancel
+                                      </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                  <div className="col-lg-3 mb2">
                                     <div className="task-card card">
                                       <div className="card-body d-flex flex-column over">
-                                        {
-                                          isNameClicked ? (
-                                            <div>
-                                              <h5 className="task-name mx-auto  card-title mt-3"><input text="text" name="newTaskName" value={this.state.newTaskName} onChange={this.handleChange.bind(this)}></input></h5>
-                                              <div className="card-subtitle mb-1 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
-                                                {
-                                                  this.state.newTaskDescription === "" ?
-                                                    (
-                                                      <p style={newTaskDescriptionStyle}>{task.description}</p>
-                                                    ) : (
-                                                      <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
-                                                    )
-                                                }
-                                              </div>
-                                              <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
-                                                <Form.Group>
-                                                  <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
-                                                    <option value="N/A" disabled selected>Select Priority Level</option>
-                                                    <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
-                                                    <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
-                                                    <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
-                                                  </Form.Control>
-                                                </Form.Group>
-                                              </div>
-                                              <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
-                                            </div>
-                                          ) : isDescriptionClicked ? (
-                                            <div>
-                                              <h5 className="task-name mx-auto card-title mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
-                                                {
-                                                  this.state.newTaskName === "" ?
-                                                    (
-                                                      <p style={newTaskNameStyle}>{task.name}</p>
-                                                    ) : (
-                                                      <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
-                                                    )
-                                                }
-                                              </h5>
-                                              <div className="card-subtitle mb-1 text-muted">
-                                                <input text="text" name="newTaskDescription" value={this.state.newTaskDescription} onChange={this.handleChange.bind(this)}></input>
-                                              </div>
-                                              <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
-                                                <Form.Group>
-                                                  <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
-                                                    <option value="N/A" disabled selected>Select Priority Level</option>
-                                                    <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
-                                                    <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
-                                                    <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
-                                                  </Form.Control>
-                                                </Form.Group>
-                                              </div>
-                                              <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
-                                            </div>
-                                          ) : (
-                                                <div>
-                                                  <h5 className="task-name card-title mt-3" onMouseOver={() => this.handleToggleMouseOver("newTaskName")} onMouseLeave={() => this.handleToggleMouseOver("newTaskName")} onClick={() => this.edit("name")}>
-                                                    {
-                                                      this.state.newTaskName === "" ?
-                                                        (
-                                                          <p style={newTaskNameStyle}>{task.name}</p>
-                                                        ) : (
-                                                          <p style={newTaskNameStyle}>{this.state.newTaskName}</p>
-                                                        )
-                                                    }
-                                                  </h5>
-                                                  <div className="card-subtitle mb-1 text-muted" onMouseOver={() => this.handleToggleMouseOver("newTaskDescription")} onMouseLeave={() => this.handleToggleMouseOver("newTaskDescription")} onClick={() => this.edit("description")}>
-                                                    {
-                                                      this.state.newTaskDescription === "" ?
-                                                        (
-                                                          <p style={newTaskDescriptionStyle}>{task.description}</p>
-                                                        ) : (
-                                                          <p style={newTaskDescriptionStyle}>{this.state.newTaskDescription}</p>
-                                                        )
-                                                    }
-                                                  </div>
-                                                  <div className="card-subtitle mb-1 text-muted" onClick={() => this.edit("none")}>
-                                                    <Form.Group>
-                                                      <Form.Control placeholder="Select Priority Level" onChange={this.handleChange.bind(this)} as='select' name="newTaskPriority">
-                                                        <option value="N/A" disabled selected>Select Priority Level</option>
-                                                        <option value="High" style={{ color: "#e1651b", fontWeight: "bold" }}>High Priority</option>
-                                                        <option value="Medium" style={{ color: "#ffaa0a", fontWeight: "bold" }}>Medium Priority</option>
-                                                        <option value="Low" style={{ color: "#2ab009", fontWeight: "bold" }}>Low Priority</option>
-                                                      </Form.Control>
-                                                    </Form.Group>
-                                                  </div>
-                                                  <Card.Text onClick={() => this.edit("none")}>{task.status}</Card.Text>
-                                                </div>
-                                              )
-                                        }
-                                        <div className="row">
-                                          <Button variant='danger' className="task-btn" onClick={() => this.handleCreateTask({ team })}>Create Task</Button>
-                                          <Button variant='primary' className="task-btn" onClick={() => this.handleCancelCreation()}>
-                                            Cancel
-                                      </Button>
+                                        <h5 className="task-name card-title mt-3">{task.name}</h5>
+                                        <div className="card-subtitle mb-1 text-muted">
+                                          {task.description}
+                                        </div>
+                                        <div className="card-subtitle mb-1 text-muted">
+                                          {task.priority}
+                                        </div>
+                                        <Card.Text>{task.status}</Card.Text>
+                                        <div className="row my-auto">
+                                          <Button name={task.id} variant='danger'
+                                            className="task-btn" onClick={(e) => { this.handleClaimTask(e) }}>Claim Task</Button>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                ) : (
-                                    <div className="col-lg-3 mb2">
-                                      <div className="task-card card">
-                                        <div className="card-body d-flex flex-column over">
-                                          <h5 className="task-name card-title mt-3">{task.name}</h5>
-                                          <div className="card-subtitle mb-1 text-muted">
-                                            {task.priority}
-                                          </div>
-                                          <Card.Text>{task.status}</Card.Text>
-                                          <div className="row my-auto">
-                                            <Button name={task.id} variant='danger'
-                                              className="task-btn" onClick={(e) => { this.handleClaimTask(e) }}>Claim Task</Button>
-                                            <Button variant='primary' className="task-btn" onClick={() => this.handleShowModal()}>
-                                              View Details
-                                      </Button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )
-                              )
-                            }
+                                )
+                            )
                           }
-                        })
-                      }
-                    </div>
+                        }
+                      })
+                    }
                   </div>
-                </React.Fragment>
-              )
-            })
-          }
+                </div>
+              </React.Fragment>
+            )
+          })
+        }
 
-          <Modal show={this.state.show} onHide={() => this.handleClose()}>
-            <Modal.Header closeButton>
-              <Modal.Title>Project Title</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className='container'>
-                <div className='row'>Project Description will go here</div>
-                <div className='row'>Level of Priority</div>
-                <div className='row'>Due Date</div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant='secondary'
-                onClick={() => this.handleHideModal()}
-              >
-                Close
+        <Modal show={this.state.show} onHide={() => this.handleClose()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Project Title</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className='container'>
+              <div className='row'>Project Description will go here</div>
+              <div className='row'>Level of Priority</div>
+              <div className='row'>Due Date</div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant='secondary'
+              onClick={() => this.handleHideModal()}
+            >
+              Close
               </Button>
-              <Button variant='danger' onClick={() => this.handleClose()}>
-                Claim Task
+            <Button variant='danger' onClick={() => this.handleClose()}>
+              Claim Task
               </Button>
-            </Modal.Footer>
-          </Modal>
-        </React.Fragment>
-      );
-    }
+          </Modal.Footer>
+        </Modal>
+      </React.Fragment>
+    );
   }
 }
