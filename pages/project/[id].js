@@ -58,20 +58,20 @@ export default class Dashboard extends Component {
                 <Layout>
                     <Nav pageTitle={this.state.pageTitle} />
                     <div class="row">
-                        <div className="col-lg-2 dashboard-menu float-left">
-                            <ListGroup variant="flush" className="verticle-align">
+                        <div className="col-lg-2 float-left my-auto">
+                            <ListGroup className="verticle-align">
                                 <ListGroup.Item>
-                                    <Button onClick={() => this.updateCategory("teams")}>
+                                    <a className="task-nav-btn mx-auto" onClick={() => this.updateCategory("teams")}>
                                         Teams
-                                </Button>
+                                    </a>
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    <Button onClick={() => this.updateCategory("tasks")}>Tasks
-                                </Button>
+                                    <a className="task-nav-btn" onClick={() => this.updateCategory("tasks")}>Tasks
+                                    </a>
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    <Button onClick={() => this.updateCategory("timeline")}>Timeline
-                                    </Button>
+                                    <a className="task-nav-btn" onClick={() => this.updateCategory("timeline")}>Timeline
+                                    </a>
                                 </ListGroup.Item>
                             </ListGroup>
                         </div>
@@ -79,8 +79,7 @@ export default class Dashboard extends Component {
                             <div className="pt-4">
                                 <div className="row">
                                     <div className="col-12">
-                                        <h1 className="task-header">Your  {this.state.categorySelected}</h1>
-                                        <hr></hr>
+                                        <h1 className="task-header">{this.state.categorySelected}</h1>
                                     </div>
                                     <hr />
                                 </div>
