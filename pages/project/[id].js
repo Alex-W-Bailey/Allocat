@@ -77,13 +77,6 @@ export default class Dashboard extends Component {
                         </div>
                         <div className="col-lg-10 container-main-task float-right px-5">
                             <div className="pt-4">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <h1 className="task-header">Your  {this.state.categorySelected}</h1>
-                                        <hr></hr>
-                                    </div>
-                                    <hr />
-                                </div>
                                 <DashboardWindow
                                     categorySelected={this.state.categorySelected}
                                     tasks={this.state.tasks}
