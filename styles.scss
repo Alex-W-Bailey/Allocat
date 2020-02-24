@@ -134,8 +134,12 @@ input {
 
 .dashboard-menu {
   padding: 0px;
+  justify-content: center;
+  max-width: 300px;
 }
-
+.dashboard-btn {
+  width: 100%;
+}
 // NAVIGATION STYLES
 @import "/components/Nav/style";
 @import "/components/NavDropdown/style";
