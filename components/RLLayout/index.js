@@ -2,7 +2,7 @@
 
 const RLLayout = props => {
   return (
-    <div className='col-md-10 col-sm-12 mx-auto'>
+    <div className='col-md-7 col-sm-12 mx-auto'>
       <div className='rl-container mx-auto'>{props.children}</div>
     </div>
   );
