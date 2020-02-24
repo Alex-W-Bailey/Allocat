@@ -117,20 +117,20 @@ export default class Login extends Component {
               onChange={this.handleChange.bind(this)}
             />
             <br />
-            <div style={{ textAlign: "center" }}>
-              <p>
-                Don't have login?
+            <div className='row mx-auto justify-center'>
+              <p class='text-center'>
+                Don't have an account?
                 <Link href='/register'>
-                  <p style={registerText}>Register</p>
+                  <p className='blue-text pointer'>Register</p>
                 </Link>
               </p>
+              <button
+                className='button50'
+                onClick={() => this.handleLoginClick()}
+              >
+                Login
+              </button>
             </div>
-            <button
-              className='btn btn-primary'
-              onClick={() => this.handleLoginClick()}
-            >
-              Login
-            </button>
 
             <br />
           </div>

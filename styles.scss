@@ -78,6 +78,10 @@ button {
     background-color: $allocatTeal;
   }
 }
+.button50 {
+  min-width: 75%;
+}
+
 .allocat-danger {
   background-color: $alertRed;
   color: $warmWhite;
@@ -87,6 +91,9 @@ button {
   &:hover {
     background-color: rgb(138, 28, 28);
   }
+}
+.pointer {
+  cursor: pointer;
 }
 
 h1,

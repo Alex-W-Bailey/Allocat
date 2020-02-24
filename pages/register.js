@@ -127,20 +127,22 @@ export default class Register extends Component {
               placeholder='Confirm Password'
               onChange={this.handleChange.bind(this)}
             />
-            <div style={{ textAlign: "center" }}>
+            <div className='row justify-center mx-auto text-center'>
               <p>
                 Already have an account?
                 <Link href='/'>
-                  <p>Login</p>
+                  <p className='blue-text pointer'>Login</p>
                 </Link>
               </p>
             </div>
-            <button
-              className='btn btn-primary'
-              onClick={() => this.handleRegisterClick()}
-            >
-              Register
-            </button>
+            <div className='row justify-center mx-auto'>
+              <button
+                className='button50'
+                onClick={() => this.handleRegisterClick()}
+              >
+                Register
+              </button>
+            </div>
             {isError ? (
               <FormMessage status='error' message={this.state.errorMsg} />
             ) : (

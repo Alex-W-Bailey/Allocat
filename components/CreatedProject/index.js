@@ -8,17 +8,17 @@ const NPForm = props => {
     <div>
       <Nav pageTitle={""} />
       <NPLayout>
-        <div className='row mt-5'>
+        <div className='row m-5 justify-center'>
           <h1 className='blue-text'>Success!</h1>
           <br />
-          <div className='row'>
-            <button onClick={() => props.handleRedirectToProjects()}>
-              View All Projects
-            </button>
-            <Link href='/project/[id]' as={`/project/${props.projectId}`}>
-              <button>View project</button>
-            </Link>
-          </div>
+        </div>
+        <div className='row justify-center'>
+          <button onClick={() => props.handleRedirectToProjects()}>
+            View All Projects
+          </button>
+          <Link href='/project/[id]' as={`/project/${props.projectId}`}>
+            <button>View project</button>
+          </Link>
         </div>
       </NPLayout>
     </div>
