@@ -100,6 +100,16 @@ button {
 
 .button50 {
   min-width: 75%;
+  border: 0;
+
+  &:hover {
+    background-color: $allocatTeal;
+    border: 0;
+  }
+  &:active {
+    background-color: $allocatTeal;
+    border: 0;
+  }
 }
 
 .allocat-danger {
@@ -149,19 +159,6 @@ a {
 }
 input {
   margin-bottom: 10px;
-}
-
-.dashboard-menu {
-  padding: 0px;
-  justify-content: center;
-  max-width: 300px;
-}
-.dashboard-menu-mobile {
-  justify-content: center;
-  max-width: 0;
-}
-.dashboard-btn {
-  width: 100%;
 }
 
 .sticky {
