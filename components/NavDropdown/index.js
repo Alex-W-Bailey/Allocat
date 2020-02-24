@@ -1,5 +1,3 @@
-// This will be the dropdown for the Nav Bar. Evenually it will change depending on where in the website the user is.
-// Currently its not functioning becuase I think we do not have bootstrap Jquery/Javascript properly linked.
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
   return (
@@ -15,12 +13,15 @@ const NavDropdown = props => {
         <Dropdown.Item href='/'>Logout</Dropdown.Item>
 
         {/* Takes in state of parent page - for teach menuItem, it takes in the name, and the link it wants to go to. Figure out how to */}
-        {/* 
-        {props.menuItems.map(item => (
-          <Dropdown.Item key={item.id} href={item.href}>
+
+        {/* props.menuItems.map(item => (
+           return(
+            <Dropdown.Item key={item.id} href={item.href}>
             {item.name}
-          </Dropdown.Item>
-        ))} */}
+           </Dropdown.Item>
+           )
+
+        )) */}
         <Dropdown.Item className='dropdown-item' href='/register'>
           Register
         </Dropdown.Item>

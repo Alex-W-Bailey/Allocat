@@ -263,6 +263,42 @@ module.exports = function (app) {
         ).then((rowsUpdated) => {
             res.json(rowsUpdated)
         });
+
+    });
+
+    app.put("/api/unclaimTask/:taskId", (req, res) => {
+        db.Task.update(
+            {userId: null},
+            {where: 
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            db.Task.update(
+                {taskStatus: "Unassigned"},
+                {where: 
+                    {
+                        id: req.params.taskId
+                    }
+                }
+            ).then((rowsUpdated) => {
+                res.json(rowsUpdated);
+            });    
+        });  
+    });
+
+    app.put("/api/updateStatus/:taskId", (req, res) => {
+        db.Task.update(
+            {taskStatus: req.body.taskStatus},
+            {where: 
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            res.json(rowsUpdated);
+        });  
     });
 }
 
