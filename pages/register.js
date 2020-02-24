@@ -76,92 +76,78 @@ export default class Register extends Component {
     var isError = this.state.isError;
     console.log(this.state);
 
-    const registerContainer = {
-      padding: "40px",
-      padding: "40px",
-      justifyContent: "center"
-    };
-
-    // const registerText = {
-    //   color: "#2190cc",
-    //   fontWeight: "bold",
-    //   cursor: "pointer"
-    // };
-
     return (
       <Layout>
         <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
-        <div style={registerContainer}>
-          <RLLayout>
-            <div className='row justify-center mx-auto'>
-              <img src='/allocat_blue.png' className='big-cat' />
-            </div>
-            <div className='row justify-center mx-auto'>
-              <h1 className='blue-text'>Allocat</h1>
-            </div>
+        <RLLayout>
+          <div className='row justify-center mx-auto'>
+            <img src='/allocat_blue.png' className='big-cat' />
+          </div>
+          <div className='row justify-center mx-auto'>
+            <h1 className='blue-text'>Allocat</h1>
+          </div>
 
-            <div>
-              <label htmlFor='FullName'>Full Name:</label>
-              <input
-                type='text'
-                name='fullName'
-                className='form-control'
-                id='FullName'
-                placeholder='Full Name'
-                onChange={this.handleChange.bind(this)}
-              />
-              <br />
-              <label htmlFor='Email'>Email:</label>
-              <input
-                type='text'
-                name='email'
-                className='form-control'
-                id='Email'
-                placeholder='Email'
-                onChange={this.handleChange.bind(this)}
-              />
-              <br />
-              <label htmlFor='Password'>Password:</label>
-              <input
-                type='password'
-                name='password'
-                className='form-control'
-                id='Password'
-                placeholder='Password'
-                onChange={this.handleChange.bind(this)}
-              />
-              <br />
-              <label htmlFor='confPassword'>Confirm Password:</label>
-              <input
-                type='password'
-                name='confPassword'
-                className='form-control'
-                id='confPassword'
-                placeholder='Confirm Password'
-                onChange={this.handleChange.bind(this)}
-              />
-              <div style={{ textAlign: "center" }}>
-                <p>
-                  Already have an account?
-                  <Link href='/'>
-                    <p>Login</p>
-                  </Link>
-                </p>
-              </div>
-              <button
-                className='btn btn-primary'
-                onClick={() => this.handleRegisterClick()}
-              >
-                Register
-              </button>
-              {isError ? (
-                <FormMessage status='error' message={this.state.errorMsg} />
-              ) : (
-                <FormMessage />
-              )}
+          <div>
+            <label htmlFor='FullName'>Full Name:</label>
+            <input
+              type='text'
+              name='fullName'
+              className='form-control'
+              id='FullName'
+              placeholder='Full Name'
+              onChange={this.handleChange.bind(this)}
+            />
+            <br />
+            <label htmlFor='Email'>Email:</label>
+            <input
+              type='text'
+              name='email'
+              className='form-control'
+              id='Email'
+              placeholder='Email'
+              onChange={this.handleChange.bind(this)}
+            />
+            <br />
+            <label htmlFor='Password'>Password:</label>
+            <input
+              type='password'
+              name='password'
+              className='form-control'
+              id='Password'
+              placeholder='Password'
+              onChange={this.handleChange.bind(this)}
+            />
+            <br />
+            <label htmlFor='confPassword'>Confirm Password:</label>
+            <input
+              type='password'
+              name='confPassword'
+              className='form-control'
+              id='confPassword'
+              placeholder='Confirm Password'
+              onChange={this.handleChange.bind(this)}
+            />
+            <div style={{ textAlign: "center" }}>
+              <p>
+                Already have an account?
+                <Link href='/'>
+                  <p>Login</p>
+                </Link>
+              </p>
             </div>
-          </RLLayout>
-        </div>
+            <button
+              className='btn btn-primary'
+              onClick={() => this.handleRegisterClick()}
+            >
+              Register
+            </button>
+            {isError ? (
+              <FormMessage status='error' message={this.state.errorMsg} />
+            ) : (
+              <FormMessage />
+            )}
+          </div>
+        </RLLayout>
       </Layout>
     );
   }
