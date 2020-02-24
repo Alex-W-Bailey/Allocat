@@ -78,78 +78,84 @@ export default class Register extends Component {
 
     return (
       <Layout>
-        <Nav pageTitle={this.state.pageTitle} menuItem={this.state.menuItem} />
-        <RLLayout>
-          <div className='row justify-center mx-auto'>
-            <img src='/allocat_blue.png' className='big-cat' />
-          </div>
-          <div className='row justify-center mx-auto'>
-            <h1 className='blue-text'>Allocat</h1>
-          </div>
-
-          <div>
-            <label htmlFor='FullName'>Full Name:</label>
-            <input
-              type='text'
-              name='fullName'
-              className='form-control'
-              id='FullName'
-              placeholder='Full Name'
-              onChange={this.handleChange.bind(this)}
-            />
-            <br />
-            <label htmlFor='Email'>Email:</label>
-            <input
-              type='text'
-              name='email'
-              className='form-control'
-              id='Email'
-              placeholder='Email'
-              onChange={this.handleChange.bind(this)}
-            />
-            <br />
-            <label htmlFor='Password'>Password:</label>
-            <input
-              type='password'
-              name='password'
-              className='form-control'
-              id='Password'
-              placeholder='Password'
-              onChange={this.handleChange.bind(this)}
-            />
-            <br />
-            <label htmlFor='confPassword'>Confirm Password:</label>
-            <input
-              type='password'
-              name='confPassword'
-              className='form-control'
-              id='confPassword'
-              placeholder='Confirm Password'
-              onChange={this.handleChange.bind(this)}
-            />
-            <div className='row justify-center mx-auto text-center'>
-              <p>
-                Already have an account?
-                <Link href='/'>
-                  <p className='blue-text pointer'>Login</p>
-                </Link>
-              </p>
+        <div className='rl-body'>
+          <Nav
+            pageTitle={this.state.pageTitle}
+            menuItem={this.state.menuItem}
+          />
+          <RLLayout>
+            <div className='row justify-center mx-auto'>
+              <img src='/allocat_blue.png' className='big-cat' />
             </div>
             <div className='row justify-center mx-auto'>
-              <button
-                className='button50'
-                onClick={() => this.handleRegisterClick()}
-              >
-                Register
-              </button>
+              <h1 className='blue-text'>Allocat</h1>
             </div>
-            {isError ? (
-              <FormMessage status='error' message={this.state.errorMsg} />
-            ) : (
-              <FormMessage />
-            )}
-          </div>
-        </RLLayout>
+
+            <div>
+              <label htmlFor='FullName'>Full Name:</label>
+              <input
+                type='text'
+                name='fullName'
+                className='form-control'
+                id='FullName'
+                placeholder='Full Name'
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <label htmlFor='Email'>Email:</label>
+              <input
+                type='text'
+                name='email'
+                className='form-control'
+                id='Email'
+                placeholder='Email'
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <label htmlFor='Password'>Password:</label>
+              <input
+                type='password'
+                name='password'
+                className='form-control'
+                id='Password'
+                placeholder='Password'
+                onChange={this.handleChange.bind(this)}
+              />
+              <br />
+              <label htmlFor='confPassword'>Confirm Password:</label>
+              <input
+                type='password'
+                name='confPassword'
+                className='form-control'
+                id='confPassword'
+                placeholder='Confirm Password'
+                onChange={this.handleChange.bind(this)}
+              />
+              <div className='row justify-center mx-auto text-center'>
+                <p>
+                  Already have an account?
+                  <Link href='/'>
+                    <p className='blue-text pointer'>Login</p>
+                  </Link>
+                </p>
+              </div>
+              <div className='row justify-center mx-auto'>
+                <button
+                  className='button50'
+                  onClick={() => this.handleRegisterClick()}
+                >
+                  Register
+                </button>
+              </div>
+              {isError ? (
+                <FormMessage status='error' message={this.state.errorMsg} />
+              ) : (
+                <FormMessage />
+              )}
+            </div>
+          </RLLayout>
+          <div className='sticky'></div>
+        </div>
       </Layout>
     );
   }

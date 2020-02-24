@@ -26,6 +26,7 @@ body {
 
 .rl-body {
   background-image: url("https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg");
+  background-size: 100% 100%;
 }
 
 .delete {
@@ -137,8 +138,16 @@ input {
   justify-content: center;
   max-width: 300px;
 }
+.dashboard-menu-mobile {
+  justify-content: center;
+  max-width: 0;
+}
 .dashboard-btn {
   width: 100%;
+}
+
+.sticky {
+  min-height: 300px;
 }
 // NAVIGATION STYLES
 @import "/components/Nav/style";

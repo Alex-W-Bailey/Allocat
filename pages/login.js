@@ -84,7 +84,7 @@ export default class Login extends Component {
     };
 
     return (
-      <div>
+      <div className='rl-body'>
         <Nav
           pageTitle={this.state.pageTitle}
           menuItems={this.state.menuItems}
@@ -135,6 +135,7 @@ export default class Login extends Component {
             <br />
           </div>
         </RLLayout>
+        <div className='sticky'></div>
       </div>
     );
   }
