@@ -56,6 +56,7 @@ export default class Dashboard extends Component {
     this.setState({ categorySelected: categoryName });
   };
 
+
   render() {
     return (
       <div>
