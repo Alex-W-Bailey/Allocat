@@ -15,6 +15,7 @@ $complete: #2ab009;
 
 .list-group-item {
   border: 0;
+  background-color: $darkCanvas;
 }
 
 body {
@@ -25,6 +26,7 @@ body {
 
 .rl-body {
   background-image: url("https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg");
+  background-size: 100% 100%;
 }
 
 .delete {
@@ -98,6 +100,16 @@ button {
 
 .button50 {
   min-width: 75%;
+  border: 0;
+
+  &:hover {
+    background-color: $allocatTeal;
+    border: 0;
+  }
+  &:active {
+    background-color: $allocatTeal;
+    border: 0;
+  }
 }
 
 .allocat-danger {
@@ -149,10 +161,9 @@ input {
   margin-bottom: 10px;
 }
 
-.dashboard-menu {
-  padding: 0px;
+.sticky {
+  min-height: 300px;
 }
-
 // NAVIGATION STYLES
 @import "/components/Nav/style";
 @import "/components/NavDropdown/style";
