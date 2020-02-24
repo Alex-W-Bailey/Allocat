@@ -1,21 +1,113 @@
 import React, { Component } from "react";
 import { Accordion, Card, Button, Form } from "react-bootstrap";
 import NPLayout from "../NPLayout";
+import axios from "axios";
 
 export default class DashboardTeams extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showNewTeamForm: false,
-      TaskName: "",
-      TaskDescription: "",
-      TaskTeam: "",
-      TaskDueDate: "",
       allTeams: [],
+      allCollaborators: [],
       allTasks: [],
+      newTeamAssign: "",
+      newTeam: "",
       isError: false,
       errorMsg: ""
     };
+  }
+
+  componentDidMount() {
+    this.getAllTeams();
+    this.getAllCollaborators();
+    this.getAllTasks();
+  }
+
+  async getAllTeams() {
+    var newArr = [null];
+
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    await axios.get(`/api/allTeams/${splitUrl}`).then((response) => {
+      for (var i = 0; i < response.data.length; i++) {
+        newArr.push(response.data[i].teamName);
+      }
+    })
+
+    console.log(newArr)
+
+    this.setState({
+      allTeams: newArr
+    });
+  }
+
+  async getAllCollaborators() {
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    var collabs = []
+
+    await axios.get(`/api/allCollaborators/${splitUrl}`).then((response) => {
+      console.log(response);
+
+      for (var i = 0; i < response.data.length; i++) {
+        collabs.push(response.data[i]);
+      }
+    })
+
+    for (var i = 0; i < collabs.length; i++) {
+      this.pushCollaborator(i, collabs[i])
+    }
+  }
+
+  async pushCollaborator(i, collaborator) {
+    var newArr = [];
+
+    await axios.get(`/api/findUser/${collaborator.userId}`).then((res) => {
+      var oldState = this.state.allCollaborators;
+
+      if (oldState.length > 0) {
+        for (var j = 0; j < oldState.length; j++) {
+          newArr.push(oldState[j]);
+        }
+      }
+
+      var collab = {
+        id: collaborator.id,
+        userId: collaborator.userId,
+        name: res.data.fullName,
+        projectId: collaborator.projectId,
+        teamName: collaborator.teamName,
+      }
+
+      newArr.push(collab);
+
+      this.setState({
+        allCollaborators: newArr
+      });
+    });
+  }
+
+  async getAllTasks() {
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    var newArr = [];
+
+    await axios.get(`/api/allTasks/${splitUrl}`).then((response) => {
+      console.log(response);
+      for (var i = 0; i < response.data.length; i++) {
+        console.log(response);
+        newArr.push(response.data[i]);
+      }
+
+      console.log(newArr);
+      this.setState({
+        allTasks: newArr
+      });
+    });
   }
 
   handleChange = e => {
@@ -30,14 +122,30 @@ export default class DashboardTeams extends Component {
   handleShowNewTeamForm = () => {
     this.state.showNewTeamForm
       ? this.setState({
-          showNewTeamForm: false
-        })
+        showNewTeamForm: false
+      })
       : this.setState({ showNewTeamForm: true });
   };
 
   addNewTeam = () => {
     console.log("This will create a new team");
+    console.log(this.state);
   };
+
+  handleAssignTeam = (e) => {
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    var teamName = this.state.newTeamAssign;
+    var userId = e.target.id;
+
+    axios.put(`/api/newAssignTeam/${splitUrl}/${userId}/${teamName}`).then((response) => {
+      console.log("updated collab team in db")
+    });
+
+    console.log(teamName);
+    console.log(userId);
+  }
 
   render() {
     if (this.state.showNewTeamForm === false) {
@@ -47,113 +155,97 @@ export default class DashboardTeams extends Component {
             Add a New Team
           </Button>
           <Accordion>
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant='link' eventKey='0'>
-                  Backend (Team 1)
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey='0'>
-                <Card.Body>
-                  <Accordion>
-                    <Card>
-                      <Card.Header>
-                        <Accordion.Toggle
-                          as={Button}
-                          variant='link'
-                          eventKey='0'
-                        >
-                          Alex Baily
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>Passport.js</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>Next.js</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>Create Schema</Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                      <Card.Header>
-                        <Accordion.Toggle
-                          as={Button}
-                          variant='link'
-                          eventKey='1'
-                        >
-                          Rico Quintanilla
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>Routing</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>Passport.js</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>Next.js</Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-                  </Accordion>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant='link' eventKey='1'>
-                  Frontend
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey='1'>
-                <Card.Body>
-                  <Accordion>
-                    <Card>
-                      <Card.Header>
-                        <Accordion.Toggle
-                          as={Button}
-                          variant='link'
-                          eventKey='0'
-                        >
-                          Danielle Burrage
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>SASS</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>Projects Card</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='0'>
-                        <Card.Body>Create Schema</Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                      <Card.Header>
-                        <Accordion.Toggle
-                          as={Button}
-                          variant='link'
-                          eventKey='1'
-                        >
-                          Monica Dixon
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>React.js</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>Bootstrap-React</Card.Body>
-                      </Accordion.Collapse>
-                      <Accordion.Collapse eventKey='1'>
-                        <Card.Body>Dashboard</Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-                  </Accordion>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
+            {
+              this.state.allTeams.map(team => {
+                return (
+                  <div>
+                    <Accordion>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant='link' eventKey='0'>
+                            {
+                              team === null ? (
+                                <p>Unassigned</p>
+                              ) : (
+                                  <p>{team}</p>
+                                )
+                            }
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <div>
+                          {
+                            this.state.allCollaborators.map(collab => {
+                              return (
+                                this.state.allCollaborators.length > 0 ? (
+                                  collab.teamName === team ? (
+                                    <Accordion.Collapse eventKey='0'>
+                                      <Card.Body>
+                                        <Accordion>
+                                          <Card>
+                                            <Card.Header>
+                                              <Accordion.Toggle
+                                                as={Button}
+                                                variant='link'
+                                                eventKey='0'
+                                              >
+                                                {collab.name}
+                                              </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey='0'>
+                                              <Card.Body>
+                                                <p>Assign Collaborator To A Team</p>
+                                                <Form.Group>
+                                                  <Form.Control onChange={this.handleChange.bind(this)} as='select' name="newTeamAssign">
+                                                    <option value="N/A" disabled selected>Select Team</option>
+                                                    {
+                                                      this.state.allTeams.map(team => {
+                                                        return (
+                                                          team === null ? (
+                                                            <option value="none">None</option>
+                                                          ) : (
+                                                              <option value={team}>{team}</option>
+                                                            )
+                                                        );
+                                                      })
+                                                    }
+                                                  </Form.Control>
+                                                </Form.Group>
+                                                <button id={collab.userId} onClick={(e) => this.handleAssignTeam(e)}>Assign to team</button>
+                                              </Card.Body>
+                                            </Accordion.Collapse>
+                                            {
+                                              this.state.allTasks.map(task => {
+                                                return (
+                                                  task.userId === collab.userId ? (
+                                                    <Accordion.Collapse eventKey='0'>
+                                                      <Card.Body>{task.taskName}</Card.Body>
+                                                    </Accordion.Collapse>
+                                                  ) : (
+                                                      <></>
+                                                    )
+                                                )
+                                              })
+                                            }                                            
+                                          </Card>
+                                        </Accordion>
+                                      </Card.Body>
+                                    </Accordion.Collapse> 
+                                  ) : (
+                                      <p></p>
+                                    )
+                                ) : (
+                                    <p>No Collaborators</p>
+                                  )
+                              )
+                            })
+                          }
+                        </div>
+                      </Card>
+                    </Accordion>
+                  </div>
+                )
+              })
+            }
           </Accordion>
         </div>
       );
