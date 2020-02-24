@@ -23,6 +23,16 @@ body {
   color: $darkText;
 }
 
+.rl-body {
+  background-image: url("https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg");
+}
+
+.delete {
+  color: $alertRed;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .container-main {
   background-color: $container;
   border: 1px solid $accentGrey;
@@ -66,6 +76,16 @@ button {
   }
   &:active {
     background-color: $allocatTeal;
+  }
+}
+.allocat-danger {
+  background-color: $alertRed;
+  color: $warmWhite;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  &:hover {
+    background-color: rgb(138, 28, 28);
   }
 }
 
