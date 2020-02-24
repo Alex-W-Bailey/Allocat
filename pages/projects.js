@@ -12,7 +12,7 @@ export default class Projects extends Component {
     this.state = {
       pageTitle: "Projects",
       projects: [],
-      projectInfo: [],
+      projectInfo: []
     };
   }
 
@@ -38,7 +38,7 @@ export default class Projects extends Component {
   async getProjectInfo(i) {
     var newArr = this.state.projectInfo;
 
-    await axios.get(`/api/project/${this.state.projects[i]}`).then((project) => {
+    await axios.get(`/api/project/${this.state.projects[i]}`).then(project => {
       newArr.push(project.data);
       this.setState({
         projectInfo: newArr
@@ -53,34 +53,32 @@ export default class Projects extends Component {
       <div>
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
-          <div className="col-lg-12 container-main float-right">
-            <div className="pt-4">
-              <div className="row">
-                <div className="col-8 my-2 pl-5">
-                  <h5 className="project-header">Your Projects</h5>
+          <div className='col-lg-12 container-main float-right'>
+            <div className='pt-4'>
+              <div className='row'>
+                <div className='col-8 my-2 pl-5'>
+                  <h5 className='project-header'>Your Projects</h5>
                 </div>
                 <hr />
               </div>
               <div className='row m-2'>
                 <NPCard />
-                {
-                  this.state.projectInfo.map(project => {
-                    return (
-                      <PCard
-                        key={project.id}
-                        id={project.id}
-                        projectName={project.projectName}
-                        description={project.projectDescription}
-                        dueDate={project.dueDate}
-                      />
-                    )
-                  })
-                }
+                {this.state.projectInfo.map(project => {
+                  return (
+                    <PCard
+                      key={project.id}
+                      id={project.id}
+                      projectName={project.projectName}
+                      description={project.projectDescription}
+                      dueDate={project.dueDate}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
         </Layout>
-      </div >
+      </div>
     );
   }
 }
