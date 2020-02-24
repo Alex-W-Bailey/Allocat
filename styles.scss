@@ -43,7 +43,7 @@ body {
 }
 
 .container-main-task {
-  background-color: $container;
+  background-color: $warmWhite;
   border: 1px solid $accentGrey;
   border-radius: 25px 0 0px 25px;
   justify-content: center;
@@ -55,8 +55,13 @@ body {
   padding-right: 0px;
 }
 
+.form-control {
+  background-color: $warmWhite;
+}
+
 .project-header,
-.task-header {
+.task-header,
+.team-header {
   font-size: 2rem;
   font-weight: 1000;
   margin-top: 5px;
@@ -75,11 +80,24 @@ button {
   margin: 5px;
   &:hover {
     background-color: $allocatTeal;
+    border: 0;
   }
   &:active {
     background-color: $allocatTeal;
+    border: 0;
   }
 }
+
+.list-group-item {
+  background-color: #595959;
+  color: $warmWhite;
+  font-size: 1.25rem;
+  &:hover {
+    color: $allocatTeal;
+  }
+  margin: auto 0;
+}
+
 .button50 {
   min-width: 75%;
 }

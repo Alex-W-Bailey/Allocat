@@ -58,31 +58,31 @@ export default class Dashboard extends Component {
         <Layout>
           <Nav pageTitle={this.state.pageTitle} />
           <div class='row'>
-            <div className='col-lg-2 dashboard-menu float-left'>
-              <ListGroup variant='flush' className='verticle-align'>
+            <div className='col-lg-2 float-left my-auto'>
+              <ListGroup className='verticle-align'>
                 <ListGroup.Item>
-                  <Button
-                    className='dashboard-btn'
+                  <a
+                    className='task-nav-btn mx-auto'
                     onClick={() => this.updateCategory("teams")}
                   >
                     Teams
-                  </Button>
+                  </a>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button
-                    className='dashboard-btn'
+                  <a
+                    className='task-nav-btn'
                     onClick={() => this.updateCategory("tasks")}
                   >
                     Tasks
-                  </Button>
+                  </a>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button
-                    className='dashboard-btn'
+                  <a
+                    className='task-nav-btn'
                     onClick={() => this.updateCategory("timeline")}
                   >
                     Timeline
-                  </Button>
+                  </a>
                 </ListGroup.Item>
               </ListGroup>
             </div>
@@ -91,9 +91,8 @@ export default class Dashboard extends Component {
                 <div className='row'>
                   <div className='col-12'>
                     <h1 className='task-header'>
-                      Your {this.state.categorySelected}
+                      {this.state.categorySelected}
                     </h1>
-                    <hr></hr>
                   </div>
                   <hr />
                 </div>

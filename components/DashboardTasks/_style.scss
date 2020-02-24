@@ -1,37 +1,60 @@
 .task-card {
-    border: 1px solid $softGrey;
-    border-radius: 25px;
-    height: inherit;
-    min-height: 13rem; 
+  border: 1px solid $softGrey;
+  border-radius: 25px;
+  height: inherit;
+  min-height: 13rem;
+  background-color: $warmWhite;
 }
 
 .task-btn {
-    font-size: 14px;
+  font-size: 14px;
 }
 
-.card-title {
-    font-weight: 1000;
-    font-size: 1.35rem;
-}
+.btn-box {
+  border-top: solid 1px $softGrey;
 
-.team-header {
-    font-size: 1.5rem;
-    font-weight: 1000;
-    margin-top: 5px;
-    text-transform: capitalize;
-}
-
-.task-name {
-    text-transform: capitalize;
-}
-
-.text-muted {
-    color: $alertRed;
+  .btn {
+    background-color: $warmWhite;
+    border: 0px;
+    color: $allocatBlue;
     font-weight: bold;
+    padding-bottom: 0;
+    &:hover {
+      background-color: $warmWhite;
+      border: 0px;
+      color: $allocatBlue;
+      font-weight: bold;
+      padding-bottom: 0;
+      color: $allocatTeal;
+    }
+    &:active {
+      background-color: $warmWhite;
+      border: 0px;
+      color: $allocatBlue;
+      font-weight: bold;
+      padding-bottom: 0;
+      color: $allocatTeal;
+    }
+  }
 }
 
 .team-container {
-    border: 1px solid red; 
+  background-color: $container;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  border-radius: 25px 0 0px 25px;
 }
 
+.card-title {
+  font-weight: 1000;
+  font-size: 1.35rem;
+}
 
+.task-name {
+  text-transform: capitalize;
+}
+
+.text-muted {
+  color: $alertRed;
+  font-weight: bold;
+}
