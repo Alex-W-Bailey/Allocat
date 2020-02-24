@@ -96,7 +96,9 @@ export default class Register extends Component {
             <div className='row justify-center mx-auto'>
               <img src='/allocat_blue.png' className='big-cat' />
             </div>
-            <h1>Allocat</h1>
+            <div className='row justify-center mx-auto'>
+              <h1 className='blue-text'>Allocat</h1>
+            </div>
 
             <div>
               <label htmlFor='FullName'>Full Name:</label>
