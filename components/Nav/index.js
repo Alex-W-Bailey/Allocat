@@ -10,7 +10,7 @@ const Nav = props => {
         {props.pageTitle}
       </h3>
 
-      <NavDropdown menuItems={props.menuItems} />
+      <NavDropdown menuItems={props.menuItems} pageTitle={props.pageTitle} />
       <div></div>
     </nav>
   );

@@ -1,5 +1,22 @@
 import { Dropdown } from "react-bootstrap";
 const NavDropdown = props => {
+  let register = false;
+  let login = false;
+  let loggedIn = false;
+
+  if (props.pageTitle === "Register") {
+    register = true;
+    login = false;
+    loggedIn = false;
+  } else if (props.pageTitle === "Login") {
+    register = false;
+    login = true;
+    loggedIn = false;
+  } else {
+    register = false;
+    login = false;
+    loggedIn = true;
+  }
   return (
     <Dropdown className='mr-3' alignRight>
       <Dropdown.Toggle
@@ -8,25 +25,24 @@ const NavDropdown = props => {
       ></Dropdown.Toggle>
 
       <Dropdown.Menu className='dd-menu'>
-        {/* Switch statement for the first item of the dropdown. If user is logged in, first item will be logout. --- Set this to default
-           If pageTitle= "Login",  option will be "Register New Account". if pagetitle="Register"  option will be Login to existing account*/}
-        <Dropdown.Item href='/'>Logout</Dropdown.Item>
-
-        {/* Takes in state of parent page - for teach menuItem, it takes in the name, and the link it wants to go to. Figure out how to */}
-
-        {/* props.menuItems.map(item => (
-           return(
-            <Dropdown.Item key={item.id} href={item.href}>
-            {item.name}
-           </Dropdown.Item>
-           )
-
-        )) */}
-        <Dropdown.Item className='dropdown-item' href='/register'>
-          Register
-        </Dropdown.Item>
-        <Dropdown.Item href='/projects'>Projects</Dropdown.Item>
-        <Dropdown.Item href='/newProject'>New Project</Dropdown.Item>
+        {loggedIn ? <Dropdown.Item href='/'>Logout</Dropdown.Item> : <h1></h1>}
+        {register ? <Dropdown.Item href='/'>Login</Dropdown.Item> : <h1></h1>}
+        {login ? (
+          <Dropdown.Item href='/register'>Register</Dropdown.Item>
+        ) : (
+          <h1></h1>
+        )}
+        {props.menuItems ? (
+          props.menuItems.map(item => {
+            return (
+              <Dropdown.Item key={item.id} href={item.link}>
+                {item.title}
+              </Dropdown.Item>
+            );
+          })
+        ) : (
+          <h1></h1>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );

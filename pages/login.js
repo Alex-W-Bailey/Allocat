@@ -13,10 +13,6 @@ export default class Login extends Component {
       email: "",
       password: "",
       pageTitle: "Login",
-      menuItems: [
-        { name: "Logout", href: "/", id: 1 },
-        { name: "Projects", href: "/Projects", id: 2 }
-      ],
       isError: false,
       errorMsg: "Email or Password incorrect"
     };

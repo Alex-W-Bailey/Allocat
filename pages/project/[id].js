@@ -12,6 +12,10 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       pageTitle: "",
+      menuItems: [
+        { title: " Your Projects", link: "/projects", id: 1 },
+        { title: "Create a New Project", link: "/newProject", id: 2 }
+      ],
       categorySelected: "",
       teamNames: [],
       teamMembers: [],
@@ -56,7 +60,10 @@ export default class Dashboard extends Component {
     return (
       <div>
         <Layout>
-          <Nav pageTitle={this.state.pageTitle} />
+          <Nav
+            pageTitle={this.state.pageTitle}
+            menuItems={this.state.menuItems}
+          />
           <div class='row'>
             <div className='col-lg-2 float-left my-auto'>
               <ListGroup className='verticle-align'>

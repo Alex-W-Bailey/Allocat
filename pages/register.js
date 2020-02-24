@@ -81,7 +81,7 @@ export default class Register extends Component {
         <div className='rl-body'>
           <Nav
             pageTitle={this.state.pageTitle}
-            menuItem={this.state.menuItem}
+            menuItem={this.state.menuItems}
           />
           <RLLayout>
             <div className='row justify-center mx-auto'>
