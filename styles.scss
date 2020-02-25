@@ -40,6 +40,7 @@ body {
   border: 1px solid $accentGrey;
   justify-content: center;
   height: inherit;
+  min-height: 100vh;
 }
 
 .container-main-task {
@@ -80,11 +81,11 @@ button {
   margin: 5px;
   &:hover {
     background-color: $allocatTeal;
-    border: 0;
+    border-color: $allocatTeal;
   }
   &:active {
     background-color: $allocatTeal;
-    border: 0;
+    border-color: $allocatTeal;
   }
 }
 

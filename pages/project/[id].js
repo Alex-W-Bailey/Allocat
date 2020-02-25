@@ -67,7 +67,7 @@ export default class Dashboard extends Component {
           />
           <div class='row'>
             <div className='col-lg-2 float-left my-auto'>
-              <ListGroup className='verticle-align'>
+              <ListGroup className='verticle-align pointer'>
                 <ListGroup.Item>
                   <a
                     className='task-nav-btn mx-auto'
