@@ -10,6 +10,7 @@ export default class Projects extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: [],
       pageTitle: "Projects",
       projects: [],
       projectInfo: []
@@ -29,6 +30,12 @@ export default class Projects extends Component {
 
           this.getProjectInfo(i);
         }
+
+        axios.get("/api/findCurrentUser").then((response) => {
+          this.setState({
+            user: response.data
+          })
+        })
       } else {
         console.log("No projects found...");
       }
@@ -49,6 +56,8 @@ export default class Projects extends Component {
   }
 
   render() {
+    console.log(this.state)
+
     return (
       <div>
         <Layout>

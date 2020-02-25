@@ -15,6 +15,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/findCurrentUser", (req, res) => {
+        var currentUser = req.user.id;
+        db.User.findOne({
+            where: {
+                id: currentUser
+            }
+        }).then((dbUser) => {
+            res.json(dbUser);
+        });    
+    });
+
     app.get("/api/project/:projectId", (req, res) => {
         db.Project.findOne({
             where: {
@@ -171,6 +182,15 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/addTeamToProject", (req, res) => {
+        db.Team.create({
+            projectId: req.body.projectId,
+            teamName: req.body.teamName,
+        }).then(() => {
+            res.status(200).end();
+        })
+    })
+
     app.post("/api/projectCreator", (req, res) => {
         var userId = req.user.id;
         console.log("userId: " + req.user);
@@ -251,21 +271,6 @@ module.exports = function (app) {
         });
     });
 
-    app.put("/api/newAssignTeam/:projectId/:userId/:teamName", (req, res) => {
-        db.Collaborator.update(
-            { teamName: req.params.teamName },
-            {
-                where: [
-                    { userId: req.params.userId },
-                    { projectId: req.params.projectId }
-                ]
-            }
-        ).then((rowsUpdated) => {
-            res.json(rowsUpdated)
-        });
-
-    });
-
     app.put("/api/unclaimTask/:taskId", (req, res) => {
         db.Task.update(
             {userId: null},
@@ -299,6 +304,21 @@ module.exports = function (app) {
         ).then((rowsUpdated) => {
             res.json(rowsUpdated);
         });  
+    });
+
+    app.put("/api/newAssignTeam/:projectId/:userId/:teamName", (req, res) => {
+        db.Collaborator.update(
+            { teamName: req.params.teamName },
+            {
+                where: [
+                    { userId: req.params.userId },
+                    { projectId: req.params.projectId }
+                ]
+            }
+        ).then((rowsUpdated) => {
+            res.json(rowsUpdated)
+        });
+
     });
 }
 
