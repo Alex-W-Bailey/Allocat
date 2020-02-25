@@ -20,44 +20,40 @@ export default class Projects extends Component {
   componentDidMount() {
     var newArr = this.state.projects;
 
-    axios.get("/api/allProjects").then(projectsFound => {
+    axios.get("http://localhost:3000/api/allProjects").then(projectsFound => {
       if (projectsFound.data.length > 0) {
         for (var i = 0; i < projectsFound.data.length; i++) {
-          newArr.push(projectsFound.data[i].id);
+          newArr.push(projectsFound.data[i].projectId);
           this.setState({
             projects: newArr
           });
 
           this.getProjectInfo(i);
         }
-
-        axios.get("/api/findCurrentUser").then((response) => {
-          this.setState({
-            user: response.data
-          })
-        })
       } else {
         console.log("No projects found...");
       }
     });
+
+    axios.get("http://localhost:3000/api/findCurrentUser").then((response) => {
+      this.setState({
+        user: response.data
+      })
+    })
   }
 
   async getProjectInfo(i) {
     var newArr = this.state.projectInfo;
 
-    await axios.get(`/api/project/${this.state.projects[i]}`).then(project => {
+    await axios.get(`http://localhost:3000/api/project/${this.state.projects[i]}`).then(project => {
       newArr.push(project.data);
       this.setState({
         projectInfo: newArr
       });
     });
-
-    console.log(this.state);
   }
 
   render() {
-    console.log(this.state)
-
     return (
       <div>
         <Layout>
