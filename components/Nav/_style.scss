@@ -1,9 +1,17 @@
 .nav {
-  background-color: $darkCanvas;
+  background-color: none;
+  position: relative;
   color: $warmWhite;
   min-height: 75px;
   padding: 10px;
 }
+
 .nav-logo {
   max-height: 50px;
+}
+
+.welcome-title {
+  padding-left: 15px;
+  font-size: 1rem;
+  color: $warmWhite;
 }

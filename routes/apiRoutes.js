@@ -2,9 +2,14 @@ var db = require("../models");
 var passport = require("../config/passport");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
-module.exports = function(app) {
+module.exports = function (app) {
     //GET
-    app.get("/api/allProjects", (req, res ) => {
+    app.get("/api/logout", (req, res) => {
+        req.logout()
+        res.redirect('/')
+    })
+   
+    app.get("/api/allProjects", (req, res) => {
         var userId = req.user.id;
         db.Collaborator.findAll({
             where: {
@@ -13,7 +18,18 @@ module.exports = function(app) {
         }).then((dbProjectCollab) => {
             res.json(dbProjectCollab);
         });
-    }); 
+    });
+
+    app.get("/api/findCurrentUser", (req, res) => {
+        var currentUser = req.user.id;
+        db.User.findOne({
+            where: {
+                id: currentUser
+            }
+        }).then((dbUser) => {
+            res.json(dbUser);
+        });    
+    });
 
     app.get("/api/project/:projectId", (req, res) => {
         db.Project.findOne({
@@ -37,9 +53,9 @@ module.exports = function(app) {
 
     app.get("/api/allUsers", (req, res) => {
         db.User.findAll({})
-        .then((dbUsers) => {
-            res.json(dbUsers)
-        });
+            .then((dbUsers) => {
+                res.json(dbUsers)
+            });
     });
 
     app.get("/api/user/:userEmail", (req, res) => {
@@ -60,7 +76,27 @@ module.exports = function(app) {
         }).then((dbTeams) => {
             res.json(dbTeams);
         });
-    })
+    });
+
+    app.get("/api/findUser/:userId", (req, res) => {
+        db.User.findOne({
+            where: {
+                id: req.params.userId
+            }
+        }).then((dbUsers) => {
+            res.json(dbUsers);
+        })
+    });
+
+    app.get("/api/allCollaborators/:projectId", (req, res) => {
+        db.Collaborator.findAll({
+            where: {
+                projectId: req.params.projectId
+            }
+        }).then((dbCollab) => {
+            res.json(dbCollab);
+        });
+    });
 
     app.get("/api/allTasks/:projectId", (req, res) => {
         db.Task.findAll({
@@ -94,11 +130,11 @@ module.exports = function(app) {
                 email: req.body.email
             }
         }).then((users) => {
-            if(users){
+            if (users) {
                 console.log("email is already taken...");
                 res.send("email is already taken");
             }
-            else{
+            else {
                 db.User.create({
                     email: req.body.email,
                     fullName: req.body.fullName,
@@ -116,7 +152,7 @@ module.exports = function(app) {
                 projectName: req.body.projectName
             }
         }).then((projectsFound) => {
-            if(projectsFound){
+            if (projectsFound) {
                 console.log("Project name already in use");
                 res.send("err");
             }
@@ -151,6 +187,15 @@ module.exports = function(app) {
         });
     });
 
+    app.post("/api/addTeamToProject", (req, res) => {
+        db.Team.create({
+            projectId: req.body.projectId,
+            teamName: req.body.teamName,
+        }).then(() => {
+            res.status(200).end();
+        })
+    })
+
     app.post("/api/projectCreator", (req, res) => {
         var userId = req.user.id;
         console.log("userId: " + req.user);
@@ -181,8 +226,8 @@ module.exports = function(app) {
                 }
             }).then((projectFound) => {
                 db.Collaborator.create({
-                  userId: userFound.id,
-                  projectId: projectFound.id  
+                    userId: userFound.id,
+                    projectId: projectFound.id
                 }).then(() => {
                     res.status(200).end();
                 });
@@ -209,7 +254,31 @@ module.exports = function(app) {
         var userID = req.user.id;
 
         db.Task.update(
-            {userId: userID},
+            { userId: userID },
+            {
+                where:
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            db.Task.update(
+                { taskStatus: "Working On" },
+                {
+                    where:
+                    {
+                        id: req.params.taskId
+                    }
+                }
+            ).then((rowsUpdated) => {
+                res.json(rowsUpdated)
+            });
+        });
+    });
+
+    app.put("/api/unclaimTask/:taskId", (req, res) => {
+        db.Task.update(
+            {userId: null},
             {where: 
                 {
                     id: req.params.taskId
@@ -217,16 +286,55 @@ module.exports = function(app) {
             }
         ).then((rowsUpdated) => {
             db.Task.update(
-                {taskStatus: "Working On"},
+                {taskStatus: "Unassigned"},
                 {where: 
                     {
                         id: req.params.taskId
                     }
                 }
             ).then((rowsUpdated) => {
-                res.json(rowsUpdated)
+                res.json(rowsUpdated);
             });    
         });  
+    });
+
+    app.put("/api/updateStatus/:taskId", (req, res) => {
+        db.Task.update(
+            {taskStatus: req.body.taskStatus},
+            {where: 
+                {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            res.json(rowsUpdated);
+        });  
+    });
+
+    app.put("/api/newAssignTeam/:projectId/:userId/:teamName", (req, res) => {
+        db.Collaborator.update(
+            { teamName: req.params.teamName },
+            {
+                where: [
+                    { userId: req.params.userId },
+                    { projectId: req.params.projectId }
+                ]
+            }
+        ).then((rowsUpdated) => {
+            res.json(rowsUpdated)
+        });
+
+    });
+
+    //DESTROY
+    app.delete("/api/deleteTask/:taskId", (req, res) => {
+       db.Task.destroy({
+           where: {
+               id: req.params.taskId
+           }
+       }).then((deletedTask) => {
+           res.json(deletedTask)
+       });
     });
 }
 

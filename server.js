@@ -21,7 +21,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(session({ secret: "TBD", resave: true, saveUninitialized: false }));
+app.use(session({ secret: "TBD", resave: true, saveUninitialized: false, resave: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));

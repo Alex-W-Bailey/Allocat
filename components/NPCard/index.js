@@ -12,7 +12,7 @@ const NPCard = props => {
           <p className='card-text mx-auto text-center'>
             Ready to start your next project?
           </p>
-          <Link href='/NewProject'>
+          <Link href='/newProject'>
             <button className='mt-auto btn btn-primary'>
               Create New Project
             </button>

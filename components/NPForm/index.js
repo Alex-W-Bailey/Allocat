@@ -1,4 +1,3 @@
-import Nav from "../Nav/index";
 import NPLayout from "../NPLayout/index";
 import NewTeam from "../NewTeam/index";
 import NewCollaborator from "../NewCollaborator/index";
@@ -15,7 +14,6 @@ const NPForm = props => {
 
   return (
     <div>
-      <Nav pageTitle='Project Creation' />
       {isOnPage1 ? (
         <NPLayout>
           <div className='row'>

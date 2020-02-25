@@ -15,6 +15,7 @@ $complete: #2ab009;
 
 .list-group-item {
   border: 0;
+  background-color: $darkCanvas;
 }
 
 body {
@@ -23,15 +24,27 @@ body {
   color: $darkText;
 }
 
+.rl-body {
+  background-image: url("https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg");
+  background-size: 100% 100%;
+}
+
+.delete {
+  color: $alertRed;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .container-main {
   background-color: $container;
   border: 1px solid $accentGrey;
   justify-content: center;
   height: inherit;
+  min-height: 100vh;
 }
 
 .container-main-task {
-  background-color: $container;
+  background-color: $warmWhite;
   border: 1px solid $accentGrey;
   border-radius: 25px 0 0px 25px;
   justify-content: center;
@@ -43,8 +56,13 @@ body {
   padding-right: 0px;
 }
 
+.form-control {
+  background-color: $warmWhite;
+}
+
 .project-header,
-.task-header {
+.task-header,
+.team-header {
   font-size: 2rem;
   font-weight: 1000;
   margin-top: 5px;
@@ -63,10 +81,50 @@ button {
   margin: 5px;
   &:hover {
     background-color: $allocatTeal;
+    border-color: $allocatTeal;
   }
   &:active {
     background-color: $allocatTeal;
+    border-color: $allocatTeal;
   }
+}
+
+.list-group-item {
+  background-color: #595959;
+  color: $warmWhite;
+  font-size: 1.25rem;
+  &:hover {
+    color: $allocatTeal;
+  }
+  margin: auto 0;
+}
+
+.button50 {
+  min-width: 75%;
+  border: 0;
+
+  &:hover {
+    background-color: $allocatTeal;
+    border: 0;
+  }
+  &:active {
+    background-color: $allocatTeal;
+    border: 0;
+  }
+}
+
+.allocat-danger {
+  background-color: $alertRed;
+  color: $warmWhite;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  &:hover {
+    background-color: rgb(138, 28, 28);
+  }
+}
+.pointer {
+  cursor: pointer;
 }
 
 h1,
@@ -75,6 +133,9 @@ h3,
 h5 {
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
+}
+.blue-text {
+  color: $allocatBlue;
 }
 
 .big-cat {
@@ -88,6 +149,7 @@ h5 {
 .form-control {
   border-radius: 10px;
 }
+
 a {
   color: $warmWhite;
   &:hover {
@@ -101,10 +163,9 @@ input {
   margin-bottom: 10px;
 }
 
-.dashboard-menu {
-  padding: 0px;
+.sticky {
+  min-height: 300px;
 }
-
 // NAVIGATION STYLES
 @import "/components/Nav/style";
 @import "/components/NavDropdown/style";
