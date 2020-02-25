@@ -30,6 +30,7 @@ export default class DashboardTasks extends Component {
       newTaskDescription: '',
       newTaskDueDate: '',
       newTaskPriority: '',
+      deleteTaskId: -1,
       isError: false,
       errorMsg: '',
       modalID: -1
@@ -243,8 +244,25 @@ export default class DashboardTasks extends Component {
     });
   };
 
-  handleDeleteTask = id => {
-    console.log(id + ' task deleted');
+  handleDeleteTaskInfo = (e) => {
+    console.log("clicked");
+
+    var newTaskId = e.target.id;
+
+    console.log("clicked: " + newTaskId);
+
+    this.setState({
+      deleteTaskId: newTaskId
+    });
+  }
+
+  handleDeleteTask() {
+    var taskId = this.state.deleteTaskId;
+    
+    axios.delete(`/api/deleteTask/${taskId}`).then((response) => {
+      console.log("deleted task!");
+    });
+
     this.handleHideModal();
   };
 
@@ -393,7 +411,7 @@ export default class DashboardTasks extends Component {
                         </span>
                         <span className="align-right">
                           <a onClick={() => this.handleShowModal(userTask.id)}>
-                            <h5 className="delete mt-3">X</h5>
+                            <h5 id={userTask.id} onClick={(e) => this.handleDeleteTaskInfo(e)} className="delete mt-3">X</h5>
                           </a>
                         </span>
                       </div>
@@ -781,7 +799,7 @@ export default class DashboardTasks extends Component {
                                         this.handleShowModal(task.id)
                                       }
                                     >
-                                      <h5 className="delete mt-3">X</h5>
+                                      <h5 id={task.id} onClick={(e) => this.handleDeleteTaskInfo(e)} className="delete mt-3">X</h5>
                                     </a>
                                   </span>
                                 </div>

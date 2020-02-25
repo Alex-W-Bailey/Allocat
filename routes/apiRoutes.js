@@ -320,5 +320,16 @@ module.exports = function (app) {
         });
 
     });
+
+    //DESTROY
+    app.delete("/api/deleteTask/:taskId", (req, res) => {
+       db.Task.destroy({
+           where: {
+               id: req.params.taskId
+           }
+       }).then((deletedTask) => {
+           res.json(deletedTask)
+       });
+    });
 }
 
