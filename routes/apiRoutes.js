@@ -4,6 +4,11 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function (app) {
     //GET
+    app.get("/api/logout", (req, res) => {
+        req.logout()
+        res.redirect('/')
+    })
+   
     app.get("/api/allProjects", (req, res) => {
         var userId = req.user.id;
         db.Collaborator.findAll({
