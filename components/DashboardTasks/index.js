@@ -744,7 +744,6 @@ export default class DashboardTasks extends Component {
                                     )}
                                 <div className='row'>
                                   <Button
-                                    variant='danger'
                                     className='task-btn'
                                     onClick={() =>
                                       this.handleCreateTask({ team })
