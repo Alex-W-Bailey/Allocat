@@ -7,7 +7,13 @@
 }
 
 .task-btn {
-  font-size: 14px;
+  font-size: 16px !important;
+  color: $darkText;
+
+  &:hover {
+    font-weight: bold;
+    color: $alertRed !important;
+  }
 }
 
 .btn-box {

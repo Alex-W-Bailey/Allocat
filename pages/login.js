@@ -120,6 +120,8 @@ export default class Login extends Component {
                   <p className='blue-text pointer'>Register</p>
                 </Link>
               </p>
+            </div>
+            <div className='row  mx-auto justify-center'>
               <button
                 className='button50'
                 onClick={() => this.handleLoginClick()}
