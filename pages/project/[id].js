@@ -1,6 +1,6 @@
-// This will need to take in a Project Card Component and map out a card for each project in the database.
 import "../../styles.scss";
 import Nav from "../../components/Nav/index";
+import MobileDashNav from "../../components/MobileDashNav";
 import React, { Component } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import Layout from "../../components/Layout";
@@ -56,7 +56,6 @@ export default class Dashboard extends Component {
     this.setState({ categorySelected: categoryName });
   };
 
-
   render() {
     return (
       <div>
@@ -65,6 +64,7 @@ export default class Dashboard extends Component {
             pageTitle={this.state.pageTitle}
             menuItems={this.state.menuItems}
           />
+          <MobileDashNav updateCategory={this.updateCategory} />
           <div class='row'>
             <div className='col-lg-2 float-left my-auto'>
               <ListGroup className='verticle-align pointer'>

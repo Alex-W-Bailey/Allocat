@@ -1,0 +1,24 @@
+.mobile-dash-nav {
+  background-color: #2190cc;
+  min-height: 75px;
+  position: fixed;
+  bottom: 0px;
+  z-index: 2;
+  width: 101%;
+  visibility: hidden;
+}
+
+.mobile-link {
+  font-weight: bold !important;
+  font-size: 20px !important;
+  color: white !important;
+  &:hover {
+    color: #cfcfcf !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .mobile-dash-nav {
+    visibility: visible;
+  }
+}
