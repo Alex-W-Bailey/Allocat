@@ -1,4 +1,6 @@
 import { Dropdown } from "react-bootstrap";
+import axios from "axios";
+
 const NavDropdown = props => {
   let register = false;
   let login = false;
@@ -25,7 +27,12 @@ const NavDropdown = props => {
       ></Dropdown.Toggle>
 
       <Dropdown.Menu className='dd-menu'>
-        {loggedIn ? <Dropdown.Item href='/'>Logout</Dropdown.Item> : <h1></h1>}
+        {loggedIn ? <Dropdown.Item href="/" onClick={() => {
+          console.log("clicked logout");
+          axios.get("/api/logout").then(() => {
+            console.log("loggedOut")
+          });
+        }}>Logout</Dropdown.Item> : <h1></h1>}
         {register ? <Dropdown.Item href='/'>Login</Dropdown.Item> : <h1></h1>}
         {login ? (
           <Dropdown.Item href='/register'>Register</Dropdown.Item>
