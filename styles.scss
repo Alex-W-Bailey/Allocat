@@ -201,11 +201,3 @@ input {
 @import "/components/NewTeam/style";
 @import "/components/FormMessage/style";
 @import "/components/MobileDashNav/style";
-
-@media only screen and (max-width: 992px) {
-  nav {
-    .invisible {
-      visibility: hidden;
-    }
-  }
-}
