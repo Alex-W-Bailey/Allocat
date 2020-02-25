@@ -57,29 +57,6 @@ export default class Login extends Component {
     const isError = this.state.isError;
     const didRegister = this.props.didRegister;
 
-    const loginContainer = {
-      justifyContent: "center",
-      height: "100vh",
-      backgroundImage:
-        "url('https://papers.co/wallpaper/papers.co-sh15-gray-dark-bw-black-gradation-blur-24-wallpaper.jpg')"
-    };
-
-    const loginInput = {
-      paddingTop: "100px"
-    };
-
-    const allocatText = {
-      textAlign: "center",
-      color: "#2190cc",
-      fontWeight: "bold"
-    };
-
-    const registerText = {
-      color: "#2190cc",
-      fontWeight: "bold",
-      cursor: "pointer"
-    };
-
     return (
       <div className='rl-body'>
         <Nav
@@ -131,23 +108,13 @@ export default class Login extends Component {
               </button>
             </div>
             <br />
-            {
-              didRegister ? (
-                <FormMessage
-                  status="success"
-                  message="You can now login!"
-                />
-              ) : (
-                isError ? (
-                  <FormMessage
-                    status="error"
-                    message={this.state.errorMsg}
-                  />
-                ) : (
-                  <></>
-                )
-              )
-            }
+            {didRegister ? (
+              <FormMessage status='success' message='You can now login!' />
+            ) : isError ? (
+              <FormMessage status='error' message={this.state.errorMsg} />
+            ) : (
+              <></>
+            )}
           </div>
         </RLLayout>
         <div className='sticky'></div>
