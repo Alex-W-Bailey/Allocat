@@ -6,7 +6,6 @@ import Link from "next/link";
 const NPForm = props => {
   return (
     <div>
-      <Nav pageTitle={""} />
       <NPLayout>
         <div className='row m-5 justify-center'>
           <h1 className='blue-text'>Success!</h1>
