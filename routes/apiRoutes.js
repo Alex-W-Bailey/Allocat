@@ -15,6 +15,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/findCurrentUser", (req, res) => {
+        var currentUser = req.user.id;
+        db.User.findOne({
+            where: {
+                id: currentUser
+            }
+        }).then((dbUser) => {
+            res.json(dbUser);
+        });    
+    });
+
     app.get("/api/project/:projectId", (req, res) => {
         db.Project.findOne({
             where: {
