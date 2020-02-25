@@ -15,6 +15,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/findCurrentUser", (req, res) => {
+        var currentUser = req.user.id;
+        db.User.findOne({
+            where: {
+                id: currentUser
+            }
+        }).then((dbUser) => {
+            res.json(dbUser);
+        });    
+    });
+
     app.get("/api/project/:projectId", (req, res) => {
         db.Project.findOne({
             where: {
@@ -308,6 +319,17 @@ module.exports = function (app) {
             res.json(rowsUpdated)
         });
 
+    });
+
+    //DESTROY
+    app.delete("/api/deleteTask/:taskId", (req, res) => {
+       db.Task.destroy({
+           where: {
+               id: req.params.taskId
+           }
+       }).then((deletedTask) => {
+           res.json(deletedTask)
+       });
     });
 }
 
