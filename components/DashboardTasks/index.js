@@ -776,7 +776,7 @@ export default class DashboardTasks extends Component {
                                     </Card.Text>
                                   </div>
                                 )}
-                                <div className='row'>
+                                <div className='row mt-3'>
                                   <Button
                                     className='task-btn'
                                     onClick={() =>
