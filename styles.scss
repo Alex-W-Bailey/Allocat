@@ -81,11 +81,11 @@ button {
   margin: 5px;
   &:hover {
     background-color: $allocatTeal;
-    border: 0;
+    border-color: $allocatTeal;
   }
   &:active {
     background-color: $allocatTeal;
-    border: 0;
+    border-color: $allocatTeal;
   }
 }
 
