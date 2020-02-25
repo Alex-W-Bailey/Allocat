@@ -6,6 +6,12 @@
   background-color: $warmWhite;
 }
 
+.list-group {
+  display: flex;
+  position: fixed;
+  top: 350px;
+}
+
 .task-btn {
   font-size: 14px;
 }
