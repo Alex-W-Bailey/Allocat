@@ -190,6 +190,10 @@ export default class DashboardTasks extends Component {
   handleUnclaimTask = e => {
     var objId = e.target.name;
 
+    axios.put(`/api/unclaimTask/${objId}`).then(response => {
+      console.log("unclaimedTask");
+    });
+
     console.log(this.state);
 
     // axios.put(`/api/unclaimTask/${objId}`).then(response => {
@@ -437,10 +441,10 @@ export default class DashboardTasks extends Component {
                           </option>
                         </Form.Control>
                       </Form.Group>
-                      <div className='row my-auto'>
+                      <div className='row my-auto '>
                         <a
                           name={userTask.id}
-                          className='mx-auto text-left pointer task-btn '
+                          className='task-btn text-left mx-auto pointer'
                           onClick={e => {
                             this.handleUnclaimTask(e);
                           }}
@@ -765,7 +769,9 @@ export default class DashboardTasks extends Component {
                                   </Button>
                                   {isError === true ? (
                                     <div className='row'>
-                                      {this.state.errorMsg}
+                                      <div className='col-lg-12 m-1'>
+                                        {this.state.errorMsg}
+                                      </div>
                                     </div>
                                   ) : (
                                     <div></div>

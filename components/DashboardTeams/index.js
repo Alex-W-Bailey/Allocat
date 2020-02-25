@@ -19,10 +19,14 @@ export default class DashboardTeams extends Component {
   }
 
   componentDidMount() {
-    this.getAllTeams();
-    this.getAllCollaborators();
-    this.getAllTasks();
+    this.getAllInfo();
   }
+
+  async getAllInfo() {
+    await this.getAllTeams();
+    await this.getAllCollaborators();
+    await this.getAllTasks();
+  } 
 
   async getAllTeams() {
     var newArr = [null];
@@ -48,6 +52,10 @@ export default class DashboardTeams extends Component {
     var splitUrl = url.split("/")[4];
 
     var collabs = []
+
+    this.setState({
+      allCollaborators: []
+    });
 
     await axios.get(`/api/allCollaborators/${splitUrl}`).then((response) => {
       console.log(response);
@@ -128,8 +136,23 @@ export default class DashboardTeams extends Component {
   };
 
   addNewTeam = () => {
-    console.log("This will create a new team");
-    console.log(this.state);
+    var url = window.location.href;
+    var splitUrl = url.split("/")[4];
+
+    var newTeam = {
+      projectId: splitUrl,
+      teamName: this.state.newTeam 
+    }
+
+    axios.post("/api/addTeamToProject", newTeam).then(response => {
+      console.log("team created...");
+
+      this.getAllInfo();
+
+      this.setState({
+        showNewTeamForm: false
+      });
+    })
   };
 
   handleAssignTeam = (e) => {
@@ -137,14 +160,18 @@ export default class DashboardTeams extends Component {
     var splitUrl = url.split("/")[4];
 
     var teamName = this.state.newTeamAssign;
+
+    if(teamName === "none"){
+      teamName = null
+    }
+
     var userId = e.target.id;
 
     axios.put(`/api/newAssignTeam/${splitUrl}/${userId}/${teamName}`).then((response) => {
       console.log("updated collab team in db")
     });
 
-    console.log(teamName);
-    console.log(userId);
+    this.getAllInfo();
   }
 
   render() {

@@ -53,8 +53,9 @@ export default class Login extends Component {
       });
   };
 
-  render() {
+  render(props) {
     const isError = this.state.isError;
+    const didRegister = this.props.didRegister;
 
     const loginContainer = {
       justifyContent: "center",
@@ -129,8 +130,24 @@ export default class Login extends Component {
                 Login
               </button>
             </div>
-
             <br />
+            {
+              didRegister ? (
+                <FormMessage
+                  status="success"
+                  message="You can now login!"
+                />
+              ) : (
+                isError ? (
+                  <FormMessage
+                    status="error"
+                    message={this.state.errorMsg}
+                  />
+                ) : (
+                  <></>
+                )
+              )
+            }
           </div>
         </RLLayout>
         <div className='sticky'></div>
