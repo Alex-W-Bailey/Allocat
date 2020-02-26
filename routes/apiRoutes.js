@@ -119,6 +119,16 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/getNotifications", (req, res) => {
+        db.Notification.findAll({
+            where: {
+                receivingUserId: req.user.id    
+            }
+        }).then((dbNotification) => {
+            res.json(dbNotification);
+        });
+    });
+
     //POST
     app.post("/api/login", passport.authenticate("local"), (req, res) => {
         res.status(200).end();
@@ -249,6 +259,28 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/newInviteUser/:userEmail/:projectName", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((userFound) => {
+            db.Project.findOne({
+                where: {
+                    projectName: req.params.projectName
+                }
+            }).then((projectFound) => {
+                db.Notification.create({
+                    receivingUserId: userFound.id,
+                    senderUserId: req.user.id,
+                    projectId: projectFound.id
+                }).then(() => {
+                    res.status(200).end();
+                });
+            });
+        });
+    });
+
     app.post("/api/addNewCollab/:userEmail/:projectId/:teamName", (req, res) => {
         db.User.findOne({
             where: {
@@ -269,7 +301,32 @@ module.exports = function (app) {
                 });
             });
         });
-    })
+    });
+
+    app.post("/api/inviteUser/:userEmail/:projectId", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((userFound) => {
+            db.Notification.create({
+                receivingUserId: userFound.id,
+                senderUserId: req.user.id,
+                projectId: req.params.projectId
+            }).then(() => {
+                res.status(200).end();
+            });
+        });
+    });
+
+    app.post("/api/acceptInvite/:projectId", (req, res) => {
+        db.Collaborator.create({
+            userId: req.user.id,
+            projectId: req.params.projectId
+        }).then(() => {
+            res.status(200).end();
+        });
+    });
 
     //Update
     app.put("/api/claimTask/:taskId", (req, res) => {
@@ -345,7 +402,6 @@ module.exports = function (app) {
         ).then((rowsUpdated) => {
             res.json(rowsUpdated)
         });
-
     });
 
     //DESTROY
@@ -358,5 +414,16 @@ module.exports = function (app) {
            res.json(deletedTask)
        });
     });
+
+    app.delete("/api/deleteInvite/:projectId", (req, res) => {
+        db.Notification.destroy({
+            where: [
+                { receivingUserId: req.user.id },
+                { projectId: req.params.projectId }
+            ]
+        }).then((deletedRows) => {
+            res.json(deletedRows);
+        });
+     });
 }
 
