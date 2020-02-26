@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Accordion, Card, Button, Form } from "react-bootstrap";
+import FormMessage from "../FormMessage";
 import NPLayout from "../NPLayout";
 import axios from "axios";
 
@@ -14,8 +15,12 @@ export default class DashboardTeams extends Component {
       allTasks: [],
       newTeamAssign: "",
       newTeam: "",
+      newCollabEmail: "",
+      newCollabTeam: "",
       isError: false,
-      errorMsg: ""
+      errorMsg: "",
+      isSuccess: false,
+      successMsg: ""
     };
   }
 
@@ -143,6 +148,7 @@ export default class DashboardTeams extends Component {
         })
       : this.setState({ showNewCollabForm: true });
   };
+
   addNewTeam = () => {
     var url = window.location.href;
     var splitUrl = url.split("/")[4];
@@ -184,7 +190,52 @@ export default class DashboardTeams extends Component {
     this.getAllInfo();
   };
 
+  async addNewCollab(){
+    var url = window.location.href;
+    var projectId = url.split("/")[4];
+    var collaboratorEmail = this.state.newCollabEmail;
+    var collaboratorTeam = this.state.newCollabTeam;
+
+    if(collaboratorTeam === "none"){
+      collaboratorTeam = null
+    }
+
+    await axios.get(`/api/user/${collaboratorEmail}`).then(userFound => {
+      if(userFound.data != null) {
+        axios.post(`/api/addNewCollab/${collaboratorEmail}/${projectId}/${collaboratorTeam}`).then(response => {
+          if(response.status === 200){
+            this.setState({
+              isError: false,
+              errorMsg: "",
+              isSuccess: true,
+              successMsg: "Collaborator added to project!"
+            });
+          }
+          else {
+            this.setState({
+              isError: true,
+              errorMsg: "Error. Try again",
+              isSuccess: false,
+              successMsg: ""
+            });
+          }
+        })
+      }
+      else {
+        this.setState({
+          isError: true,
+          errorMsg: "No user found",
+          isSuccess: false,
+          successMsg: "" 
+        })
+      }
+    })
+  }
+
   render() {
+    var isError = this.state.isError;
+    var isSuccess = this.state.isSuccess;
+
     if (
       this.state.showNewTeamForm === false &&
       this.state.showNewCollabForm === false
@@ -340,39 +391,52 @@ export default class DashboardTeams extends Component {
           <div className='row mt-3'>
             <div className='col-md-12 mx-auto'>
               <Form>
-                <label htmlFor='newCollab'>Collaborator Name:</label>
-                <input
-                  type='text'
-                  name='newCollab'
-                  className='form-control'
-                  placeholder='Full Name'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <br />
                 <label htmlFor='collaboratorEmail'>Collaborator Email:</label>
                 <input
                   type='email'
-                  name='collaboratorEmail'
+                  name='newCollabEmail'
                   className='form-control'
                   id='collaboratorEmail'
                   placeholder='Collaborator Email'
+                  onChange={this.handleChange.bind(this)}
                 />
                 <br />
                 <Form.Group>
                   <Form.Label>
                     Select the team this collaborator will Work With
                   </Form.Label>
-                  <Form.Control as='select'>
+                  <Form.Control name="newCollabTeam" as='select' onChange={this.handleChange.bind(this)}>
                     {this.state.allTeams.map(team => {
-                      return <option>{team}</option>;
+                      if(team === null){
+                        return <option value="none">None</option>
+                      }
+                      else {
+                        return <option>{team}</option>;
+                      }
                     })}
                   </Form.Control>
                 </Form.Group>
                 <br />
-
                 <Button onClick={() => this.addNewCollab()}>
                   Add Collaborator
                 </Button>
+                {
+                  isError ? (
+                    <FormMessage 
+                      status="error"
+                      message={this.state.errorMsg}
+                    />
+                  ) : (
+                    isSuccess ? (
+                      <FormMessage 
+                        status="success"
+                        message={this.state.successMsg}
+                      />
+                    ) : (
+                      <></>
+                    )
+                  )
+                }
               </Form>
             </div>
           </div>

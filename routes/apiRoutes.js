@@ -249,6 +249,28 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/addNewCollab/:userEmail/:projectId/:teamName", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((userFound) => {
+            db.Project.findOne({
+                where: {
+                    id: req.params.projectId
+                }
+            }).then((projectFound) => {
+                db.Collaborator.create({
+                    userId: userFound.id,
+                    projectId: projectFound.id,
+                    teamName: req.params.teamName
+                }).then(() => {
+                    res.status(200).end();
+                });
+            });
+        });
+    })
+
     //Update
     app.put("/api/claimTask/:taskId", (req, res) => {
         var userID = req.user.id;
