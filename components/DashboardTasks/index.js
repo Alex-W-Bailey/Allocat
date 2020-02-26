@@ -32,6 +32,7 @@ export default class DashboardTasks extends Component {
       newTaskPriority: "",
       isError: false,
       errorMsg: "",
+      deleteTaskNum: -1,
       modalID: -1
     };
   }
@@ -195,11 +196,6 @@ export default class DashboardTasks extends Component {
       console.log("unclaimedTask");
     });
 
-    console.log(this.state);
-
-    // axios.put(`/api/unclaimTask/${objId}`).then(response => {
-    //   console.log("updated task in db");
-    // });
   };
 
   handleClose = () => {
@@ -250,8 +246,21 @@ export default class DashboardTasks extends Component {
     });
   };
 
-  handleDeleteTask = id => {
-    console.log(id + " task deleted");
+  handleSetDeleteInfo = e => {
+    var taskId = e.target.id;
+
+    this.setState({
+      deleteTaskNum: taskId
+    })
+  }
+
+  handleDeleteTask = () => {
+    console.log(this.state);
+
+    axios.delete(`/api/deleteTask/${this.state.deleteTaskNum}`).then(res => {
+      console.log("deleted task");
+    });
+
     this.handleHideModal();
   };
 
@@ -400,7 +409,7 @@ export default class DashboardTasks extends Component {
                         </span>
                         <span className='align-right'>
                           <a onClick={() => this.handleShowModal(userTask.id)}>
-                            <h5 className='delete mt-3'>X</h5>
+                            <h5 id={userTask.id} onClick={(e) => this.handleSetDeleteInfo(e)} className='delete mt-3'>X</h5>
                           </a>
                         </span>
                       </div>
@@ -796,7 +805,7 @@ export default class DashboardTasks extends Component {
                                         this.handleShowModal(task.id)
                                       }
                                     >
-                                      <h5 className='delete mt-3'>X</h5>
+                                      <h5 id={task.id} onClick={(e) => this.handleSetDeleteInfo(e)} className='delete mt-3'>X</h5>
                                     </a>
                                   </span>
                                 </div>
@@ -843,7 +852,7 @@ export default class DashboardTasks extends Component {
           <Modal.Footer>
             <Button
               className='allocat-danger'
-              onClick={() => this.handleDeleteTask(this.state.modalID)}
+              onClick={() => this.handleDeleteTask()}
             >
               Delete Task
             </Button>
