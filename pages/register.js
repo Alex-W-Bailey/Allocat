@@ -53,7 +53,10 @@ export default class Register extends Component {
       this.setError(true, "Confirmation Password is required");
     } else if (this.state.password !== this.state.confPassword) {
       this.setError(true, "Passwords don't match");
-    } else {
+    } else if (this.state.email.includes("@") === false) {
+      this.setError(true, "Email is invalid format. Ex: name@mail.com");
+    } 
+    else {
       axios.post("/api/newUser", newUser).then(response => {
         if (response.data !== "email is already taken") {
           if (response.status === 200) {
