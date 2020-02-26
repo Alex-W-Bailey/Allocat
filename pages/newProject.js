@@ -247,10 +247,10 @@ export default class NewProject extends Component {
       console.log("collab: " + collaborator);
 
       axios
-        .post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`)
+        .post(`/api/newInviteUser/${collaborator}/${this.state.projectName}`)
         .then(response => {
           if (response.status === 200) {
-            console.log("added collaborators");
+            console.log("invited collaborators");
           }
         });
     }

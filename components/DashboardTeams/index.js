@@ -202,13 +202,13 @@ export default class DashboardTeams extends Component {
 
     await axios.get(`/api/user/${collaboratorEmail}`).then(userFound => {
       if(userFound.data != null) {
-        axios.post(`/api/addNewCollab/${collaboratorEmail}/${projectId}/${collaboratorTeam}`).then(response => {
+        axios.post(`/api/inviteUser/${collaboratorEmail}/${projectId}`).then(response => {
           if(response.status === 200){
             this.setState({
               isError: false,
               errorMsg: "",
               isSuccess: true,
-              successMsg: "Collaborator added to project!"
+              successMsg: "Collaborator invited to project!"
             });
           }
           else {
