@@ -30,7 +30,10 @@ export default class NewProject extends Component {
       projectCreatedSuccessfully: false,
       isError: false,
       errorMsg: "",
-      errorPage: 0
+      errorPage: 0,
+      isSuccess: false,
+      successMsg: "",
+      successPage: 0,
     };
   }
 
@@ -119,10 +122,14 @@ export default class NewProject extends Component {
 
     this.setState({
       allCollaborators: newArr,
-      collaboratorEmail: ""
+      collaboratorEmail: "",
+      isError: false,
+      errorMsg: "",
+      errorPage: 0,
+      isSuccess: true,
+      successMsg: "User invited to the project!",
+      successPage: 2
     });
-
-    console.log(this.state);
   };
 
   handleRedirectToProjects = () => {
@@ -328,6 +335,9 @@ export default class NewProject extends Component {
             isError={this.state.isError}
             errorMsg={this.state.errorMsg}
             errorPage={this.state.errorPage}
+            isSuccess={this.state.isSuccess}
+            successMsg={this.state.successMsg}
+            successPage={this.state.successPage}
           />
         )}
       </Layout>

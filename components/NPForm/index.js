@@ -11,6 +11,9 @@ const NPForm = props => {
   var isError = props.isError;
   var errorMsg = props.errorMsg;
   var errorPage = props.errorPage;
+  var isSuccess = props.isSuccess;
+  var successMsg = props.successMsg;
+  var successPage = props.successPage;
 
   return (
     <div>
@@ -132,7 +135,11 @@ const NPForm = props => {
             Back
           </button>
           <br />
-
+          <div className='justify-center row mx-auto'>
+            <button className='cp-btn' onClick={() => props.handleNewProject()}>
+              Create Project
+            </button>
+          </div>
           <div className='row justify-center'>
             {isError ? (
               errorPage === 2 ? (
@@ -141,13 +148,12 @@ const NPForm = props => {
                 <h1></h1>
               )
             ) : (
-              <h1></h1>
+              isSuccess ? (
+                <FormMessage status="success" message={props.successMsg} />
+              ) : (
+                <h1></h1>
+              )
             )}
-          </div>
-          <div className='justify-center row mx-auto'>
-            <button className='cp-btn' onClick={() => props.handleNewProject()}>
-              Create Project
-            </button>
           </div>
         </NPLayout>
       )}
