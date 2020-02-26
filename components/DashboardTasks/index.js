@@ -339,6 +339,12 @@ export default class DashboardTasks extends Component {
       });
     }
   }
+  showInProgress(team) {
+    console.log("show in progress for " + team);
+  }
+  showComplete(team) {
+    console.log("show Completed by " + team);
+  }
 
   render() {
     const isError = this.state.isError;
@@ -469,6 +475,7 @@ export default class DashboardTasks extends Component {
                   <div className='col-lg-6'>
                     <h2 className='team-header align-middle'>{team}</h2>
                   </div>
+
                   <div className='col-lg-6'>
                     <button
                       className='btn px-5 float-right'
@@ -477,6 +484,21 @@ export default class DashboardTasks extends Component {
                       Create New Task
                     </button>
                   </div>
+                </div>
+                <div className='row ml-3'>
+                  <a
+                    className='bb-link'
+                    onClick={() => this.showInProgress(team)}
+                  >
+                    In Progress
+                  </a>{" "}
+                  /
+                  <a
+                    className='bb-link'
+                    onClick={() => this.showComplete(team)}
+                  >
+                    Complete
+                  </a>
                 </div>
                 <hr></hr>
                 <div className='row px-2 my-3'>
