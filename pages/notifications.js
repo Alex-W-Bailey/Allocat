@@ -173,7 +173,6 @@ export default class Projects extends Component {
                 <hr />
               </div>
               <div className='row m-2'>
-                {console.log(this.state.userNotifications)}
                 {this.state.userNotifications.length >= 1 ? (
                   this.state.userNotifications.map(noti => {
                     return (
