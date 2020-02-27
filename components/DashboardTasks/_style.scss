@@ -55,6 +55,7 @@
   }
 }
 .bb-link {
+  display: inline-block;
   color: $allocatBlue !important;
   cursor: pointer;
   &:hover {
@@ -66,6 +67,7 @@
 }
 
 .clicked-link {
+  display: inline-block;
   color: $stuck !important;
   cursor: pointer;
   &:hover {
