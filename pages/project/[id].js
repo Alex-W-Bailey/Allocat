@@ -14,7 +14,8 @@ export default class Dashboard extends Component {
       pageTitle: "",
       menuItems: [
         { title: " Your Projects", link: "/projects", id: 1 },
-        { title: "Create a New Project", link: "/newProject", id: 2 }
+        { title: "Create a New Project", link: "/newProject", id: 2 },
+        { title: "Notifications", link: "/notifications", id: 3 }
       ],
       categorySelected: "",
       teamNames: [],
