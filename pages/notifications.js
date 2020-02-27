@@ -139,7 +139,6 @@ export default class Projects extends Component {
   }
 
   render() {
-    var showNotificationsPage = this.state.showNotificationsPage;
     var isError = this.state.isError;
     var isSuccess = this.state.isSuccess;
 
@@ -174,50 +173,54 @@ export default class Projects extends Component {
                 <hr />
               </div>
               <div className='row m-2'>
-                {this.state.userNotifications.map(noti => {
-                  return (
-                    <div
-                      style={{
-                        backgroundColor: "#f8f8f6",
-                        margin: "30px",
-                        height: "200px",
-                        width: "100%",
-                        borderRadius: "25px"
-                      }}
-                    >
-                      <h5
+                {this.state.userNotifications.length >= 1 ? (
+                  this.state.userNotifications.map(noti => {
+                    return (
+                      <div
                         style={{
-                          display: "inline-block",
-                          marginLeft: "8px",
-                          marginBottom: "5px",
-                          fontWeight: "bolder",
-                          padding: "20px"
+                          backgroundColor: "#f8f8f6",
+                          margin: "30px",
+                          height: "200px",
+                          width: "100%",
+                          borderRadius: "25px"
                         }}
                       >
-                        New Project Invite
-                      </h5>
-                      <hr />
-                      <div style={{ textAlign: "center" }}>
-                        <h3>
-                          {noti.senderName} invited you to join a project named{" "}
-                          {noti.projectName}
-                        </h3>
-                        <button
-                          id={noti.projectId}
-                          onClick={e => this.handleAcceptInvite(e)}
+                        <h5
+                          style={{
+                            display: "inline-block",
+                            marginLeft: "8px",
+                            marginBottom: "5px",
+                            fontWeight: "bolder",
+                            padding: "20px"
+                          }}
                         >
-                          Accept Invite
-                        </button>
-                        <button
-                          id={noti.projectId}
-                          onClick={e => this.handleDeclineInvite(e)}
-                        >
-                          Decline Invite
-                        </button>
+                          New Project Invite
+                        </h5>
+                        <hr />
+                        <div style={{ textAlign: "center" }}>
+                          <h3>
+                            {noti.senderName} invited you to join a project
+                            named {noti.projectName}
+                          </h3>
+                          <button
+                            id={noti.projectId}
+                            onClick={e => this.handleAcceptInvite(e)}
+                          >
+                            Accept Invite
+                          </button>
+                          <button
+                            id={noti.projectId}
+                            onClick={e => this.handleDeclineInvite(e)}
+                          >
+                            Decline Invite
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                ) : (
+                  <div>No notifications right now. Check back soon</div>
+                )}
               </div>
             </div>
           </div>
