@@ -1,0 +1,36 @@
+.team-toggle-nav {
+  background-color: $allocatTeal;
+  border: solid 2px $allocatTeal;
+  color: $warmWhite;
+}
+
+.unassigned-team {
+  background-color: $softGrey;
+  margin: 10px 0 10px 0;
+  border-radius: 10px;
+}
+
+.dashboard-team-cards {
+  background-color: $softGrey;
+  margin: 10px 0 10px 0;
+  border-radius: 10px;
+}
+
+.team-dash-header {
+  font-size: 1.3rem;
+  font-weight: bolder;
+}
+
+.accordion {
+  background-color: $warmWhite;
+}
+
+.collab-name-header {
+  font-size: 1.23rem;
+  font-weight: bolder;
+  padding: 1rem 0 0 1rem;
+}
+
+.collaborator-cards {
+  padding-top: 1rem;
+}
