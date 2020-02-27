@@ -229,3 +229,47 @@ export default class Projects extends Component {
     );
   }
 }
+
+// {
+//   this.state.userNotifications.map(noti => {
+//     return (
+//       <div
+//         style={{
+//           backgroundColor: "#f8f8f6",
+//           margin: "30px",
+//           height: "200px",
+//           width: "100%",
+//           borderRadius: "25px"
+//         }}
+//       >
+//         <h5
+//           style={{
+//             display: "inline-block",
+//             marginLeft: "8px",
+//             marginBottom: "5px",
+//             fontWeight: "bolder",
+//             padding: "20px"
+//           }}
+//         >
+//           New Project Invite
+//         </h5>
+//         <hr />
+//         <div style={{ textAlign: "center" }}>
+//           <h3>
+//             {noti.senderName} invited you to join a project named{" "}
+//             {noti.projectName}
+//           </h3>
+//           <button id={noti.projectId} onClick={e => this.handleAcceptInvite(e)}>
+//             Accept Invite
+//           </button>
+//           <button
+//             id={noti.projectId}
+//             onClick={e => this.handleDeclineInvite(e)}
+//           >
+//             Decline Invite
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   });
+// }
