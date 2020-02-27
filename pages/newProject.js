@@ -15,7 +15,10 @@ export default class NewProject extends Component {
     this.state = {
       pageNum: 0,
       pageTitle: "Create A New Project",
-      menuItems: [{ title: "Your Projects", link: "/projects", id: 1 }],
+      menuItems: [
+        { title: "Your Projects", link: "/projects", id: 1 },
+        { title: "Notifications", link: "/notifications", id: 3 }
+      ],
       projectName: "",
       projectDescription: "",
       dueDate: "",
@@ -30,7 +33,10 @@ export default class NewProject extends Component {
       projectCreatedSuccessfully: false,
       isError: false,
       errorMsg: "",
-      errorPage: 0
+      errorPage: 0,
+      isSuccess: false,
+      successMsg: "",
+      successPage: 0
     };
   }
 
@@ -80,6 +86,9 @@ export default class NewProject extends Component {
   };
 
   handleNewTeam = () => {
+    // if(this.){
+
+    // }
     var newArr = this.state.numberOfTeams;
     newArr.push(<NewTeam />);
 
@@ -111,18 +120,64 @@ export default class NewProject extends Component {
   };
 
   handleAddNewCollaborator = () => {
-    console.log("Add new collaborator");
     let collaboratorEmail = this.state.collaboratorEmail;
 
-    var newArr = this.state.allCollaborators;
-    newArr.push(collaboratorEmail);
+    if (collaboratorEmail == "") {
+      this.setState({
+        isError: true,
+        errorMsg: "Collaborator email is required",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    } else if (collaboratorEmail.includes("@") === false) {
+      this.setState({
+        isError: true,
+        errorMsg: "Email is invalid format. Ex: name@email.com",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    } else if (this.state.allCollaborators.includes(collaboratorEmail)) {
+      this.setState({ 
+        isError: true,
+        errorMsg: "User has already been invited",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    }
+    else {
+      axios.get(`/api/user/${collaboratorEmail}`).then(response => {
+        if (response.data !== null) {
+          var newArr = this.state.allCollaborators;
+          newArr.push(collaboratorEmail);
 
-    this.setState({
-      allCollaborators: newArr,
-      collaboratorEmail: ""
-    });
-
-    console.log(this.state);
+          this.setState({
+            allCollaborators: newArr,
+            collaboratorEmail: "",
+            isError: false,
+            errorMsg: "",
+            errorPage: 0,
+            isSuccess: true,
+            successMsg: "User invited to the project!",
+            successPage: 2
+          });
+        } else {
+          this.setState({
+            isError: true,
+            errorMsg: "No user found...",
+            errorPage: 2,
+            isSuccess: false,
+            successMsg: "",
+            successPage: 0
+          });
+        }
+      });
+    }
   };
 
   handleRedirectToProjects = () => {
@@ -200,6 +255,13 @@ export default class NewProject extends Component {
     if (this.state.projectName === "") {
       isFormLeftEmpty = true;
       this.setErrorState(isFormLeftEmpty, "Project name is required!", 0);
+    } else if (this.state.allTeams.length === 0) {
+      isFormLeftEmpty = true;
+      this.setErrorState(
+        isFormLeftEmpty,
+        "At least one team is required. If you are working on a solo project, use your name as the team.",
+        0
+      );
     } else if (this.state.projectDescription === "") {
       isFormLeftEmpty = true;
       this.setErrorState(
@@ -247,10 +309,10 @@ export default class NewProject extends Component {
       console.log("collab: " + collaborator);
 
       axios
-        .post(`/api/newCollaborator/${collaborator}/${this.state.projectName}`)
+        .post(`/api/newInviteUser/${collaborator}/${this.state.projectName}`)
         .then(response => {
           if (response.status === 200) {
-            console.log("added collaborators");
+            console.log("invited collaborators");
           }
         });
     }
@@ -328,6 +390,9 @@ export default class NewProject extends Component {
             isError={this.state.isError}
             errorMsg={this.state.errorMsg}
             errorPage={this.state.errorPage}
+            isSuccess={this.state.isSuccess}
+            successMsg={this.state.successMsg}
+            successPage={this.state.successPage}
           />
         )}
       </Layout>

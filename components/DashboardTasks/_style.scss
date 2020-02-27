@@ -22,6 +22,11 @@
   }
 }
 
+.alert-text {
+  color: $alertRed !important;
+  font-weight: bold;
+}
+
 .btn-box {
   border-top: solid 1px $softGrey;
 
@@ -49,7 +54,29 @@
     }
   }
 }
+.bb-link {
+  display: inline-block;
+  color: $allocatBlue !important;
+  cursor: pointer;
+  &:hover {
+    color: $allocatTeal !important;
+  }
+  &:active {
+    color: $allocatTeal !important;
+  }
+}
 
+.clicked-link {
+  display: inline-block;
+  color: $stuck !important;
+  cursor: pointer;
+  &:hover {
+    color: $inProgress !important;
+  }
+  &:active {
+    color: $inProgress !important;
+  }
+}
 .team-container {
   background-color: $container;
   padding-right: 5rem;
@@ -66,7 +93,111 @@
   text-transform: capitalize;
 }
 
+input {
+  box-sizing: border-box;
+  margin: 0;
+  max-width: 100%;
+}
+
 .text-muted {
   color: $alertRed;
   font-weight: bold;
+}
+
+//// Priority Levels
+.hp-border {
+  border: solid $highPriority 8px;
+  border-radius: 42px;
+}
+.mp-border {
+  border: solid $mediumPriority 8px;
+  border-radius: 42px;
+}
+.lp-border {
+  border: solid $lowPriority 8px;
+  border-radius: 42px;
+}
+.undetermined {
+  border: solid $darkCanvas 8px;
+  border-radius: 42px;
+}
+
+/// Status Indicators
+.stuck {
+  border: solid $stuck 8px;
+  border-radius: 33px;
+}
+.in-progress {
+  border: solid $inProgress 8px;
+  border-radius: 33px;
+}
+.complete {
+  border: solid $complete 8px;
+  border-radius: 33px;
+}
+.unclaimed {
+  border: solid $alertRed 8px;
+  border-radius: 33px;
+}
+
+.dot-hp {
+  height: 15px;
+  width: 50px;
+  background-color: $highPriority;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.dot-mp {
+  height: 15px;
+  width: 50px;
+  background-color: $mediumPriority;
+  border-radius: 25px;
+  display: inline-block;
+}
+.dot-lp {
+  height: 15px;
+  width: 50px;
+  background-color: $lowPriority;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.dot-c {
+  height: 15px;
+  width: 50px;
+  background-color: $complete;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.dot-p {
+  height: 15px;
+  width: 50px;
+  background-color: $inProgress;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.dot-s {
+  height: 15px;
+  width: 50px;
+  background-color: $stuck;
+  border-radius: 25px;
+  display: inline-block;
+}
+.dot-undetermined {
+  height: 15px;
+  width: 50px;
+  background-color: $darkCanvas;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.dot-unclaimed {
+  height: 15px;
+  width: 50px;
+  background-color: $alertRed;
+  border-radius: 25px;
+  display: inline-block;
 }

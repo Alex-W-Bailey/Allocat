@@ -1,5 +1,6 @@
 import NavDropdown from "../NavDropdown";
-import Axios from "axios";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 const Nav = props => {
   let loggedOut = false;
@@ -13,6 +14,15 @@ const Nav = props => {
     loggedIn = true;
   }
 
+  const [displayUsername, setDisplayUsername] = useState("");
+
+  useEffect(() => {
+    axios.get('/api/findCurrentUser')
+      .then(({ data }) => {
+        setDisplayUsername(data.fullName);
+      })
+  }, []);
+
   return (
     <React.Fragment>
       <nav className='nav navbar-light'>
@@ -22,7 +32,7 @@ const Nav = props => {
           </a>
         </div>
         <div className='row'>
-          {loggedIn ? (<h1 className='welcome-title my-auto'>Welcome person</h1>) : (<h1></h1>)}
+          {loggedIn ? (<h1 className='welcome-title my-auto'>Welcome {displayUsername}</h1>) : (<h1></h1>)}
         </div>
 
         <h3 className='mx-auto text-center font-weight-bold'>

@@ -10,6 +10,7 @@ const NewTeam = props => {
         name={teamNum}
         className='form-control'
         id={teamNum}
+        required
         placeholder='Team Name'
         onChange={props.handleChange}
       />

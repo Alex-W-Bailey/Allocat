@@ -7,11 +7,18 @@ $softGrey: #cfcfcf;
 $accentGrey: #a6a6a6;
 $darkCanvas: #595959;
 $darkText: #242424;
+
 //Indicator Colors
 $alertRed: #e1651b;
-// used for alerts, and to indicate tasks that are high priority or unclaimed
+// More of an orange actually, but used for unclaimed tasks and alerts
+
 $inProgress: #ffaa0a;
 $complete: #2ab009;
+$stuck: #dd1900;
+
+$highPriority: #6712fa;
+$mediumPriority: #be56ff;
+$lowPriority: #cfabfa;
 
 .list-group-item {
   border: 0;
@@ -200,3 +207,4 @@ input {
 @import "/components/NewCollaborator/style";
 @import "/components/NewTeam/style";
 @import "/components/FormMessage/style";
+@import "/components/MobileDashNav/style";
