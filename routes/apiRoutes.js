@@ -129,6 +129,29 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/getUserCollabInfo/:userEmail/:projectId", (req, res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.userEmail
+            }
+        }).then((dbUser) => {
+            db.Collaborator.findOne({
+                where: [
+                    { userId: dbUser.id },
+                    { projectId: req.params.projectId }
+                ]
+            }).then((dbCollab) => {
+                res.json(dbCollab);
+            });
+        });
+        
+        db.Collaborator.findOne({
+            where: [
+                {  }
+            ]
+        })
+    })
+
     //POST
     app.post("/api/login", passport.authenticate("local"), (req, res) => {
         res.status(200).end();

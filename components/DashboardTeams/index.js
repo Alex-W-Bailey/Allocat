@@ -202,24 +202,36 @@ export default class DashboardTeams extends Component {
 
     await axios.get(`/api/user/${collaboratorEmail}`).then(userFound => {
       if (userFound.data != null) {
-        axios.post(`/api/inviteUser/${collaboratorEmail}/${projectId}`).then(response => {
-          if (response.status === 200) {
-            this.setState({
-              isError: false,
-              errorMsg: "",
-              isSuccess: true,
-              successMsg: "Collaborator invited to project!"
-            });
+        axios.get(`/api/getUserCollabInfo/${collaboratorEmail}/${projectId}`).then(res => {
+          if(res.data === null){
+            axios.post(`/api/inviteUser/${collaboratorEmail}/${projectId}`).then(response => {
+              if (response.status === 200) {
+                this.setState({
+                  isError: false,
+                  errorMsg: "",
+                  isSuccess: true,
+                  successMsg: "Collaborator invited to project!"
+                });
+              }
+              else {
+                this.setState({
+                  isError: true,
+                  errorMsg: "Error. Try again",
+                  isSuccess: false,
+                  successMsg: ""
+                });
+              }
+            })
           }
           else {
             this.setState({
               isError: true,
-              errorMsg: "Error. Try again",
+              errorMsg: "User already a collaborator",
               isSuccess: false,
               successMsg: ""
             });
           }
-        })
+        });
       }
       else {
         this.setState({
@@ -227,7 +239,7 @@ export default class DashboardTeams extends Component {
           errorMsg: "No user found",
           isSuccess: false,
           successMsg: ""
-        })
+        });
       }
     })
   }
