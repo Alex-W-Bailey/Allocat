@@ -6,6 +6,7 @@ import axios from "axios";
 import NPCard from "../components/NPCard";
 import PCard from "../components/PCard";
 import FormMessage from "../components/FormMessage";
+import Link from "next/link";
 
 export default class Projects extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ export default class Projects extends Component {
     this.state = {
       user: [],
       pageTitle: "Projects",
+      menuItems: [
+        { title: "Create a New Project", link: "/newProject", id: 2 },
+        { title: "Notifications", link: "/notifications", id: 3 }
+      ],
       projects: [],
       projectInfo: [],
       showNotificationsPage: false,
@@ -45,22 +50,22 @@ export default class Projects extends Component {
 
     this.getNotifications();
 
-    axios.get("/api/findCurrentUser").then((response) => {
+    axios.get("/api/findCurrentUser").then(response => {
       this.setState({
         user: response.data
       });
     });
   }
 
-  async getNotifications(){
+  async getNotifications() {
     this.setState({
       userNotifications: []
     });
 
     await axios.get("/api/getNotifications").then(response => {
-      var notifications = []
+      var notifications = [];
 
-      console.log(response.data)
+      console.log(response.data);
 
       if (response.data.length > 0) {
         for (var i = 0; i < response.data.length; i++) {
@@ -91,8 +96,8 @@ export default class Projects extends Component {
           id: notification.id,
           projectId: notification.projectId,
           projectName: response.data.projectName,
-          senderName: res.data.fullName,
-        }
+          senderName: res.data.fullName
+        };
 
         newArr.push(newNotification);
 
@@ -124,7 +129,7 @@ export default class Projects extends Component {
 
   showUserNotifications() {
     this.setState({
-      showNotificationsPage: true,
+      showNotificationsPage: true
     });
   }
 
@@ -186,9 +191,8 @@ export default class Projects extends Component {
         fontSize: "20px",
         fontWeight: "bolder",
         outline: "none"
-      }
-    }
-    else {
+      };
+    } else {
       notificationCircle = {
         borderRadius: "50%",
         width: "45px",
@@ -202,7 +206,7 @@ export default class Projects extends Component {
         fontSize: "20px",
         fontWeight: "bolder",
         outline: "none"
-      }
+      };
     }
 
     var newNotificationCircle = {
@@ -213,98 +217,58 @@ export default class Projects extends Component {
       paddingTop: "40px",
       backgroundColor: "#ff0000",
       borderRadius: "50%",
-      display: "inline-block",
-    }
+      display: "inline-block"
+    };
 
-    var showNotificationsPage = this.state.showNotificationsPage;
     var isError = this.state.isError;
     var isSuccess = this.state.isSuccess;
 
     return (
       <Layout>
-        <Nav pageTitle={this.state.pageTitle} />
-        {
-          showNotificationsPage ? (
-            <div className='col-lg-12 container-main float-right'>
-              <div className='pt-4'>
-                <div className='row'>
-                  <div className='col-8 my-2 pl-5'>
-                    <h5 className='project-header'>
-                      Your Notifications
-                      <button onClick={() => this.hideUserNotifications()}>Back</button>
-                    </h5>
-                    <div style={{textAlign: "center"}}>
-                    {
-                        isError ? (
-                        <FormMessage
-                          status="error"
-                          message={this.state.errorMsg}
-                        />
-                        ) : (
-                            isSuccess ? (
-                            <FormMessage
-                          status="success"
-                          message={this.state.successMsg}
-                        />
-                        ) : (
-                              <></>
-                        )
-                    )
-                    }
-                    </div>
-                  </div>
-                  <hr />
-                </div>
-                <div className='row m-2'>
-                  {
-                    this.state.userNotifications.map(noti => {
-                      return (
-                        <div style={{ backgroundColor: "white", margin: "30px", height: "200px", width: "100%" }}>
-                          <span style={newNotificationCircle}></span>
-                          <h5 style={{ display: "inline-block", marginLeft: "8px", marginBottom: "5px", fontWeight: "bolder" }}>New Project Invite</h5>
-                          <hr />
-                          <div style={{ textAlign: "center" }}>
-                            <h3>{noti.senderName} invited you to join a project named {noti.projectName}</h3>
-                            <button id={noti.projectId} onClick={(e) => this.handleAcceptInvite(e)}>Accept Invite</button>
-                            <button id={noti.projectId} onClick={(e) => this.handleDeclineInvite(e)}>Decline Invite</button>
-                          </div>
-                        </div>
-                      )
-                    })
-                  }
-                </div>
+        <Nav
+          pageTitle={this.state.pageTitle}
+          menuItems={this.state.menuItems}
+        />
+
+        <div className='col-lg-12 container-main float-right'>
+          <div className='pt-4'>
+            <div className='row'>
+              <div className='col-8 my-2 pl-5'>
+                <h5 className='project-header'>
+                  Your Projects
+                  {this.state.userNotifications.length >= 1 ? (
+                    <Link href='/notifications'>
+                      <button
+                        onMouseOver={() => this.toggleNotificationBtn()}
+                        onMouseLeave={() => this.toggleNotificationBtn()}
+                        style={notificationCircle}
+                      >
+                        {this.state.userNotifications.length}
+                      </button>
+                    </Link>
+                  ) : (
+                    <> </>
+                  )}
+                </h5>
               </div>
+              <hr />
             </div>
-          ) : (
-              <div className='col-lg-12 container-main float-right'>
-                <div className='pt-4'>
-                  <div className='row'>
-                    <div className='col-8 my-2 pl-5'>
-                      <h5 className='project-header'>
-                        Your Projects
-                      <button onClick={() => this.showUserNotifications()} onMouseOver={() => this.toggleNotificationBtn()} onMouseLeave={() => this.toggleNotificationBtn()} style={notificationCircle}>{this.state.userNotifications.length}</button>
-                      </h5>
-                    </div>
-                    <hr />
-                  </div>
-                  <div className='row m-2'>
-                    <NPCard />
-                    {this.state.projectInfo.map(project => {
-                      return (
-                        <PCard
-                          key={project.id}
-                          id={project.id}
-                          projectName={project.projectName}
-                          description={project.projectDescription}
-                          dueDate={project.dueDate}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )
-        }
+            <div className='row m-2'>
+              <NPCard />
+              {this.state.projectInfo.map(project => {
+                return (
+                  <PCard
+                    key={project.id}
+                    id={project.id}
+                    projectName={project.projectName}
+                    description={project.projectDescription}
+                    dueDate={project.dueDate}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </Layout>
     );
   }

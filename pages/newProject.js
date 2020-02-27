@@ -15,7 +15,10 @@ export default class NewProject extends Component {
     this.state = {
       pageNum: 0,
       pageTitle: "Create A New Project",
-      menuItems: [{ title: "Your Projects", link: "/projects", id: 1 }],
+      menuItems: [
+        { title: "Your Projects", link: "/projects", id: 1 },
+        { title: "Notifications", link: "/notifications", id: 3 }
+      ],
       projectName: "",
       projectDescription: "",
       dueDate: "",
@@ -33,7 +36,7 @@ export default class NewProject extends Component {
       errorPage: 0,
       isSuccess: false,
       successMsg: "",
-      successPage: 0,
+      successPage: 0
     };
   }
 
