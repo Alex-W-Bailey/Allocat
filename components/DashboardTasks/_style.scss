@@ -64,6 +64,17 @@
     color: $allocatTeal !important;
   }
 }
+
+.clicked-link {
+  color: $stuck !important;
+  cursor: pointer;
+  &:hover {
+    color: $inProgress !important;
+  }
+  &:active {
+    color: $inProgress !important;
+  }
+}
 .team-container {
   background-color: $container;
   padding-right: 5rem;
