@@ -288,10 +288,18 @@ export default class DashboardTasks extends Component {
   }
 
   createTask(team) {
-    console.log(this.state);
+    var teamName = Object.values(team)[0];
+    console.log(teamName);
+
+    var stateAllTasks = teamName + "showAllTasks";
+    var stateCompletedTasks = teamName + "showCompletedTasks";
+    var stateUnclaimedTasks = teamName + "showUnclaimedTasks";
 
     this.setState({
-      isCreatingTask: true
+      isCreatingTask: true,
+      [stateAllTasks]: false,
+      [stateCompletedTasks]: false,
+      [stateUnclaimedTasks]: true
     });
 
     var teamName = Object.values(team)[0];
