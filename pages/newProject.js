@@ -140,7 +140,17 @@ export default class NewProject extends Component {
         successMsg: "",
         successPage: 0
       });
-    } else {
+    } else if (this.state.allCollaborators.includes(collaboratorEmail)) {
+      this.setState({ 
+        isError: true,
+        errorMsg: "User has already been invited",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    }
+    else {
       axios.get(`/api/user/${collaboratorEmail}`).then(response => {
         if (response.data !== null) {
           var newArr = this.state.allCollaborators;
