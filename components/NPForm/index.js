@@ -53,8 +53,10 @@ const NPForm = props => {
                   onChange={props.handleTeamNameChange}
                 />
               </form>
+              <button onClick={() => props.handleNextPage()}>
+                Next <i class='fas fa-arrow-right'></i>
+              </button>
             </div>
-            <button onClick={() => props.handleNextPage()}>Next</button>
           </div>
           <div className='row justify-center'>
             {isError ? (
@@ -89,8 +91,12 @@ const NPForm = props => {
                 Add Another Team
               </button>
               <br />
-              <button onClick={() => props.handleLastPage()}>Last</button>
-              <button onClick={() => props.handleNextPage()}>Next</button>
+              <button onClick={() => props.handleLastPage()}>
+                <i class='fas fa-arrow-left'></i> Back
+              </button>
+              <button onClick={() => props.handleNextPage()}>
+                Next <i class='fas fa-arrow-right'></i>
+              </button>
             </div>
           </div>
 
@@ -131,8 +137,7 @@ const NPForm = props => {
           </button>
           <br />
           <button onClick={() => props.handleLastPage()}>
-            <span class='glyphicon glyphicon-triangle-left' />
-            Back
+            <i class='fas fa-arrow-left'></i> Back
           </button>
           <br />
           <div className='justify-center row mx-auto'>
@@ -147,12 +152,10 @@ const NPForm = props => {
               ) : (
                 <h1></h1>
               )
+            ) : isSuccess ? (
+              <FormMessage status='success' message={props.successMsg} />
             ) : (
-              isSuccess ? (
-                <FormMessage status="success" message={props.successMsg} />
-              ) : (
-                <h1></h1>
-              )
+              <h1></h1>
             )}
           </div>
         </NPLayout>
