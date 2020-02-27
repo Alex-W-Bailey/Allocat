@@ -66,13 +66,13 @@
 }
 
 .clicked-link {
-  color: $allocatTeal !important;
+  color: $stuck !important;
   cursor: pointer;
   &:hover {
-    color: $allocatBlue !important;
+    color: $inProgress !important;
   }
   &:active {
-    color: $allocatBlue !important;
+    color: $inProgress !important;
   }
 }
 .team-container {

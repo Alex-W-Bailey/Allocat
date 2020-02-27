@@ -361,7 +361,7 @@ export default class DashboardTasks extends Component {
   }
 
   showUnclaimedTasks = team => {
-    // This needs to be wrapped in an if statement that only changes the values if they correspond with the team
+    // This needs to be wrapped in an if statement or something that only changes the values if they correspond with the team
     allLink = "bb-link";
     unclaimedLink = "clicked-link";
     completedLink = "bb-link";
