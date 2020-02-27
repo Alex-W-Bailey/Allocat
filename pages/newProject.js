@@ -117,22 +117,56 @@ export default class NewProject extends Component {
   };
 
   handleAddNewCollaborator = () => {
-    console.log("Add new collaborator");
     let collaboratorEmail = this.state.collaboratorEmail;
 
-    var newArr = this.state.allCollaborators;
-    newArr.push(collaboratorEmail);
+    if (collaboratorEmail == "") {
+      this.setState({
+        isError: true,
+        errorMsg: "Collaborator email is required",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    }
+    else if (collaboratorEmail.includes("@") === false) {
+      this.setState({
+        isError: true,
+        errorMsg: "Email is invalid format. Ex: name@email.com",
+        errorPage: 2,
+        isSuccess: false,
+        successMsg: "",
+        successPage: 0
+      });
+    }
+    else {
+      axios.get(`/api/user/${collaboratorEmail}`).then(response => {
+        if (response.data !== null) {
+          var newArr = this.state.allCollaborators;
+          newArr.push(collaboratorEmail);
 
-    this.setState({
-      allCollaborators: newArr,
-      collaboratorEmail: "",
-      isError: false,
-      errorMsg: "",
-      errorPage: 0,
-      isSuccess: true,
-      successMsg: "User invited to the project!",
-      successPage: 2
-    });
+          this.setState({
+            allCollaborators: newArr,
+            collaboratorEmail: "",
+            isError: false,
+            errorMsg: "",
+            errorPage: 0,
+            isSuccess: true,
+            successMsg: "User invited to the project!",
+            successPage: 2
+          });
+        } else {
+          this.setState({
+            isError: true,
+            errorMsg: "No user found...",
+            errorPage: 2,
+            isSuccess: false,
+            successMsg: "",
+            successPage: 0
+          });
+        }
+      });
+    }
   };
 
   handleRedirectToProjects = () => {
@@ -319,30 +353,30 @@ export default class NewProject extends Component {
             errorPage={this.state.errorPage}
           />
         ) : (
-          <NPForm
-            pageNum={this.state.pageNum}
-            pageTitle={this.state.pageTitle}
-            collaboratorEmail={this.state.collaboratorEmail}
-            collaboratorName={this.state.collaboratorName}
-            handleChange={this.handleChange}
-            handleTeamNameChange={this.handleTeamNameChange}
-            numberOfTeams={this.state.numberOfTeams}
-            handleNewTeam={this.handleNewTeam}
-            handleCollabSearch={this.handleCollabSearch}
-            handleAddNewCollaborator={this.handleAddNewCollaborator}
-            handleNewProject={this.handleNewProject}
-            foundCollaborator={foundCollaborator}
-            searchedForCollaborator={searchedForCollaborator}
-            handleNextPage={this.handleNextPage}
-            handleLastPage={this.handleLastPage}
-            isError={this.state.isError}
-            errorMsg={this.state.errorMsg}
-            errorPage={this.state.errorPage}
-            isSuccess={this.state.isSuccess}
-            successMsg={this.state.successMsg}
-            successPage={this.state.successPage}
-          />
-        )}
+              <NPForm
+                pageNum={this.state.pageNum}
+                pageTitle={this.state.pageTitle}
+                collaboratorEmail={this.state.collaboratorEmail}
+                collaboratorName={this.state.collaboratorName}
+                handleChange={this.handleChange}
+                handleTeamNameChange={this.handleTeamNameChange}
+                numberOfTeams={this.state.numberOfTeams}
+                handleNewTeam={this.handleNewTeam}
+                handleCollabSearch={this.handleCollabSearch}
+                handleAddNewCollaborator={this.handleAddNewCollaborator}
+                handleNewProject={this.handleNewProject}
+                foundCollaborator={foundCollaborator}
+                searchedForCollaborator={searchedForCollaborator}
+                handleNextPage={this.handleNextPage}
+                handleLastPage={this.handleLastPage}
+                isError={this.state.isError}
+                errorMsg={this.state.errorMsg}
+                errorPage={this.state.errorPage}
+                isSuccess={this.state.isSuccess}
+                successMsg={this.state.successMsg}
+                successPage={this.state.successPage}
+              />
+            )}
       </Layout>
     );
   }
