@@ -477,10 +477,10 @@ export default class DashboardTasks extends Component {
                       userTask.priority === "High"
                         ? "hp-border"
                         : userTask.priority === "Low"
-                        ? "lp-border"
-                        : userTask.priority === "Medium"
-                        ? "mp-border"
-                        : "undetermined"
+                          ? "lp-border"
+                          : userTask.priority === "Medium"
+                            ? "mp-border"
+                            : "undetermined"
                     }
                   >
                     <div
@@ -488,10 +488,10 @@ export default class DashboardTasks extends Component {
                         userTask.status === "Completed"
                           ? "complete"
                           : userTask.status === "Working On"
-                          ? "in-progress"
-                          : userTask.status === "Stuck"
-                          ? "stuck"
-                          : "unclaimed"
+                            ? "in-progress"
+                            : userTask.status === "Stuck"
+                              ? "stuck"
+                              : "unclaimed"
                       }
                     >
                       <div className='task-card card'>
@@ -683,6 +683,7 @@ export default class DashboardTasks extends Component {
                                             {task.status}
                                           </Card.Text>
                                         </div>
+
                                       ) : isDescriptionClicked ? (
                                         <div>
                                           <h5
@@ -752,7 +753,7 @@ export default class DashboardTasks extends Component {
                                             {task.status}
                                           </Card.Text>
                                         </div>
-                                      ) : (
+ ) : (
                                         <div>
                                           <h5
                                             className='task-name card-title mt-3'
@@ -1125,60 +1126,72 @@ export default class DashboardTasks extends Component {
                             >
                               <div
                                 className={
-                                  task.status === "Completed"
-                                    ? "complete"
-                                    : task.status === "Working On"
-                                    ? "in-progress"
-                                    : task.status === "Stuck"
-                                    ? "stuck"
-                                    : "unclaimed"
+                                  task.priority === "High"
+                                    ? "hp-border"
+                                    : task.priority === "Low"
+                                      ? "lp-border"
+                                      : task.priority === "Medium"
+                                        ? "mp-border"
+                                        : "undetermined"
                                 }
                               >
-                                <div className='task-card card'>
-                                  <div className='card-body d-flex flex-column over'>
-                                    <div className='d-flex justify-content-between'>
-                                      <span>
-                                        <h5 className='task-name card-title mt-3'>
-                                          {task.name}
-                                        </h5>
-                                      </span>
-                                      <span className='align-right'>
-                                        <a
-                                          onClick={() =>
-                                            this.handleShowModal(task.id)
-                                          }
-                                        >
-                                          <h5
-                                            id={task.id}
-                                            onClick={e =>
-                                              this.handleSetDeleteInfo(e)
-                                            }
-                                            className='delete mt-3'
-                                          >
-                                            X
+                                <div
+                                  className={
+                                    task.status === "Completed"
+                                      ? "complete"
+                                      : task.status === "Working On"
+                                        ? "in-progress"
+                                        : task.status === "Stuck"
+                                          ? "stuck"
+                                          : "unclaimed"
+                                  }
+                                >
+                                  <div className='task-card card'>
+                                    <div className='card-body d-flex flex-column over'>
+                                      <div className='d-flex justify-content-between'>
+                                        <span>
+                                          <h5 className='task-name card-title mt-3'>
+                                            {task.name}
                                           </h5>
-                                        </a>
-                                      </span>
-                                    </div>
+                                        </span>
+                                        <span className='align-right'>
+                                          <a
+                                            onClick={() =>
+                                              this.handleShowModal(task.id)
+                                            }
+                                          >
+                                            <h5
+                                              id={task.id}
+                                              onClick={e =>
+                                                this.handleSetDeleteInfo(e)
+                                              }
+                                              className='delete mt-3'
+                                            >
+                                              X
+                                          </h5>
+                                          </a>
+                                        </span>
+                                      </div>
 
-                                    <div className='card-subtitle mb-1 text-muted'>
-                                      {task.description}
-                                    </div>
-                                    <div className='card-subtitle mb-1 text-muted'>
-                                      {task.priority}
-                                    </div>
-                                    <Card.Text>{task.status}</Card.Text>
-                                    <div className='row my-auto claim-task'>
-                                      <Button
-                                        name={task.id}
-                                        className='task-btn button50 mx-auto'
-                                        onClick={e => {
-                                          this.handleClaimTask(e);
-                                        }}
-                                      >
-                                        Claim Task
+                                      <div className='card-subtitle mb-1 text-muted'>
+                                        {task.description}
+                                      </div>
+                                      <div className='card-subtitle mb-1 text-muted'>
+                                        {task.priority}
+                                      </div>
+                                      <Card.Text>{task.status}</Card.Text>
+                                      <div className='row my-auto claim-task'>
+                                        <Button
+                                          name={task.id}
+                                          className='task-btn button50 mx-auto'
+                                          onClick={e => {
+                                            this.handleClaimTask(e);
+                                          }}
+                                        >
+                                          Claim Task
                                         <i class='pl-2 far fa-plus-square'></i>
-                                      </Button>
+                                        </Button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

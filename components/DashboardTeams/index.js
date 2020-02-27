@@ -136,16 +136,16 @@ export default class DashboardTeams extends Component {
   handleShowNewTeamForm = () => {
     this.state.showNewTeamForm
       ? this.setState({
-          showNewTeamForm: false
-        })
+        showNewTeamForm: false
+      })
       : this.setState({ showNewTeamForm: true });
   };
 
   handleShowNewCollabForm = () => {
     this.state.showNewCollabForm
       ? this.setState({
-          showNewCollabForm: false
-        })
+        showNewCollabForm: false
+      })
       : this.setState({ showNewCollabForm: true });
   };
 
@@ -190,20 +190,20 @@ export default class DashboardTeams extends Component {
     this.getAllInfo();
   };
 
-  async addNewCollab(){
+  async addNewCollab() {
     var url = window.location.href;
     var projectId = url.split("/")[4];
     var collaboratorEmail = this.state.newCollabEmail;
     var collaboratorTeam = this.state.newCollabTeam;
 
-    if(collaboratorTeam === "none"){
+    if (collaboratorTeam === "none") {
       collaboratorTeam = null
     }
 
     await axios.get(`/api/user/${collaboratorEmail}`).then(userFound => {
-      if(userFound.data != null) {
+      if (userFound.data != null) {
         axios.post(`/api/inviteUser/${collaboratorEmail}/${projectId}`).then(response => {
-          if(response.status === 200){
+          if (response.status === 200) {
             this.setState({
               isError: false,
               errorMsg: "",
@@ -226,7 +226,7 @@ export default class DashboardTeams extends Component {
           isError: true,
           errorMsg: "No user found",
           isSuccess: false,
-          successMsg: "" 
+          successMsg: ""
         })
       }
     })
@@ -241,116 +241,129 @@ export default class DashboardTeams extends Component {
       this.state.showNewCollabForm === false
     ) {
       return (
-        <div className='mt-5'>
-          <Button onClick={() => this.handleShowNewTeamForm()}>
-            Add a New Team
-          </Button>
-          <Button onClick={() => this.handleShowNewCollabForm()}>
-            Add a Collaborator
-          </Button>
-          <Accordion>
+        <div className="mt-1">
+          <div className="row">
+            <div className="col-lg-6">
+              <Button className="team-toggle-nav w-75 align-center" onClick={() => this.handleShowNewTeamForm()}>
+                Add a New Team
+              </Button>
+            </div>
+            <div className="col-lg-6">
+              <Button className="team-toggle-nav w-75 align-center" onClick={() => this.handleShowNewCollabForm()}>
+                Add a Collaborator
+              </Button>
+            </div>
+          </div>
+          <div>
             {this.state.allTeams.map(team => {
               return (
-                <div>
-                  <Accordion>
-                    <Card>
-                      <Card.Header>
-                        <Accordion.Toggle
-                          as={Button}
-                          variant='link'
-                          eventKey='0'
-                        >
-                          {team === null ? <p>Unassigned</p> : <p>{team}</p>}
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <div>
-                        {this.state.allCollaborators.map(collab => {
-                          return this.state.allCollaborators.length > 0 ? (
-                            collab.teamName === team ? (
-                              <Accordion.Collapse eventKey='0'>
-                                <Card.Body>
-                                  <Accordion>
-                                    <Card>
-                                      <Card.Header>
-                                        <Accordion.Toggle
-                                          as={Button}
-                                          variant='link'
-                                          eventKey='0'
+                <div className="collaborator-cards">
+                  <div className="row">
+                    <div className="team-dash-header">
+                      {team === null ? <p>Unassigned Collaborators</p> : <p>{team}</p>}
+                    </div>
+                  </div>
+                  <div>
+                    {this.state.allCollaborators.map(collab => {
+                      return this.state.allCollaborators.length > 0 ? (
+                        collab.teamName === team ? (
+                          <div>
+                            <Accordion>
+                              <Card>
+                                <Card.Header>
+                                  <div className="row">
+                                    <div className="col-6">
+                                      <p className="collab-name-header">{collab.name}</p>
+                                    </div>
+                                  </div>
+                                  <div className="row team-dash-toggle">
+                                    <div className="col-lg-6 align-center">
+                                      <Accordion.Toggle variant="link" eventKey="0">
+                                        <p>Assign {collab.name} To A Team</p>
+                                      </Accordion.Toggle>
+                                    </div>
+                                    <div className="col-lg-6 align-center">
+                                      <Accordion.Toggle variant="link" eventKey="1">
+                                        <p>See {collab.name}'s Tasks</p>
+                                      </Accordion.Toggle>
+                                    </div>
+                                  </div>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                  <Card.Body>
+                                    <Form.Group>
+                                      <Form.Control
+                                        onChange={this.handleChange.bind(
+                                          this
+                                        )}
+                                        as='select'
+                                        name='newTeamAssign'
+                                      >
+                                        <option
+                                          value='N/A'
+                                          disabled
+                                          selected
                                         >
-                                          {collab.name}
-                                        </Accordion.Toggle>
-                                      </Card.Header>
-                                      <Accordion.Collapse eventKey='0'>
-                                        <Card.Body>
-                                          <p>Assign Collaborator To A Team</p>
-                                          <Form.Group>
-                                            <Form.Control
-                                              onChange={this.handleChange.bind(
-                                                this
-                                              )}
-                                              as='select'
-                                              name='newTeamAssign'
-                                            >
-                                              <option
-                                                value='N/A'
-                                                disabled
-                                                selected
-                                              >
-                                                Select Team
+                                          Select Team
                                               </option>
-                                              {this.state.allTeams.map(team => {
-                                                return team === null ? (
-                                                  <option value='none'>
-                                                    None
+                                        {this.state.allTeams.map(team => {
+                                          return team === null ? (
+                                            <option value='none'>
+                                              None
                                                   </option>
-                                                ) : (
-                                                  <option value={team}>
-                                                    {team}
-                                                  </option>
-                                                );
-                                              })}
-                                            </Form.Control>
-                                          </Form.Group>
-                                          <button
-                                            id={collab.userId}
-                                            onClick={e =>
-                                              this.handleAssignTeam(e)
-                                            }
-                                          >
-                                            Assign to team
+                                          ) : (
+                                              <option value={team}>
+                                                {team}
+                                              </option>
+                                            );
+                                        })}
+                                      </Form.Control>
+                                    </Form.Group>
+                                    <button className="assign-team"
+                                      id={collab.userId}
+                                      onClick={e =>
+                                        this.handleAssignTeam(e)
+                                      }
+                                    >
+                                      Assign To Team
                                           </button>
-                                        </Card.Body>
-                                      </Accordion.Collapse>
-                                      {this.state.allTasks.map(task => {
-                                        return task.userId === collab.userId ? (
-                                          <Accordion.Collapse eventKey='0'>
-                                            <Card.Body>
-                                              {task.taskName}
-                                            </Card.Body>
-                                          </Accordion.Collapse>
-                                        ) : (
-                                          <></>
-                                        );
-                                      })}
-                                    </Card>
-                                  </Accordion>
-                                </Card.Body>
-                              </Accordion.Collapse>
-                            ) : (
-                              <p></p>
-                            )
-                          ) : (
-                            <p>No Collaborators</p>
-                          );
-                        })}
-                      </div>
-                    </Card>
-                  </Accordion>
+                                  </Card.Body>
+                                </Accordion.Collapse>
+                                <Accordion.Collapse eventKey="1">
+                                  <Card.Body>
+                                    <div>
+                                      {
+                                        this.state.allTasks.map(task => {
+                                          return task.userId === collab.userId ? (
+                                            <div>
+                                              <div className="card-body">
+                                                {task.taskName}
+                                              </div>
+                                            </div>
+                                          ) : (
+                                              <></>
+                                            );
+                                        })
+                                      }
+                                    </div>
+                                  </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
+                            </Accordion>
+                          </div>
+                        ) : (
+                            <p></p>
+                          )
+                      ) : (
+                          <p>No Collaborators</p>
+                        );
+                    })}
+                  </div>
                 </div>
               );
             })}
-          </Accordion>
-        </div>
+          </div>
+        </div >
       );
     } else if (this.state.showNewTeamForm === true) {
       return (
@@ -407,7 +420,7 @@ export default class DashboardTeams extends Component {
                   </Form.Label>
                   <Form.Control name="newCollabTeam" as='select' onChange={this.handleChange.bind(this)}>
                     {this.state.allTeams.map(team => {
-                      if(team === null){
+                      if (team === null) {
                         return <option value="none">None</option>
                       }
                       else {
@@ -417,25 +430,25 @@ export default class DashboardTeams extends Component {
                   </Form.Control>
                 </Form.Group>
                 <br />
-                <Button onClick={() => this.addNewCollab()}>
-                  Add Collaborator
+                <Button className="w-100 align-center" onClick={() => this.addNewCollab()}>
+                  Add Collaborator <i className="pl-1 fas fa-user-plus"></i>
                 </Button>
                 {
                   isError ? (
-                    <FormMessage 
+                    <FormMessage
                       status="error"
                       message={this.state.errorMsg}
                     />
                   ) : (
-                    isSuccess ? (
-                      <FormMessage 
-                        status="success"
-                        message={this.state.successMsg}
-                      />
-                    ) : (
-                      <></>
+                      isSuccess ? (
+                        <FormMessage
+                          status="success"
+                          message={this.state.successMsg}
+                        />
+                      ) : (
+                          <></>
+                        )
                     )
-                  )
                 }
               </Form>
             </div>
