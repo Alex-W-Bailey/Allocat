@@ -439,7 +439,7 @@ export default class DashboardTasks extends Component {
       <React.Fragment>
         <div className='mx-auto row pb-5'>
           <div className='mx-auto col-lg-6 col-sm-12'>
-            <h6>Priority Level</h6>
+            <h6 style={{ fontWeight: "bold"}}>Priority Level</h6>
             <span className='dot-hp'></span>
             <span className='mr-2'> High Priority</span>
             <span className='dot-mp'></span>
@@ -454,7 +454,7 @@ export default class DashboardTasks extends Component {
             </div>
           </div>
           <div className='mx-auto col-lg-6 col-sm-12'>
-            <h6>Task Status</h6>
+            <h6 style={{ fontWeight: "bold"}}>Task Status</h6>
             <span className='dot-c'></span>
             <span className='mr-2'> Completed</span>
             <span className='dot-p'></span>
@@ -597,20 +597,26 @@ export default class DashboardTasks extends Component {
                   {
                     this.state[team + "showAllTasks"] ? (
                       <div>
-                        <p className="clicked-link" onClick={() => this.showAll(team)}>All /</p>
-                        <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}> / Unclaimed</p>
-                        <p className="bb-link" onClick={() => this.showCompletedTasks(team)}> / Completed</p>
+                        <p className="clicked-link" onClick={() => this.showAll(team)}> All </p>
+                        <p style={{display: "inline-block"}}> / </p>
+                        <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}> Unclaimed </p>
+                        <p style={{display: "inline-block"}}> / </p>
+                        <p className="bb-link" onClick={() => this.showCompletedTasks(team)}> Completed </p>
                       </div>
                     ) : this.state[team + "showUnclaimedTasks"] ? (
                       <div>
-                        <p className="bb-link" onClick={() => this.showAll(team)}>All</p>
-                        <p className="clicked-link" onClick={() => this.showUnclaimedTasks(team)}>Unclaimed</p>
-                        <p className="bb-link" onClick={() => this.showCompletedTasks(team)}>Completed</p>
+                        <p className="bb-link" onClick={() => this.showAll(team)}> All </p>
+                        <p style={{display: "inline-block"}}> / </p>
+                        <p className="clicked-link" onClick={() => this.showUnclaimedTasks(team)}> Unclaimed </p>
+                        <p style={{display: "inline-block"}}> / </p>
+                        <p className="bb-link" onClick={() => this.showCompletedTasks(team)}> Completed </p>
                       </div>
                     ) : (
                           <div>
-                            <p className="bb-link" onClick={() => this.showAll(team)}>All</p>
-                            <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}>Unclaimed</p>
+                            <p className="bb-link" onClick={() => this.showAll(team)}> All </p>
+                            <p style={{display: "inline-block"}}> / </p>
+                            <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}> Unclaimed </p>
+                            <p style={{display: "inline-block"}}> / </p>
                             <p className="clicked-link" onClick={() => this.showCompletedTasks(team)}>Completed</p>
                           </div>
                         )
