@@ -4,6 +4,36 @@
   color: $warmWhite;
 }
 
+.team {
+  color: #2190cc;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.collab { 
+  border-radius: 15px;
+  background-color: white;
+  border: 3px solid #2190cc;
+  margin: 20px;
+  min-height: 100px;
+  height: auto;
+}
+
+.collab-name {
+  font-weight: bold;
+  padding: 30px 0 0 25px;
+}
+
+.allTasks {
+  position: relative;
+  top: 30px;
+}
+
+.assign-to-team {
+  float: right;
+  padding-top: 10px;
+}
+
 .unassigned-team {
   background-color: $softGrey;
   margin: 10px 0 10px 0;
