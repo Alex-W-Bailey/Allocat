@@ -301,6 +301,12 @@ export default class DashboardTeams extends Component {
           <div className="row">
             <div className='col-lg-3' style={{ height: "90vh" }}>
               <div>
+                <Button className="team-toggle-nav w-75 align-center" onClick={() => this.handleShowNewTeamForm()}>
+                  Add a New Team
+              </Button>
+                <Button className="team-toggle-nav w-75 align-center" onClick={() => this.handleShowNewCollabForm()}>
+                  Add a Collaborator
+              </Button>
                 <Nav style={{ textAlign: "" }} className="flex-column">
                   {this.state.allTeams.map(team => {
                     return (
@@ -427,8 +433,8 @@ export default class DashboardTeams extends Component {
                                 <></>
                               )
                           ) : (
-                            <></>
-                          )
+                              <></>
+                            )
                         )
                     ) : (
                         <h1>No collaborators assigned to this team</h1>
