@@ -164,7 +164,6 @@ module.exports = function (app) {
             }
         }).then((users) => {
             if (users) {
-                console.log("email is already taken...");
                 res.send("email is already taken");
             }
             else {
@@ -186,7 +185,6 @@ module.exports = function (app) {
             }
         }).then((projectsFound) => {
             if (projectsFound) {
-                console.log("Project name already in use");
                 res.send("err");
             }
             else {
@@ -231,7 +229,6 @@ module.exports = function (app) {
 
     app.post("/api/projectCreator", (req, res) => {
         var userId = req.user.id;
-        console.log("userId: " + req.user);
 
         db.Project.findOne({
             where: {

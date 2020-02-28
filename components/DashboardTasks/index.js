@@ -116,13 +116,11 @@ export default class DashboardTasks extends Component {
     var newAllTasks = [];
 
     for (var i = 0; i < this.state.userTasks.length; i++) {
-      console.log("pushing... " + this.state.userTasks[i]);
       newAllTasks.push(this.state.userTasks[i]);
     }
 
     for (var i = 0; i < newAllTasks.length; i++) {
       if (newAllTasks[i].id === objId) {
-        console.log("found : " + newAllTasks[i].id);
         newAllTasks[i].status = objValue;
       }
     }
@@ -259,8 +257,6 @@ export default class DashboardTasks extends Component {
   };
 
   handleDeleteTask = () => {
-    console.log(this.state);
-
     axios.delete(`/api/deleteTask/${this.state.deleteTaskNum}`).then(res => {
       console.log("deleted task");
     });
@@ -294,7 +290,6 @@ export default class DashboardTasks extends Component {
 
   createTask(team) {
     var teamName = Object.values(team)[0];
-    console.log(teamName);
 
     var stateAllTasks = teamName + "showAllTasks";
     var stateCompletedTasks = teamName + "showCompletedTasks";
@@ -332,8 +327,6 @@ export default class DashboardTasks extends Component {
     this.setState({
       allTasks: newArr
     });
-
-    console.log("updated");
   }
 
   edit(elementToEdit) {

@@ -65,8 +65,6 @@ export default class Projects extends Component {
     await axios.get("/api/getNotifications").then(response => {
       var notifications = [];
 
-      console.log(response.data);
-
       if (response.data.length > 0) {
         for (var i = 0; i < response.data.length; i++) {
           notifications.push(response.data[i]);
