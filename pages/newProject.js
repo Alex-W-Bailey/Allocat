@@ -61,12 +61,10 @@ export default class NewProject extends Component {
       if (this.state.allTeams.length >= teamNum) {
         //removes all characters in the objName so we get the team num
         let teamNum = parseInt(getTeamNum);
-        console.log("replace teamNum Val");
         this.state.allTeams[teamNum - 1] = objValue;
       }
       //since there are no teams, just push to create one
       else {
-        console.log("insert into the arr...");
         this.state.allTeams.push(objValue);
       }
     }
@@ -79,16 +77,10 @@ export default class NewProject extends Component {
   };
 
   handleNewProject = () => {
-    console.log("clicked!");
-    console.log(this.state);
-
     this.createProject();
   };
 
   handleNewTeam = () => {
-    // if(this.){
-
-    // }
     var newArr = this.state.numberOfTeams;
     newArr.push(<NewTeam />);
 
@@ -98,8 +90,6 @@ export default class NewProject extends Component {
   };
 
   handleCollabSearch = () => {
-    console.log("searching..." + this.state.collaboratorEmail);
-
     axios.get(`/api/user/${this.state.collaboratorEmail}`).then(usersFound => {
       if (usersFound.data != null) {
         this.setState({
@@ -108,14 +98,11 @@ export default class NewProject extends Component {
           collaboratorName: usersFound.data.fullName
         });
       } else {
-        console.log("none");
         this.setState({
           searchedForCollaborator: true,
           collaboratorFound: false
         });
       }
-
-      console.log(this.state);
     });
   };
 
@@ -222,8 +209,6 @@ export default class NewProject extends Component {
         if (response.data === "err") {
           console.log("project name already taken");
         } else {
-          console.log("project created...");
-
           this.getId();
         }
       });
@@ -234,8 +219,6 @@ export default class NewProject extends Component {
 
       await axios.post("/api/projectCreator", newCreator).then(response => {
         for (var i = 0; i < this.state.allTeams.length; i++) {
-          console.log("creating team...");
-
           this.createTeams(i);
         }
       });
@@ -292,8 +275,6 @@ export default class NewProject extends Component {
       teamPosition: i
     };
 
-    console.log(newTeam);
-
     axios.post("/api/newTeam", newTeam).then(response => {
       if (response) {
         console.log("New Team created!");
@@ -302,11 +283,8 @@ export default class NewProject extends Component {
   }
 
   async createCollaborators() {
-    console.log("create collaborators");
-
     for (var i = 0; i < this.state.allCollaborators.length; i++) {
       var collaborator = this.state.allCollaborators[i];
-      console.log("collab: " + collaborator);
 
       axios
         .post(`/api/newInviteUser/${collaborator}/${this.state.projectName}`)
@@ -325,9 +303,6 @@ export default class NewProject extends Component {
         this.setState({
           projectId: response.data.id
         });
-
-        console.log("retrieved id...");
-        console.log(this.state);
       });
   }
 

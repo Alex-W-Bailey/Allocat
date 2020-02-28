@@ -28,9 +28,6 @@ export default class Login extends Component {
   };
 
   handleLoginClick = () => {
-    console.log("clicked!");
-    console.log(this.state);
-
     let user = {
       email: this.state.email,
       password: this.state.password
@@ -45,7 +42,6 @@ export default class Login extends Component {
       })
       .catch(err => {
         if (err.response) {
-          console.log("err");
           this.setState({
             isError: true
           });
