@@ -34,7 +34,6 @@ export default class Register extends Component {
   };
 
   handleRegisterClick = () => {
-    console.log("clicked!");
     console.log(this.state);
 
     let newUser = {

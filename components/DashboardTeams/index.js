@@ -49,8 +49,6 @@ export default class DashboardTeams extends Component {
       }
     });
 
-    console.log(newArr);
-
     this.setState({
       allTeams: newArr
     });
@@ -67,8 +65,6 @@ export default class DashboardTeams extends Component {
     });
 
     await axios.get(`/api/allCollaborators/${splitUrl}`).then(response => {
-      console.log(response);
-
       for (var i = 0; i < response.data.length; i++) {
         collabs.push(response.data[i]);
       }
@@ -130,7 +126,6 @@ export default class DashboardTeams extends Component {
     var newArr = [];
 
     await axios.get(`/api/allTasks/${splitUrl}`).then(response => {
-      console.log(response);
       for (var i = 0; i < response.data.length; i++) {
         newArr.push(response.data[i]);
 
@@ -193,8 +188,6 @@ export default class DashboardTeams extends Component {
     };
 
     axios.post("/api/addTeamToProject", newTeam).then(response => {
-      console.log("team created...");
-
       this.getAllInfo();
 
       this.setState({
