@@ -170,7 +170,15 @@ export default class DashboardTasks extends Component {
         }
 
         this.setState({
-          isCreatingTask: false
+          isCreatingTask: false,
+          isNameClicked: false,
+          isDescriptionClicked: false,
+          newTaskNameHover: false,
+          newTaskDescriptionHover: false,
+          newTaskName: "",
+          newTaskDescription: "",
+          newTaskDueDate: "",
+          newTaskPriority: "",
         });
 
         this.handleShowAllTasks();
@@ -289,44 +297,46 @@ export default class DashboardTasks extends Component {
   }
 
   createTask(team) {
-    var teamName = Object.values(team)[0];
+    if(this.state.isCreatingTask === false){
+      var teamName = Object.values(team)[0];
 
-    var stateAllTasks = teamName + "showAllTasks";
-    var stateCompletedTasks = teamName + "showCompletedTasks";
-    var stateUnclaimedTasks = teamName + "showUnclaimedTasks";
-
-    this.setState({
-      isCreatingTask: true,
-      [stateAllTasks]: false,
-      [stateCompletedTasks]: false,
-      [stateUnclaimedTasks]: true
-    });
-
-    var teamName = Object.values(team)[0];
-    var newArr = [];
-
-    var url = window.location.href;
-    var splitUrl = url.split("/")[4];
-    let newTask = {
-      id: -1,
-      name: "Task Name",
-      description: "Task Description",
-      dueDate: "Task Due Date",
-      priority: "Task Priority",
-      team: teamName,
-      status: "Unassigned"
-    };
-
-    newArr.push(newTask);
-
-    var allTasks = this.state.allTasks;
-    for (var i = 0; i < allTasks.length; i++) {
-      newArr.push(allTasks[i]);
+      var stateAllTasks = teamName + "showAllTasks";
+      var stateCompletedTasks = teamName + "showCompletedTasks";
+      var stateUnclaimedTasks = teamName + "showUnclaimedTasks";
+  
+      this.setState({
+        isCreatingTask: true,
+        [stateAllTasks]: false,
+        [stateCompletedTasks]: false,
+        [stateUnclaimedTasks]: true
+      });
+  
+      var teamName = Object.values(team)[0];
+      var newArr = [];
+  
+      var url = window.location.href;
+      var splitUrl = url.split("/")[4];
+      let newTask = {
+        id: -1,
+        name: "Task Name",
+        description: "Task Description",
+        dueDate: "Task Due Date",
+        priority: "Task Priority",
+        team: teamName,
+        status: "Unassigned"
+      };
+  
+      newArr.push(newTask);
+  
+      var allTasks = this.state.allTasks;
+      for (var i = 0; i < allTasks.length; i++) {
+        newArr.push(allTasks[i]);
+      }
+  
+      this.setState({
+        allTasks: newArr
+      });
     }
-
-    this.setState({
-      allTasks: newArr
-    });
   }
 
   edit(elementToEdit) {
@@ -400,9 +410,6 @@ export default class DashboardTasks extends Component {
     const isError = this.state.isError;
     const isNameClicked = this.state.isNameClicked;
     const isDescriptionClicked = this.state.isDescriptionClicked;
-
-    console.log(this.state)
-
     var newTaskNameStyle;
     var newTaskDescriptionStyle;
 
