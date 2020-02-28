@@ -427,6 +427,19 @@ module.exports = function (app) {
         });
     });
 
+    app.put("/api/completedTask/:taskId", (req, res) => {
+        db.Task.update(
+            { userId: null },
+            {
+                where : {
+                    id: req.params.taskId
+                }
+            }
+        ).then((rowsUpdated) => {
+            res.json(rowsUpdated);
+        });
+    })
+
     //DESTROY
     app.delete("/api/deleteTask/:taskId", (req, res) => {
        db.Task.destroy({
