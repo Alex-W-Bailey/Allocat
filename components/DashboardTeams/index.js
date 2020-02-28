@@ -101,15 +101,15 @@ export default class DashboardTeams extends Component {
 
       newArr.push(collab);
 
-      if(this.state.allCollaboratorTeams.includes(collab.teamName) === false) {
+      if (this.state.allCollaboratorTeams.includes(collab.teamName) === false) {
         var newTeamArr = [];
-        
-        if(this.state.allCollaboratorTeams.length > 0){
-          for(var i = 0; i < this.state.allCollaboratorTeams.length; i++){
+
+        if (this.state.allCollaboratorTeams.length > 0) {
+          for (var i = 0; i < this.state.allCollaboratorTeams.length; i++) {
             newTeamArr.push(this.state.allCollaboratorTeams[i]);
           }
         }
-        
+
         newTeamArr.push(collab.teamName);
 
         this.setState({
@@ -134,18 +134,18 @@ export default class DashboardTeams extends Component {
       for (var i = 0; i < response.data.length; i++) {
         newArr.push(response.data[i]);
 
-        if(this.state.allTaskUserIDs.includes(response.data[i].userId) === false) {
+        if (this.state.allTaskUserIDs.includes(response.data[i].userId) === false) {
           var newID = [];
 
-          if(this.state.allTaskUserIDs.length > 0){
-            for(var j = 0; j < this.state.allTaskUserIDs.length; j++){
+          if (this.state.allTaskUserIDs.length > 0) {
+            for (var j = 0; j < this.state.allTaskUserIDs.length; j++) {
               newID.push(this.state.allTaskUserIDs[j]);
             }
           }
 
           console.log(response.data[i].userId);
           newID.push(response.data[i].userId);
-  
+
           this.setState({
             allTaskUserIDs: newID
           });
@@ -305,9 +305,9 @@ export default class DashboardTeams extends Component {
                   {this.state.allTeams.map(team => {
                     return (
                       team === null ? (
-                        <Nav.Link id="unassigned" className="team" onClick={() => this.viewTeamPage({team})}>Unassigned</Nav.Link>
+                        <Nav.Link id="unassigned" className="team" onClick={() => this.viewTeamPage({ team })}>Unassigned</Nav.Link>
                       ) : (
-                          <Nav.Link id={team} onClick={() => this.viewTeamPage({team})} className="team">{team}</Nav.Link>
+                          <Nav.Link id={team} onClick={() => this.viewTeamPage({ team })} className="team">{team}</Nav.Link>
                         )
                     );
                   })}
@@ -319,8 +319,8 @@ export default class DashboardTeams extends Component {
                 this.state.currentTeam === null ? (
                   <p>Unassigned</p>
                 ) : (
-                  <p>{this.state.currentTeam}</p>
-                )
+                    <p>{this.state.currentTeam}</p>
+                  )
               }</h1>
               <hr />
               {
@@ -333,7 +333,7 @@ export default class DashboardTeams extends Component {
                             <div className="col-lg-3">
                               <h5 className="collab-name">{collab.name} -</h5>
                             </div>
-                            <div className="col-lg-9 allTasks">
+                            <div className="col-lg-3 allTasks">
                               <ul>
                                 {
                                   this.state.allTaskUserIDs.includes(collab.userId) ? (
@@ -347,23 +347,96 @@ export default class DashboardTeams extends Component {
                                         );
                                     })
                                   ) : (
-                                    <p>No current tasks</p>
-                                  )
+                                      <p>No current tasks</p>
+                                    )
                                 }
                               </ul>
+                            </div>
+                            <div className="col-lg-6 assign-to-team">
+                              <Form.Group>
+                                <p style={{ margin: "0" }}>Assign to a team</p>
+                                <Form.Control style={{ width: "60%", display: "inline-block" }} onChange={this.handleChange.bind(this)} as='select' name='newTeamAssign'>
+                                  <option value='N/A' disabled selected> Select Team </option>
+                                  {this.state.allTeams.map(team => {
+                                    return team === null ? (
+                                      <option value={null}> None </option>
+                                    ) : (
+                                        <option value={team}>
+                                          {team}
+                                        </option>
+                                      );
+                                  })}
+                                </Form.Control>
+                                <button className="assign-team" id={collab.userId} onClick={e => this.handleAssignTeam(e)}>
+                                  Assign
+                              </button>
+                              </Form.Group>
                             </div>
                           </div>
                         </div>
                       ) : (
-                          <></>
+                          this.state.currentTeam === null ? (
+                            collab.teamName === "None" ? (
+                              <div className="collab">
+                                <div class="row">
+                                  <div className="col-lg-3">
+                                    <h5 className="collab-name">{collab.name} -</h5>
+                                  </div>
+                                  <div className="col-lg-3 allTasks">
+                                    <ul>
+                                      {
+                                        this.state.allTaskUserIDs.includes(collab.userId) ? (
+                                          this.state.allTasks.map(task => {
+                                            return task.userId === collab.userId ? (
+                                              <div>
+                                                <li>{task.taskName}</li>
+                                              </div>
+                                            ) : (
+                                                <></>
+                                              );
+                                          })
+                                        ) : (
+                                            <p>No current tasks</p>
+                                          )
+                                      }
+                                    </ul>
+                                  </div>
+                                  <div className="col-lg-6 assign-to-team">
+                                    <Form.Group>
+                                      <p style={{ margin: "0" }}>Assign to a team</p>
+                                      <Form.Control style={{ width: "60%", display: "inline-block" }} onChange={this.handleChange.bind(this)} as='select' name='newTeamAssign'>
+                                        <option value='N/A' disabled selected> Select Team </option>
+                                        {this.state.allTeams.map(team => {
+                                          return team === null ? (
+                                            <option value={null}> None </option>
+                                          ) : (
+                                              <option value={team}>
+                                                {team}
+                                              </option>
+                                            );
+                                        })}
+                                      </Form.Control>
+                                      <button className="assign-team" id={collab.userId} onClick={e => this.handleAssignTeam(e)}>
+                                        Assign
+                                  </button>
+                                    </Form.Group>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                                <></>
+                              )
+                          ) : (
+                            <></>
+                          )
                         )
                     ) : (
                         <h1>No collaborators assigned to this team</h1>
                       )
                   })
                 ) : (
-                  <h5>No collaborators assinged to this team</h5>
-                )
+                    <h5>No collaborators assinged to this team</h5>
+                  )
               }
             </div>
           </div>
