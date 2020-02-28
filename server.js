@@ -17,11 +17,13 @@ const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const app = express();
 
+require('dotenv').config(); 
+
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(session({ secret: "TBD", resave: true, saveUninitialized: false, resave: false }));
+app.use(session({ secret: process.env.SECRET, resave: true, saveUninitialized: false, resave: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
