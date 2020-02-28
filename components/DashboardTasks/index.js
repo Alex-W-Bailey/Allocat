@@ -108,6 +108,11 @@ export default class DashboardTasks extends Component {
     let objValue = e.target.value;
     let objId = parseInt(e.target.id);
 
+    var newState = objId + "Status"
+    this.setState({
+      [newState]: objValue
+    })
+
     var newAllTasks = [];
 
     for (var i = 0; i < this.state.userTasks.length; i++) {
@@ -390,6 +395,14 @@ export default class DashboardTasks extends Component {
     });
   };
 
+  finalizeTask = (e) => {
+    var taskId = e.target.id;
+
+    axios.put(`/api/completedTask/${taskId}`).then(() => {
+      console.log("updated");
+    });
+  }
+
   render() {
     const isError = this.state.isError;
     const isNameClicked = this.state.isNameClicked;
@@ -543,16 +556,22 @@ export default class DashboardTasks extends Component {
                             </Form.Control>
                           </Form.Group>
                           <div className='row my-auto btn-box'>
-                            <a
-                              name={userTask.id}
-                              className='task-btn mx-auto pointer'
-                              onClick={e => {
-                                this.handleUnclaimTask(e);
-                              }}
-                            >
-                              Unclaim Task
-                              <i className='pl-2 far fa-minus-square text-right'></i>
-                            </a>
+                            {
+                              this.state[userTask.id + "Status"] === "Completed" ? (
+                                <Button id={userTask.id} onClick={(e) => this.finalizeTask(e)}>Finish Task</Button>
+                              ) : (
+                                  <a
+                                    name={userTask.id}
+                                    className='task-btn mx-auto pointer'
+                                    onClick={e => {
+                                      this.handleUnclaimTask(e);
+                                    }}
+                                  >
+                                    Unclaim Task
+                                    <i className='pl-2 far fa-minus-square text-right'></i>
+                                  </a>
+                                )
+                            }
                           </div>
                         </div>
                       </div>
@@ -594,25 +613,25 @@ export default class DashboardTasks extends Component {
                         <p className="bb-link" onClick={() => this.showAll(team)}>All</p>
                         <p className="clicked-link" onClick={() => this.showUnclaimedTasks(team)}>Unclaimed</p>
                         <p className="bb-link" onClick={() => this.showCompletedTasks(team)}>Completed</p>
-                    </div>
+                      </div>
                     ) : (
-                      <div>
-                        <p className="bb-link" onClick={() => this.showAll(team)}>All</p>
-                        <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}>Unclaimed</p>
-                        <p className="clicked-link" onClick={() => this.showCompletedTasks(team)}>Completed</p>
-                      </div>               
-                    )
+                          <div>
+                            <p className="bb-link" onClick={() => this.showAll(team)}>All</p>
+                            <p className="bb-link" onClick={() => this.showUnclaimedTasks(team)}>Unclaimed</p>
+                            <p className="clicked-link" onClick={() => this.showCompletedTasks(team)}>Completed</p>
+                          </div>
+                        )
                   }
                 </div>
                 <hr></hr>
                 <div className='row px-2 my-3'>
                   {this.state.allTasks.map(task => {
                     if (task.team === team) {
-                      if(this.state[team + "showAllTasks"] === undefined && this.state[team + "showUnclaimedTasks"] === undefined && this.state[team + "showCompletedTasks"] === undefined) {
+                      if (this.state[team + "showAllTasks"] === undefined && this.state[team + "showUnclaimedTasks"] === undefined && this.state[team + "showCompletedTasks"] === undefined) {
                         var stateAllTasks = team + "showAllTasks";
                         var stateUnclaimed = team + "showUnclaimedTasks";
                         var stateCompleted = team + "showCompletedTasks";
-                        
+
                         this.setState({
                           [stateAllTasks]: false,
                           [stateUnclaimed]: true,
