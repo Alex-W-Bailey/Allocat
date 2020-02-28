@@ -146,7 +146,7 @@ const DashboardTimeline = () => {
                     <div className='task-card card'>
                       <div className='card-body d-flex flex-column over'>
                         <h5 className='task-name card-title mt-3'>
-                          Task Title
+                          Make Final Edits
                         </h5>
                         <div className='card-subtitle mb-1 text-muted'>
                           Task Description
@@ -169,7 +169,7 @@ const DashboardTimeline = () => {
                     <div className='task-card card'>
                       <div className='card-body d-flex flex-column over'>
                         <h5 className='task-name card-title mt-3'>
-                          Task Title
+                          Attend Award Ceremony
                         </h5>
                         <div className='card-subtitle mb-1 text-muted'>
                           Task Description
@@ -199,7 +199,7 @@ const DashboardTimeline = () => {
                         <div className='task-card card'>
                           <div className='card-body d-flex flex-column over'>
                             <h5 className='task-name card-title mt-3'>
-                              Task Title
+                              Repot Plants
                             </h5>
                             <div className='card-subtitle mb-1 text-muted'>
                               Task Description
@@ -222,7 +222,7 @@ const DashboardTimeline = () => {
                         <div className='task-card card'>
                           <div className='card-body d-flex flex-column over'>
                             <h5 className='task-name card-title mt-3'>
-                              Task Title
+                              Company Potluck
                             </h5>
                             <div className='card-subtitle mb-1 text-muted'>
                               Task Description
@@ -245,7 +245,7 @@ const DashboardTimeline = () => {
                         <div className='task-card card'>
                           <div className='card-body d-flex flex-column over'>
                             <h5 className='task-name card-title mt-3'>
-                              Task Title
+                              Renew License
                             </h5>
                             <div className='card-subtitle mb-1 text-muted'>
                               Task Description
