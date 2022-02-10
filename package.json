@@ -46,7 +46,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "mysql2": "^2.1.0",
     "next": "^8.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-session": "^1.0.2",
